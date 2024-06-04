@@ -1,0 +1,60 @@
+{
+  "name": "@lutralabs/ees-contracts",
+  "scripts": {
+    "build": "pnpm build:hardhat && pnpm build:forge",
+    "build:hardhat": "hardhat compile",
+    "build:forge": "forge build --evm-version cancun",
+    "clean": "pnpm clean:hardhat && pnpm clean:forge && pnpm clean:ignition && pnpm clean:broadcast",
+    "clean:hardhat": "hardhat clean && rimraf .openzeppelin && rimraf cache && rimraf coverage",
+    "clean:forge": "forge clean",
+    "clean:ignition": "rimraf ./ignition/deployments",
+    "clean:broadcast": "rimraf ./broadcast",
+    "generate:data": "npx hardhat run scripts/generateExampleData.ts --network local",
+    "test": "pnpm test:hardhat && pnpm test:forge",
+    "test:hardhat": "hardhat test",
+    "test:hardhat:local": "hardhat test --network local",
+    "test:forge": "forge test --evm-version cancun --fork-url $SEPOLIA_RPC_URL --fork-block-number 6037898",
+    "coverage": "pnpm coverage:hardhat",
+    "coverage:hardhat": "hardhat coverage --sources Core",
+    "lint": "forge fmt --check && biome check .",
+    "lint:fix": "forge fmt && biome check --apply .",
+
+    "deploy:local": "npx hardhat run scripts/deployCore.ts --network local",
+    "upgrade:local": "npx hardhat run scripts/upgradeCore.ts --network local",
+    "deploy:schema:local": "npx hardhat run scripts/deployEasSchema.ts --network local",
+
+    "deploy:base": "npx hardhat run scripts/deployCore.ts --network base",
+    "upgrade:base": "npx hardhat run scripts/upgradeCore.ts --network base",
+    "deploy:schema:base": "npx hardhat run scripts/deployEasSchema.ts --network base",
+
+    "deploy:base-sepolia": "npx hardhat run scripts/deployCore.ts --network baseSepolia",
+    "upgrade:base-sepolia": "npx hardhat run scripts/upgradeCore.ts --network baseSepolia",
+    "deploy:schema:base-sepolia": "npx hardhat run scripts/deployEasSchema.ts --network baseSepolia",
+
+    "deploy:defender:sepolia": "npx hardhat run --network sepolia scripts/defenderDeployCore.ts",
+    "upgrade:defender:sepolia": "npx hardhat run --network sepolia scripts/defenderUpgradeCore.ts",
+
+    "deploy:sepolia": "npx hardhat run scripts/deployCore.ts --network sepolia",
+    "upgrade:sepolia": "npx hardhat run scripts/upgradeCore.ts --network sepolia",
+    "deploy:schema:sepolia": "npx hardhat run scripts/deployEasSchema.ts --network sepolia"
+  },
+  "devDependencies": {
+    "@ethereum-attestation-service/eas-sdk": "^2.1.4",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.6",
+    "@nomicfoundation/hardhat-ethers": "^3.0.5",
+    "@nomicfoundation/hardhat-foundry": "^1.1.1",
+    "@nomicfoundation/hardhat-ignition": "^0.15.1",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.1",
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.7",
+    "@openzeppelin/hardhat-upgrades": "^3.1.0",
+    "@openzeppelin/upgrades-core": "1.33.0",
+    "ethers": "^6.12.0",
+    "hardhat": "^2.22.4"
+  },
+  "dependencies": {
+    "@ethereum-attestation-service/eas-contracts": "^1.7.1",
+    "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/contracts-upgradeable": "^5.0.2"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "extends": "nx/presets/npm.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/tests/**/*",
+      "!{projectRoot}/sonar-project.properties",
+      "!{projectRoot}/coverage/**/*",
+      "!{projectRoot}/dist/**/*",
+      "!{projectRoot}/.docusaurus/**/*",
+      "!{projectRoot}/.next/**/*",
+      "!{projectRoot}/jest.config.ts",
+      "!{projectRoot}/.lintstagedrc.cjs",
+      "!{projectRoot}/Dockerfile",
+      "!{projectRoot}/.env.*"
+    ]
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
+      "outputs": [
+        "{projectRoot}/dist",
+        "{projectRoot}/.next",
+        "{projectRoot}/build",
+        "{projectRoot}/generated",
+        "{projectRoot}/.openzeppelin",
+        "{projectRoot}/cache",
+        "{projectRoot}/cache_forge",
+        "{projectRoot}/artifacts",
+        "{projectRoot}/out",
+        "{projectRoot}/typechain-types"
+      ]
+    },
+    "lint": {
+      "cache": true
+    },
+    "coverage": {
+      "cache": true,
+      "outputs": ["{projectRoot}/packages/contracts/coverage"]
+    },
+    "test": {
+      "cache": true
+    },
+    "test:hardhat": {
+      "cache": true
+    },
+    "test:forge": {
+      "cache": true
+    }
+  },
+  "nxCloudAccessToken": "",
+  "defaultBase": "develop"
+}

@@ -1,0 +1,61 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  actions: read
+  contents: read
+
+env:
+  FOUNDRY_PROFILE: ci
+  AMOY_PRIVATE_KEY: ${{ secrets.AMOY_PRIVATE_KEY }}
+  SEPOLIA_PRIVATE_KEY: ${{ secrets.SEPOLIA_PRIVATE_KEY }}
+  BASE_SEPOLIA_PRIVATE_KEY: ${{ secrets.BASE_SEPOLIA_PRIVATE_KEY }}
+  COINMARKETCAP_KEY: ${{ secrets.COINMARKETCAP_KEY }}
+  REPORT_GAS: false
+  SEPOLIA_ETHERSCAN_API_KEY: ${{ secrets.SEPOLIA_ETHERSCAN_API_KEY }}
+  AMOY_ETHERSCAN_API_KEY: ${{ secrets.AMOY_ETHERSCAN_API_KEY }}
+  SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+  OPTIMISM_ETHERSCAN_API_KEY: ${{ secrets.OPTIMISM_ETHERSCAN_API_KEY }}
+  MAINNET_ETHERSCAN_API_KEY: ${{ secrets.MAINNET_ETHERSCAN_API_KEY }}
+
+jobs:
+  main:
+    name: Main CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v3
+      - uses: pnpm/action-setup@v3
+        with:
+          package_json_file: "package.json"
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: "pnpm"
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+      # - name: Gas snapshot
+      #   run: forge snapshot
+      # - name: Check gas snapshots
+      #   run: forge snapshot --check
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm lint
+      - name: Build
+        run: pnpm build
+      - name: Test
+        run: pnpm test

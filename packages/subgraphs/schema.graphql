@@ -1,0 +1,42 @@
+# Base entities
+type Donation @entity(immutable: true) {
+  id: Bytes!
+  from: Account!
+  to: Account!
+  amount: BigInt!
+}
+
+type Endorsement @entity(immutable: true) {
+  id: Bytes!
+  from: Account!
+  to: Account!
+  endorsmentType: String!
+  easUid: Bytes!
+  donationAmount: BigInt!
+}
+
+type Withdrawal @entity(immutable: true) {
+  id: Bytes!
+  address: Account!
+  amount: BigInt!
+}
+
+type FeeWithdrawal @entity(immutable: true) {
+  id: Bytes!
+  # Event has a uint8 feeType, but we can store it as an Int8 as we will not overflow it
+  withdrawalType: String!
+  address: Bytes!
+  amount: BigInt!
+}
+
+# Aggregated entities
+type Account @entity(immutable: false) {
+  id: Bytes! # address
+  receivedDonations: [Donation!]! @derivedFrom(field: "to")
+  receivedEndorsements: [Endorsement!]! @derivedFrom(field: "to")
+  withdrawals: [Withdrawal!]! @derivedFrom(field: "address")
+  sentDonations: [Donation!]! @derivedFrom(field: "from")
+  sentEndorsements: [Endorsement!]! @derivedFrom(field: "from")
+  totalDonationsReceived: BigInt!
+  totalDonationsSent: BigInt!
+}

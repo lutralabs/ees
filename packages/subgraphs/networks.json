@@ -1,0 +1,26 @@
+{
+  "base": {
+    "EESCore": {
+      "address": "",
+      "startBlock": 0
+    }
+  },
+  "test": {
+    "EESCore": {
+      "address": "0xa0b4B77fD7Afd4A38810fB2c060F93aF5e085156",
+      "startBlock": 6037898
+    }
+  },
+  "base-sepolia": {
+    "EESCore": {
+      "address": "0x63F610a03Caa82ca32386BDb6F447a93d4D6F6e7",
+      "startBlock": 10868305
+    }
+  },
+  "sepolia": {
+    "EESCore": {
+      "address": "0x306aa8b6640A4Ef12919Ed97b5d85c006DD68796",
+      "startBlock": 6037898
+    }
+  }
+}

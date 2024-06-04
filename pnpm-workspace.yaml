@@ -1,0 +1,6 @@
+packages:
+  - "packages/**"
+  - "scripts/**"
+  - "apps/**"
+  - "libs/**"
+  - "!packages/contracts/lib/**"

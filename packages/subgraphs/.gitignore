@@ -1,0 +1,7 @@
+data
+.env
+generated
+build
+tests/.bin
+tests/.latest.json
+tests/.docker

@@ -1,0 +1,28 @@
+{
+  "name": "@lutralabs/ees-subgraphs",
+  "license": "MIT",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "pnpm codegen && graph build",
+    "setup": "pnpm codegen && pnpm create-local && pnpm deploy-local",
+    "test": "graph test",
+    "lint": "biome check .",
+    "lint:fix": "biome check --apply .",
+    "clean": "rimraf ./generated ./build ./data ./tests/.bin ./tests/.latest.json ./tests/.docker",
+    "create-local": "graph create ees --node http://localhost:8020/",
+    "remove-local": "graph remove ees --node http://localhost:8020/",
+    "deploy-local": "graph deploy ees --network test --node http://localhost:8020/ --ipfs http://localhost:5001 --version-label 0.0.1",
+    "deploy:base": "bash scripts/deploy-base.sh",
+    "deploy:base-sepolia": "bash scripts/deploy-base-sepolia.sh",
+    "deploy:sepolia": "bash scripts/deploy-sepolia.sh",
+    "deploy:base:graph-studio": "bash scripts/deploy-base-graph-studio.sh",
+    "deploy:sepolia:graph-studio": "bash scripts/deploy-sepolia-graph-studio.sh",
+    "deploy:base-sepolia:graph-studio": "bash scripts/deploy-base-sepolia-graph-studio.sh"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.71.2",
+    "@graphprotocol/graph-ts": "^0.35.1",
+    "assemblyscript": "^0.19.0",
+    "matchstick-as": "^0.6.0"
+  }
+}

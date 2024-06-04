@@ -1,0 +1,38 @@
+specVersion: 1.0.0
+description: Ethereum Endorsement Service Subgraph
+repository: https://github.com/lutralabs/ees
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: EESCore
+    network: sepolia
+    source:
+      abi: EESCore
+      address: "0xe53090918048bd0066c152A89517242893CE9955"
+      startBlock: 6037898
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/EESCore.ts
+      entities:
+        - Donation
+        - Endorsement
+        - Withdrawal
+        - Account
+        - FeeWithdrawal
+      abis:
+        - name: EESCore
+          file: ./abis/EESCore.json
+      eventHandlers:
+        - event: Donate(indexed address,indexed address,uint256)
+          handler: handleDonate
+        - event: Endorse(indexed address,indexed address,string,indexed bytes32,uint256)
+          handler: handleEndorse
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw
+        - event: WithdrawFees(string,indexed address,uint256)
+          handler: handleWithdrawFees
