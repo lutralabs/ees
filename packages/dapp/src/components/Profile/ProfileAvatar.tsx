@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import { useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { MemoizedImage } from '../MemoizedImage';
 
 type ProfileAvatarProps = {
   account: any;
@@ -18,7 +18,7 @@ export const ProfileAvatar = ({ account, size }: ProfileAvatarProps) => {
     );
   return (
     <div>
-      <Image
+      <MemoizedImage
         className={cn(
           'rounded-full min-w-[50px] min-h-[50px]',
           avatarLoading && 'fixed left-[-100px]'
@@ -27,7 +27,7 @@ export const ProfileAvatar = ({ account, size }: ProfileAvatarProps) => {
         alt={'avatar'}
         width={size ? size : 140}
         height={size ? size : 140}
-        onLoadingComplete={() => setAvatarLoading(false)}
+        onLoad={() => setAvatarLoading(false)}
       />
       <Skeleton
         className={cn(

@@ -9,12 +9,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { ArrowUpTrayIcon, ShareIcon } from '@heroicons/react/24/outline';
+import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
-import Image from 'next/image';
 import { ProfileAvatar } from './ProfileAvatar';
 import { Card } from '../ui/card';
+import { MemoizedImage } from '../MemoizedImage';
 
 type ShareDialogProps = {
   shareLink: string;
@@ -64,7 +64,7 @@ export function ShareDialog({ shareLink, account }: ShareDialogProps) {
               )}&hashtags=${encodeURIComponent('Masca,Identity,Credential')}`}
               target="_blank"
             >
-              <Image
+              <MemoizedImage
                 src="/icons/hey_icon.png"
                 alt="hey"
                 width={32}
@@ -77,7 +77,7 @@ export function ShareDialog({ shareLink, account }: ShareDialogProps) {
               )}&embeds[]=${shareLink}`}
               target="_blank"
             >
-              <Image
+              <MemoizedImage
                 src="/icons/warpcast_icon.png"
                 alt="warpcast"
                 className="rounded-full"

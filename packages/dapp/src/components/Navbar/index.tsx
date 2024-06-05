@@ -1,10 +1,10 @@
-import Image from 'next/image';
 import { ConnectButton } from '@/components/ConnectButton';
 import { Searchbar } from './Searchbar';
 import { Nunito } from 'next/font/google';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ClaimNavigationLink } from './ClaimNavigationLink';
+import { MemoizedImage } from '../MemoizedImage';
 
 const nunito = Nunito({ subsets: ['latin'] });
 
@@ -14,7 +14,12 @@ export const Navbar = () => {
       <nav className="w-full py-5 px-3 flex">
         <Link className="col-span-2" href="/">
           <div className="flex gap-x-2 items-center min-w-12">
-            <Image src="/EES_logo.svg" alt="logo" width={57} height={42} />
+            <MemoizedImage
+              src="/EES_logo.svg"
+              alt="logo"
+              width={57}
+              height={42}
+            />
             <div
               className={cn(
                 'font-bold text-5xl text-blue-950',

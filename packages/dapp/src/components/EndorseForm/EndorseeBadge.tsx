@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import SVG from 'react-inlinesvg';
 
@@ -6,6 +5,7 @@ import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { PLATFORM_DATA, PlatformType } from '@/utils/platform';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { MemoizedImage } from '../MemoizedImage';
 
 type EndorseeBadgeProps = {
   type: PlatformType;
@@ -33,13 +33,13 @@ export const EndorseeBadge = ({
 
     return (
       <div>
-        <Image
+        <MemoizedImage
           className={cn('rounded-full', avatarLoading && 'fixed left-[-100px]')}
           src={avatar}
           alt={address}
           width={100}
           height={100}
-          onLoadingComplete={() => setAvatarLoading(false)}
+          onLoad={() => setAvatarLoading(false)}
         />
         <Skeleton
           className={cn(
