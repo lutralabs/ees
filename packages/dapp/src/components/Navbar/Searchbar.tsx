@@ -83,8 +83,11 @@ export const Searchbar = () => {
             return (
               <Link
                 key={account.value}
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${account.value}`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${account.value}?platform=${account.platform}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
                 <div className="flex gap-x-2 items-center">
@@ -103,8 +106,11 @@ export const Searchbar = () => {
         <div className={cn('w-full', query === '' && 'hidden')}>
           {isEthereumAddress ? (
             <Link
-              onClick={() => setShowDropdown(false)}
-              href={`/profile/${query}`}
+              onClick={() => {
+                setShowDropdown(false);
+                setModalOpen(false);
+              }}
+              href={`/profile/${query}?platform=${PlatformType.ethereum}`}
               className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
             >
               <SVG
@@ -121,8 +127,11 @@ export const Searchbar = () => {
                 Results
               </div>
               <Link
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${query}.eth`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${query}.eth?platform=${PlatformType.ens}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
                 <SVG
@@ -134,8 +143,11 @@ export const Searchbar = () => {
                 {query}.eth
               </Link>
               <Link
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${query}.lens`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${query}.lens?platform=${PlatformType.lens}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
                 <SVG
@@ -147,8 +159,11 @@ export const Searchbar = () => {
                 {query}.lens
               </Link>
               <Link
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${query}.farcaster`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${query}?platform=${PlatformType.farcaster}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
                 <SVG

@@ -91,6 +91,9 @@ export const getMinimalProfileInfoByPlatform = async (
           };
         }
 
+        const isIpfsAvatar =
+          data.Wallet.primaryDomain.avatar?.startsWith('ipfs://');
+
         const isHtttpsAvatar =
           data.Wallet.primaryDomain.avatar?.startsWith('https');
 
@@ -99,8 +102,13 @@ export const getMinimalProfileInfoByPlatform = async (
           address: data.Wallet.addresses[0],
           avatar: isHtttpsAvatar
             ? data.Wallet.primaryDomain.avatar!
-            : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
-              null,
+            : isIpfsAvatar
+              ? data.Wallet.primaryDomain.avatar!.replace(
+                  'ipfs://',
+                  'https://ipfs.io/ipfs/'
+                )
+              : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image
+                  ?.small ?? null,
           error: null,
         };
       }

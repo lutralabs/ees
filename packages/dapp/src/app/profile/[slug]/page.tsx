@@ -1,4 +1,3 @@
-import type { GetProfileInfoQuery } from '@/__generated__/airstack/graphql';
 import { Address } from '@/components/Address';
 import { Container } from '@/components/Container';
 import { getAvatarForPlatform, getProfileInfo } from '@/lib/airstack';

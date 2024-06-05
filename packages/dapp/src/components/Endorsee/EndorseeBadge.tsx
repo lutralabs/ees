@@ -1,15 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import SVG from 'react-inlinesvg';
 
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
-import {
-  PLATFORM_DATA,
-  PlatformType,
-  validateOrGetDefaultPlatform,
-} from '@/utils/platform';
+import { PLATFORM_DATA, PlatformType } from '@/utils/platform';
 import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatAddress } from '@/utils';

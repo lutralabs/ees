@@ -9,14 +9,14 @@ export const getAvatarForPlatform = (
     case PlatformType.ens: {
       // Check if primary domain is set
       if (!data.Wallet?.primaryDomain) return null;
-      // Check if tokenNft is set
-      const tokenNft =
-        data.Wallet.primaryDomain.tokenNft?.contentValue?.image?.small;
-      if (tokenNft) return tokenNft;
-      // Check if avatar is set
-      const avatar = data.Wallet.primaryDomain.avatar;
 
-      return avatar ?? null;
+      const isHtttpsAvatar =
+        data.Wallet.primaryDomain.avatar?.startsWith('https');
+
+      return isHtttpsAvatar
+        ? data.Wallet.primaryDomain.avatar!
+        : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
+            null;
     }
     case PlatformType.lens: {
       if (!data.lensSocials?.Social || data.lensSocials?.Social.length === 0) {
@@ -28,7 +28,6 @@ export const getAvatarForPlatform = (
 
       return lens.profileImageContentValue?.image?.small ?? null;
     }
-
     case PlatformType.farcaster: {
       if (
         !data.farcasterSocials?.Social ||
@@ -41,7 +40,61 @@ export const getAvatarForPlatform = (
       if (!farcaster) return null;
       return farcaster.profileImageContentValue?.image?.small ?? null;
     }
-    default:
+    // For ethereum addresss we check first entry in each social
+    case PlatformType.ethereum: {
+      // ENS profile
+      if (data?.Wallet?.primaryDomain?.avatar) {
+        const isIpfsAvatar =
+          data.Wallet.primaryDomain.avatar?.startsWith('ipfs://');
+
+        if (isIpfsAvatar) {
+          return data.Wallet.primaryDomain.avatar!.replace(
+            'ipfs://',
+            'https://ipfs.io/ipfs/'
+          );
+        }
+
+        const isHtttpsAvatar =
+          data.Wallet.primaryDomain.avatar?.startsWith('https');
+
+        return isHtttpsAvatar
+          ? data.Wallet.primaryDomain.avatar!
+          : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
+              null;
+      }
+
+      // Lens profile
+      if (
+        data?.farcasterSocials?.Social &&
+        data.farcasterSocials?.Social.length > 0
+      ) {
+        if (
+          data.farcasterSocials?.Social[0].profileImageContentValue?.image
+            ?.small
+        ) {
+          return data.farcasterSocials?.Social[0].profileImageContentValue
+            ?.image?.small;
+        }
+      }
+
+      // Farcaster profile
+      if (
+        data?.farcasterSocials?.Social &&
+        data.farcasterSocials?.Social.length > 0
+      ) {
+        if (
+          data.farcasterSocials?.Social[0].profileImageContentValue?.image
+            ?.small
+        ) {
+          return data.farcasterSocials?.Social[0].profileImageContentValue
+            ?.image?.small;
+        }
+      }
+
       return null;
+    }
+    default: {
+      return null;
+    }
   }
 };

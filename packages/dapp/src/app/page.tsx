@@ -3,7 +3,6 @@ import { EndorseForm } from '@/components/EndorseForm';
 import { Endorsee } from '@/components/Endorsee';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getMinimalProfileInfoByPlatform } from '@/lib/airstack/getMinimalProfileInfoByPlatform';
 import { PlatformType, validateOrGetDefaultPlatform } from '@/utils';
 import Link from 'next/link';
 import { Suspense } from 'react';

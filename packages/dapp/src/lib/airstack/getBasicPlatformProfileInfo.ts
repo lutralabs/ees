@@ -54,7 +54,45 @@ export const getBasicPlatformProfileInfo = (
         description: farcaster.profileBio ?? null,
       };
     }
-    default:
+    // We try to find the first social entry
+    case PlatformType.ethereum: {
+      // ENS profile
+      if (data.Wallet?.primaryDomain) {
+        return {
+          name: data.Wallet.primaryDomain.name ?? null,
+          handle: data.Wallet.primaryDomain.name ?? null,
+          description: null,
+        };
+      }
+
+      // Lens profile
+      if (data.lensSocials?.Social) {
+        const lens = data.lensSocials?.Social[0];
+        if (lens) {
+          return {
+            name: lens.profileDisplayName ?? null,
+            handle: lens.profileHandle ?? null,
+            description: lens.profileBio ?? null,
+          };
+        }
+      }
+
+      // Farcaster profile
+      if (data.farcasterSocials?.Social) {
+        const farcaster = data.farcasterSocials?.Social[0];
+        if (farcaster) {
+          return {
+            name: farcaster.profileDisplayName ?? null,
+            handle: farcaster.profileHandle ?? null,
+            description: farcaster.profileBio ?? null,
+          };
+        }
+      }
+
       return EMPTY_RESULT;
+    }
+    default: {
+      return EMPTY_RESULT;
+    }
   }
 };

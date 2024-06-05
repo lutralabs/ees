@@ -54,7 +54,6 @@ export const Endorsee = async ({
   return (
     <div className="w-full">
       <EndorseeDialog />
-
       {error && (
         <div className="absolute mt-2 w-[200px] text-xs font-semibold text-red-500">
           {error}

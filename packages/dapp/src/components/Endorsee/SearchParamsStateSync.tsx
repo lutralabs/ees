@@ -11,26 +11,23 @@ export const SearchParamsStateSync = ({
   address: `0x${string}` | null;
 }) => {
   const searchParams = useSearchParams();
+  const account = searchParams.get('account');
+  const platform = validateOrGetDefaultPlatform(searchParams.get('platform'));
 
   // Global state
   const { changeDisplayValue, changePlatform, changeAddress } =
     useEndorsementStore((state) => ({
-      changeDisplayValue: state.changeDisplayValue,
-      changePlatform: state.changePlatform,
       changeAddress: state.changeAddress,
+      changePlatform: state.changePlatform,
+      changeDisplayValue: state.changeDisplayValue,
     }));
 
   // Reads search params and updates global store
   useEffect(() => {
-    const account = searchParams.get('account');
-    const platform = account
-      ? validateOrGetDefaultPlatform(searchParams.get('platform'))
-      : null;
-
-    changeDisplayValue(account ?? null);
+    changeDisplayValue(account);
     changePlatform(platform);
     changeAddress(address);
-  }, [searchParams, address]);
+  }, [account, platform, address]);
 
   return null;
 };
