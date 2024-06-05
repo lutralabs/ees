@@ -25,7 +25,7 @@ export default function RootLayout(props: { children: ReactNode }) {
   const initialState = cookieToInitialState(headers().get('cookie'));
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={cn(inter.className, 'antialiased')}>
         <div className="h-full w-full overflow-hidden">
           <Providers initialState={initialState}>

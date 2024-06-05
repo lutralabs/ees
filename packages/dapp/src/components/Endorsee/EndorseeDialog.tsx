@@ -10,6 +10,7 @@ import { isAddress } from 'viem';
 import { useEndorsementStore } from '@/stores';
 import { PLATFORM_DATA, PlatformType } from '@/utils/platform';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
   {
@@ -27,6 +28,8 @@ const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
 ];
 
 export function EndorseeDialog() {
+  const router = useRouter();
+
   // Global state
   const { changePlatform, changeDisplayValue } = useEndorsementStore(
     (state) => ({
@@ -84,6 +87,9 @@ export function EndorseeDialog() {
                   onMouseDown={() => {
                     changePlatform(account.platform);
                     changeDisplayValue(account.value);
+                    router.push(
+                      `/?platform=${account.platform}&account=${account.value}`
+                    );
                     setOpen(false);
                   }}
                   variant="ghost"
@@ -115,6 +121,9 @@ export function EndorseeDialog() {
                   onMouseDown={() => {
                     changePlatform(PlatformType.ethereum);
                     changeDisplayValue(query);
+                    router.push(
+                      `/?platform=${PlatformType.ethereum}&account=${query}`
+                    );
                     setOpen(false);
                   }}
                   variant="ghost"
@@ -136,6 +145,9 @@ export function EndorseeDialog() {
                     onMouseDown={() => {
                       changePlatform(PlatformType.ens);
                       changeDisplayValue(`${query}.eth`);
+                      router.push(
+                        `/?platform=${PlatformType.ens}&account=${query}.eth`
+                      );
                       setOpen(false);
                     }}
                     variant="ghost"
@@ -155,6 +167,9 @@ export function EndorseeDialog() {
                     onMouseDown={() => {
                       changePlatform(PlatformType.lens);
                       changeDisplayValue(`${query}.lens`);
+                      router.push(
+                        `/?platform=${PlatformType.lens}&account=${query}.lens`
+                      );
                       setOpen(false);
                     }}
                     variant="ghost"
@@ -174,6 +189,9 @@ export function EndorseeDialog() {
                     onMouseDown={() => {
                       changePlatform(PlatformType.farcaster);
                       changeDisplayValue(query);
+                      router.push(
+                        `/?platform=${PlatformType.farcaster}&account=${query}`
+                      );
                       setOpen(false);
                     }}
                     variant="ghost"

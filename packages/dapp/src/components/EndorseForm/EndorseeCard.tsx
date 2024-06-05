@@ -7,9 +7,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Endorsee } from './Endorsee';
 import { useEndorsementStore } from '@/stores';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/navigation';
 
 const ENDORSMENT_OPTIONS = [
   { value: 'web3', label: 'Web3Explorer' },
@@ -19,7 +19,14 @@ const ENDORSMENT_OPTIONS = [
   { value: 'trader', label: 'Trader' },
 ];
 
-export const EndorseeCard = () => {
+type EndorseeCardProps = {
+  endorsee: React.ReactNode;
+};
+
+export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
+  const router = useRouter();
+
+  // Global state
   const { address, endorsementType, changeEndorsementType, clear } =
     useEndorsementStore((state) => ({
       address: state.address,
@@ -36,7 +43,12 @@ export const EndorseeCard = () => {
           <div className="flex-1 flex items-center justify-end">
             <Button
               variant="link"
-              onMouseDown={clear}
+              onMouseDown={() => {
+                // Clear global store
+                clear();
+                // Clear search params
+                router.push('/');
+              }}
               className="font-semibold p-0 h-5"
             >
               Clear
@@ -45,7 +57,8 @@ export const EndorseeCard = () => {
         )}
       </div>
       <div className="flex max-sm:flex-col max-sm:pt-4 max-sm:gap-y-4 justify-between items-center">
-        <Endorsee />
+        {endorsee}
+
         <Select
           defaultValue="web3"
           value={endorsementType}

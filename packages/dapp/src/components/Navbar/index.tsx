@@ -26,7 +26,7 @@ export const Navbar = () => {
             </div>
           </div>
         </Link>
-        <div className="flex flex-1 space-x-4 items-center">
+        <div className="flex flex-1 gap-x-4 items-center">
           <div className="col-span-6 flex flex-1 items-center justify-center max-lg:justify-end">
             <Searchbar />
           </div>

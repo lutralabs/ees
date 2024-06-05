@@ -1,33 +1,39 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { ArrowUpTrayIcon, ShareIcon } from '@heroicons/react/24/outline';
+import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
 import Image from 'next/image';
 import { ProfileAvatar } from './ProfileAvatar';
-import { Card } from '../ui/card';
+import { Card } from '../../../components/ui/card';
 
 type ShareDialogProps = {
+  avatar: string | null;
   shareLink: string;
-  account: any;
+  displayName: string;
 };
 
-export function ShareDialog({ shareLink, account }: ShareDialogProps) {
+export function ShareDialog({
+  avatar,
+  shareLink,
+  displayName,
+}: ShareDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          size={'sm'}
+          size="sm"
           className="flex gap-x-1 items-center text-md font-medium bg-slate-200 px-4 rounded-full"
         >
           <ArrowUpTrayIcon className="w-6 h-6" />
@@ -42,9 +48,9 @@ export function ShareDialog({ shareLink, account }: ShareDialogProps) {
           </DialogDescription>
         </DialogHeader>
 
-        <Card className="flex flex-col gap-y-2 p-4">
-          <ProfileAvatar account={account} size={80} />
-          <div className="text-3xl font-semibold">{account.displayName}</div>
+        <Card className="flex gap-x-2 p-4 items-center">
+          <ProfileAvatar avatar={avatar} size="2xl" />
+          <div className="text-3xl font-semibold">{displayName}</div>
         </Card>
 
         <div className="mt-8">

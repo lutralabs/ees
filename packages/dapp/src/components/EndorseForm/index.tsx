@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card } from '@/components/ui/card';
@@ -30,7 +32,11 @@ import {
 import { cn } from '@/lib/utils';
 import { ConnectButtonCustom } from '@/components/ConnectButtonCustom';
 
-export const EndorseForm = () => {
+type EndorseeProps = {
+  endorsee: React.ReactNode;
+};
+
+export const EndorseForm = ({ endorsee }: EndorseeProps) => {
   const searchParams = useSearchParams();
   const intro = !!searchParams.get('intro');
 
@@ -90,7 +96,7 @@ export const EndorseForm = () => {
     data: endorsementPrice,
     isPending: isEndorsementPricePending,
     isError: isEndorsementPriceError,
-  } = useEndorsmentPrice(chainId ?? DEFAULT_CHAIN_ID); // FIXME: Replace with proper chainId
+  } = useEndorsmentPrice(chainId ?? DEFAULT_CHAIN_ID);
 
   const { isPending: isFeesPerGasPending, isError: isFeesPerGasError } =
     useEstimateFeesPerGas({
@@ -177,11 +183,11 @@ export const EndorseForm = () => {
       .then((txHash) => {
         partialClear();
         toast(
-          <div className="flex space-x-2">
+          <div className="flex gap-x-2">
             <div className="flex items-center justify-center">
               <CheckCircle2 className="w-6 h-6 text-green-500" />
             </div>
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col gap-y-1">
               <h3 className="font-semibold justify-start items-center">
                 Transaction submitted
               </h3>
@@ -209,11 +215,11 @@ export const EndorseForm = () => {
         if (error.name === 'TransactionExecutionError') {
           if (error.cause.name === 'UserRejectedRequestError') {
             return toast(
-              <div className="flex space-x-2">
+              <div className="flex gap-x-2">
                 <div className="flex items-center justify-center">
                   <CircleAlert className="w-6 h-6 text-red-500" />
                 </div>
-                <div className="flex flex-col space-y-1 items-center justify-center">
+                <div className="flex flex-col gap-y-1 items-center justify-center">
                   <h3 className="font-semibold">Transaction rejected</h3>
                 </div>
               </div>,
@@ -225,11 +231,11 @@ export const EndorseForm = () => {
         }
 
         return toast(
-          <div className="flex space-x-2">
+          <div className="flex gap-x-2">
             <div className="flex items-center justify-center">
               <CircleAlert className="w-6 h-6 text-red-500" />
             </div>
-            <div className="flex flex-col space-y-1 items-center justify-center">
+            <div className="flex flex-col gap-y-1 items-center justify-center">
               <h3 className="font-semibold">Something went wrong</h3>
             </div>
           </div>,
@@ -242,12 +248,12 @@ export const EndorseForm = () => {
 
   return (
     <Card className="p-4 flex flex-col gap-y-4 overflow-hidden shadow-lg">
-      <EndorseeCard />
+      <EndorseeCard endorsee={endorsee} />
       {(donationOpen || intro) && (
         <DonationCard close={() => setDonationOpen(false)} />
       )}
       {commentOpen && <CommentCard close={() => setCommentOpen(false)} />}
-      <div className="flex max-sm:flex-col max-sm:space-y-4 sm:space-x-2">
+      <div className="flex max-sm:flex-col max-sm:gap-y-4 sm:gap-x-2">
         {!commentOpen && (
           <CommentButton onMouseDown={() => setCommentOpen(true)} />
         )}

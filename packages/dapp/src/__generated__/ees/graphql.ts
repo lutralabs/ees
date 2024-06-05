@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -22,11 +22,6 @@ export type Scalars = {
    *
    */
   Int8: { input: any; output: any; }
-  /**
-   * A string representation of microseconds UNIX timestamp (16 digits)
-   *
-   */
-  Timestamp: { input: any; output: any; }
 };
 
 export type Account = {
@@ -135,11 +130,6 @@ export enum Account_OrderBy {
   Withdrawals = 'withdrawals'
 }
 
-export enum Aggregation_Interval {
-  Day = 'day',
-  Hour = 'hour'
-}
-
 export type BlockChangedFilter = {
   number_gte: Scalars['Int']['input'];
 };
@@ -240,6 +230,7 @@ export enum Donation_OrderBy {
 
 export type Endorsement = {
   __typename?: 'Endorsement';
+  donationAmount: Scalars['BigInt']['output'];
   easUid: Scalars['Bytes']['output'];
   endorsmentType: Scalars['String']['output'];
   from: Account;
@@ -251,6 +242,14 @@ export type Endorsement_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<Endorsement_Filter>>>;
+  donationAmount?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  donationAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   easUid?: InputMaybe<Scalars['Bytes']['input']>;
   easUid_contains?: InputMaybe<Scalars['Bytes']['input']>;
   easUid_gt?: InputMaybe<Scalars['Bytes']['input']>;
@@ -337,6 +336,7 @@ export type Endorsement_Filter = {
 };
 
 export enum Endorsement_OrderBy {
+  DonationAmount = 'donationAmount',
   EasUid = 'easUid',
   EndorsmentType = 'endorsmentType',
   From = 'from',
@@ -716,8 +716,6 @@ export type _Block_ = {
   hash?: Maybe<Scalars['Bytes']['output']>;
   /** The block number */
   number: Scalars['Int']['output'];
-  /** The hash of the parent block */
-  parentHash?: Maybe<Scalars['Bytes']['output']>;
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']['output']>;
 };
@@ -758,6 +756,36 @@ export type GetAccountsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAccountsQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: any, totalDonationsReceived: any, totalDonationsSent: any }> };
 
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
 
-export const GetAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAccount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsReceived"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsSent"}}]}}]}}]} as unknown as DocumentNode<GetAccountQuery, GetAccountQueryVariables>;
-export const GetAccountsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAccounts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsReceived"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsSent"}}]}}]}}]} as unknown as DocumentNode<GetAccountsQuery, GetAccountsQueryVariables>;
+  constructor(private value: string, public __meta__?: Record<string, any>) {
+    super(value);
+  }
+
+  toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const GetAccountDocument = new TypedDocumentString(`
+    query GetAccount($address: ID!) {
+  account(id: $address) {
+    id
+    totalDonationsReceived
+    totalDonationsSent
+  }
+}
+    `) as unknown as TypedDocumentString<GetAccountQuery, GetAccountQueryVariables>;
+export const GetAccountsDocument = new TypedDocumentString(`
+    query GetAccounts {
+  accounts {
+    id
+    totalDonationsReceived
+    totalDonationsSent
+  }
+}
+    `) as unknown as TypedDocumentString<GetAccountsQuery, GetAccountsQueryVariables>;

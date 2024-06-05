@@ -124,7 +124,7 @@ export const DonationCard = ({ close }: DonationCardProps) => {
             </Select>
           </div>
         </div>
-        <div className="flex justify-between mt-1 space-x-2">
+        <div className="flex justify-between mt-1 gap-x-2">
           <div className="flex-1 max-w-full overflow-hidden">
             <DonationValueUSD amount={Number(donationValue)} token="ETH" />
           </div>
