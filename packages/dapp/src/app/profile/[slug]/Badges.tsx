@@ -1,8 +1,8 @@
 import type { GetProfileInfoQuery } from '@/__generated__/airstack/graphql';
+import { MemoizedSVG } from '@/components/MemoizedSVG';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { PLATFORM_DATA, PlatformType } from '@/utils';
-import SVG from 'react-inlinesvg';
 
 type BadgesProps = {
   data: GetProfileInfoQuery;
@@ -25,7 +25,7 @@ const Badge = ({
       )}
       rel="noreferrer"
     >
-      <SVG
+      <MemoizedSVG
         fill={PLATFORM_DATA[platform].color}
         src={PLATFORM_DATA[platform].icon as string}
         width={20}

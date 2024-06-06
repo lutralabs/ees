@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
 import { useMemo, useState } from 'react';
-import SVG from 'react-inlinesvg';
 
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { PLATFORM_DATA, PlatformType } from '@/utils/platform';
@@ -10,6 +8,8 @@ import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatAddress } from '@/utils';
 import { Check } from 'lucide-react';
+import { MemoizedImage } from '@/components/MemoizedImage';
+import { MemoizedSVG } from '@/components/MemoizedSVG';
 
 type EndorseeBadgeProps = {
   type: PlatformType;
@@ -40,7 +40,7 @@ export const EndorseeBadge = ({
 
     return (
       <div className="relative h-[80px] w-[80px]">
-        <Image
+        <MemoizedImage
           className={cn('absolute rounded-full')}
           src={avatar}
           alt="Avatar"
@@ -77,7 +77,7 @@ export const EndorseeBadge = ({
           <div className="relative sm:mt-3">
             {Avatar}
             <div className={'absolute -bottom-2 -right-2'}>
-              <SVG
+              <MemoizedSVG
                 fill={PLATFORM_DATA[type].color as string}
                 className={cn(
                   'p-1 rounded-full',

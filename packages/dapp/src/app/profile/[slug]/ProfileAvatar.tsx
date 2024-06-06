@@ -1,9 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import { useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { MemoizedImage } from '@/components/MemoizedImage';
 
 type ProfileAvatarProps = {
   avatar: string | null;
@@ -74,7 +74,7 @@ export const ProfileAvatar = ({ avatar, size = 'md' }: ProfileAvatarProps) => {
         size === '6xl' && 'w-[192px] h-[192px]'
       )}
     >
-      <Image
+      <MemoizedImage
         className={cn('absolute rounded-full')}
         src={avatar}
         alt="Profile avatar"

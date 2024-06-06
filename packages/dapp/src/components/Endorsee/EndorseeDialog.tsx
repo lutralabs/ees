@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import SVG from 'react-inlinesvg';
 import { Input } from '@/components/ui/input';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
@@ -11,6 +10,7 @@ import { useEndorsementStore } from '@/stores';
 import { PLATFORM_DATA, PlatformType } from '@/utils/platform';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
+import { MemoizedSVG } from '@/components/MemoizedSVG';
 
 const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
   {
@@ -96,7 +96,7 @@ export function EndorseeDialog() {
                   className="w-full justify-start"
                 >
                   <div className="flex gap-x-2 items-center">
-                    <SVG
+                    <MemoizedSVG
                       fill={PLATFORM_DATA[account.platform].color}
                       src={PLATFORM_DATA[account.platform].icon}
                       width={20}
@@ -130,7 +130,7 @@ export function EndorseeDialog() {
                   className="w-full justify-start"
                 >
                   <div className="flex gap-x-2 items-center">
-                    <SVG
+                    <MemoizedSVG
                       fill={PLATFORM_DATA[PlatformType.ethereum].color}
                       src={PLATFORM_DATA[PlatformType.ethereum].icon}
                       width={20}
@@ -154,7 +154,7 @@ export function EndorseeDialog() {
                     className="w-full justify-start"
                   >
                     <div className="flex gap-x-2 items-center">
-                      <SVG
+                      <MemoizedSVG
                         fill={PLATFORM_DATA[PlatformType.ens].color}
                         src={PLATFORM_DATA[PlatformType.ens].icon}
                         width={20}
@@ -176,7 +176,7 @@ export function EndorseeDialog() {
                     className="w-full justify-start"
                   >
                     <div className="flex gap-x-2 items-center">
-                      <SVG
+                      <MemoizedSVG
                         fill={PLATFORM_DATA[PlatformType.lens].color}
                         src={PLATFORM_DATA[PlatformType.lens].icon}
                         width={20}
@@ -198,7 +198,7 @@ export function EndorseeDialog() {
                     className="w-full justify-start"
                   >
                     <div className="flex gap-x-2 items-center">
-                      <SVG
+                      <MemoizedSVG
                         fill={PLATFORM_DATA[PlatformType.farcaster].color}
                         src={PLATFORM_DATA[PlatformType.farcaster].icon}
                         width={20}
