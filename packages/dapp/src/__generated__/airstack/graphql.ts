@@ -2310,6 +2310,13 @@ export type XmtPsOutput = {
   pageInfo?: Maybe<PageInfo>;
 };
 
+export type GetMinimalProfileFromAddressQueryVariables = Exact<{
+  identity: Scalars['Identity']['input'];
+}>;
+
+
+export type GetMinimalProfileFromAddressQuery = { __typename?: 'Query', Wallet?: { __typename?: 'Wallet', primaryDomain?: { __typename?: 'Domain', name?: string | null, avatar?: string | null, tokenNft?: { __typename?: 'TokenNft', contentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null } | null } | null } | null, farcasterSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileHandle?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null, lensSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileHandle?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null };
+
 export type GetProfileFromEnsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
 }>;
@@ -2353,6 +2360,47 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const GetMinimalProfileFromAddressDocument = new TypedDocumentString(`
+    query GetMinimalProfileFromAddress($identity: Identity!) {
+  Wallet(input: {identity: $identity, blockchain: ethereum}) {
+    primaryDomain {
+      name
+      avatar
+      tokenNft {
+        contentValue {
+          image {
+            small
+          }
+        }
+      }
+    }
+  }
+  farcasterSocials: Socials(
+    input: {filter: {identity: {_eq: $identity}, dappName: {_eq: farcaster}}, blockchain: ethereum, order: {followerCount: DESC}, limit: 1}
+  ) {
+    Social {
+      profileHandle
+      profileImageContentValue {
+        image {
+          small
+        }
+      }
+    }
+  }
+  lensSocials: Socials(
+    input: {filter: {identity: {_eq: $identity}, dappName: {_eq: lens}}, blockchain: ethereum, order: {followerCount: DESC}, limit: 1}
+  ) {
+    Social {
+      profileHandle
+      profileImageContentValue {
+        image {
+          small
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetMinimalProfileFromAddressQuery, GetMinimalProfileFromAddressQueryVariables>;
 export const GetProfileFromEnsDocument = new TypedDocumentString(`
     query GetProfileFromEns($identity: Identity!) {
   Wallet(input: {identity: $identity, blockchain: ethereum}) {

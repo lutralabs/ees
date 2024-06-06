@@ -26,12 +26,13 @@ const validateOrGetDefaultTab = (tab: string | undefined) => {
 };
 
 type FeedProps = {
-  account: string;
+  account: `0x${string}`;
   platform: PlatformType;
   tab?: string;
+  network: number;
 };
 
-export const Feed = ({ account, platform, tab }: FeedProps) => {
+export const Feed = ({ account, platform, tab, network }: FeedProps) => {
   const _tab = validateOrGetDefaultTab(tab);
 
   return (
@@ -63,7 +64,9 @@ export const Feed = ({ account, platform, tab }: FeedProps) => {
         </Link>
       </div>
       <div className="mt-4 w-full">
-        {_tab === 'dashboard' && <Dashboard account={account} />}
+        {_tab === 'dashboard' && (
+          <Dashboard account={account} network={network} />
+        )}
         {_tab === 'explorer' && <Explorer />}
         {_tab === 'graph' && <SocialGraph />}
       </div>

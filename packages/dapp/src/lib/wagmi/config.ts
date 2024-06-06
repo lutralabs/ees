@@ -51,26 +51,38 @@ const connectors = connectorsForWallets(
   }
 );
 
-const DEVELOPMENT_CHAINS = [baseSepolia, sepolia, localhost];
-const DEVELOPMENT_TRANSPORTS = {
-  [baseSepolia.id]: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_ENDPOINT),
+const PROD_CHAINS = [base] as const;
+const STAGING_CHAINS = [sepolia, baseSepolia, ...PROD_CHAINS] as const;
+const DEVELOPMENT_CHAINS = [localhost, ...STAGING_CHAINS] as const;
+
+const PROD_TRANSPORTS = {
+  [base.id]: http(process.env.NEXT_PUBLIC_BASE_ENDPOINT),
+};
+const STAGING_TRANSPORTS = {
   [sepolia.id]: http(process.env.NEXT_PUBLIC_SEPOLIA_ENDPOINT),
+  [baseSepolia.id]: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_ENDPOINT),
+  ...PROD_TRANSPORTS,
+};
+const DEVELOPMENT_TRANSPORTS = {
   [localhost.id]: http(),
+  ...STAGING_TRANSPORTS,
 };
 
 export const config = createConfig({
   ssr: true,
   chains: [
-    base,
-    ...(APP_ENV === 'development' || APP_ENV === 'staging'
+    ...(APP_ENV === 'development'
       ? DEVELOPMENT_CHAINS
-      : []),
+      : APP_ENV === 'staging'
+        ? STAGING_CHAINS
+        : PROD_CHAINS),
   ],
   transports: {
-    [base.id]: http(process.env.NEXT_PUBLIC_BASE_ENDPOINT),
-    ...((APP_ENV === 'development' || APP_ENV === 'staging'
+    ...((APP_ENV === 'development'
       ? DEVELOPMENT_TRANSPORTS
-      : {}) as any),
+      : APP_ENV === 'staging'
+        ? STAGING_TRANSPORTS
+        : PROD_TRANSPORTS) as any),
   },
   storage: createStorage({
     storage: cookieStorage,

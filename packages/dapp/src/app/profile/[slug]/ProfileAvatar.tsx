@@ -38,7 +38,21 @@ export const ProfileAvatar = ({ avatar, size = 'md' }: ProfileAvatarProps) => {
 
   if (!avatar) {
     return (
-      <div className="w-[120px] h-[120px] flex items-center justify-center text-7xl font-semibold bg-primary-200 text-primary-800 rounded-full">
+      <div
+        className={cn(
+          'flex items-center justify-center text-7xl font-semibold bg-primary-200 text-primary-800 rounded-full',
+          size === 'xs' && 'w-[14px] h-[14px]',
+          size === 'sm' && 'w-[24px] h-[24px]',
+          size === 'md' && 'w-[36px] h-[36px]',
+          size === 'lg' && 'w-[48px] h-[48px]',
+          size === 'xl' && 'w-[64px] h-[64px]',
+          size === '2xl' && 'w-[80px] h-[80px]',
+          size === '3xl' && 'w-[96px] h-[96px]',
+          size === '4xl' && 'w-[128px] h-[128px]',
+          size === '5xl' && 'w-[160px] h-[160px]',
+          size === '6xl' && 'w-[192px] h-[192px]'
+        )}
+      >
         V
       </div>
     );

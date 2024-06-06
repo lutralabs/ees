@@ -1,0 +1,26 @@
+query GetTopEndorsersAndDonators($account: String!) {
+  topEndorsers: aggregatedInformations(
+    where: {to: $account}
+    orderBy: from__totalEndorsementsReceived
+    orderDirection: desc
+    first: 6
+  ) {
+    id
+    from {
+      id
+      totalEndorsementsReceived
+    }
+  }
+  topDonators: aggregatedInformations(
+    where: {to: $account}
+    orderBy: from__totalEndorsementsReceived
+    orderDirection: desc
+    first: 6
+  ) {
+    id
+    from {
+      id
+    }
+    donationAmount
+  }
+}

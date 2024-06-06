@@ -1,7 +1,0 @@
-query GetAccount($address: ID!) {
-  account(id: $address) {
-    id
-    totalDonationsReceived
-    totalDonationsSent
-  }
-}

@@ -9,15 +9,17 @@ import Link from 'next/link';
 import { ShareDialog } from './ShareDialog';
 import { ProfileAvatar } from './ProfileAvatar';
 import { Feed } from './Feed';
+import { validateOrGetDefaultNetwork } from '@/utils/validateOrGetDefaultNetwork';
 
 export default async function Page({
   params: { slug },
-  searchParams: { platform, tab },
+  searchParams: { platform, tab, network },
 }: {
   params: { slug: string };
-  searchParams: { platform?: string; tab?: string };
+  searchParams: { platform?: string; tab?: string; network?: string };
 }) {
   const _platform = validateOrGetDefaultPlatform(platform);
+  const _network = validateOrGetDefaultNetwork(network);
   const data = await getProfileInfo(slug, _platform);
 
   const mainAddress = data.Wallet!.addresses![0] as `0x${string}`;
@@ -59,7 +61,12 @@ export default async function Page({
           </div>
         </div>
         <div className="w-full">
-          <Feed account={mainAddress} platform={_platform} tab={tab} />
+          <Feed
+            account={mainAddress}
+            platform={_platform}
+            tab={tab}
+            network={_network}
+          />
         </div>
       </div>
     </Container>

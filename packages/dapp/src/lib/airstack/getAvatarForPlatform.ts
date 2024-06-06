@@ -10,12 +10,20 @@ export const getAvatarForPlatform = (
       // Check if primary domain is set
       if (!data.Wallet?.primaryDomain) return null;
 
+      const isIpfsAvatar =
+        data.Wallet.primaryDomain.avatar?.startsWith('ipfs://');
+
       const isHtttpsAvatar =
         data.Wallet.primaryDomain.avatar?.startsWith('https');
 
       return isHtttpsAvatar
         ? data.Wallet.primaryDomain.avatar!
-        : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
+        : isIpfsAvatar
+          ? data.Wallet.primaryDomain.avatar!.replace(
+              'ipfs://',
+              'https://ipfs.io/ipfs/'
+            )
+          : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
             null;
     }
     case PlatformType.lens: {
@@ -64,16 +72,12 @@ export const getAvatarForPlatform = (
       }
 
       // Lens profile
-      if (
-        data?.farcasterSocials?.Social &&
-        data.farcasterSocials?.Social.length > 0
-      ) {
+      if (data?.lensSocials?.Social && data.lensSocials?.Social.length > 0) {
         if (
-          data.farcasterSocials?.Social[0].profileImageContentValue?.image
-            ?.small
+          data.lensSocials?.Social[0].profileImageContentValue?.image?.small
         ) {
-          return data.farcasterSocials?.Social[0].profileImageContentValue
-            ?.image?.small;
+          return data.lensSocials?.Social[0].profileImageContentValue?.image
+            ?.small;
         }
       }
 
