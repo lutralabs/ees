@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useEndorsementStore } from '@/stores';
-import Image from 'next/image';
+import { MemoizedImage } from '@/components/MemoizedImage';
 import {
   Select,
   SelectContent,
@@ -110,7 +110,7 @@ export const DonationCard = ({ close }: DonationCardProps) => {
               <SelectContent>
                 <SelectItem key="eth" value="eth">
                   <div className="flex items-center justify-center">
-                    <Image
+                    <MemoizedImage
                       src="/icons/coin-ethereum.png"
                       alt="Ethereum"
                       width={256}
