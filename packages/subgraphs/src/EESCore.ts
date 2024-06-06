@@ -22,6 +22,8 @@ const createOrLoadAccount = (address: Bytes): Account => {
     account = new Account(address);
     account.totalDonationsReceived = BigInt.fromI32(0);
     account.totalDonationsSent = BigInt.fromI32(0);
+    account.totalEndorsementsReceived = BigInt.fromI32(0);
+    account.totalEndorsementsSent = BigInt.fromI32(0);
     account.save();
   }
 
@@ -104,6 +106,17 @@ export function handleEndorse(event: EndorseEvent): void {
   endorsement.donationAmount = event.params.donationAmount;
 
   endorsement.save();
+
+  // Update account endorsements sent
+  fromAccount.totalEndorsementsSent = fromAccount.totalEndorsementsSent.plus(
+    BigInt.fromI32(1)
+  );
+  fromAccount.save();
+
+  // Update account endorsements received
+  toAccount.totalEndorsementsReceived =
+    toAccount.totalEndorsementsReceived.plus(BigInt.fromI32(1));
+  toAccount.save();
 
   // Update aggregated information
   const aggregatedInformation = createOrLoadAggregatedInformation(

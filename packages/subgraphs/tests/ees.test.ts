@@ -79,10 +79,14 @@ describe('Describe entity assertions', () => {
       assert.assertNotNull(accountFrom);
       assert.i32Equals(accountFrom!.sentEndorsements.load().length, 1);
       assert.i32Equals(accountFrom!.receivedEndorsements.load().length, 0);
+      assert.i32Equals(accountFrom!.totalEndorsementsSent.toI32(), 1);
+      assert.i32Equals(accountFrom!.totalEndorsementsReceived.toI32(), 0);
       const accountTo = Account.load(to);
       assert.assertNotNull(accountTo);
       assert.i32Equals(accountTo!.sentEndorsements.load().length, 0);
       assert.i32Equals(accountTo!.receivedEndorsements.load().length, 1);
+      assert.i32Equals(accountTo!.totalEndorsementsSent.toI32(), 0);
+      assert.i32Equals(accountTo!.totalEndorsementsReceived.toI32(), 1);
 
       // Assert AggregatedInformation was created and stored
       assert.entityCount('AggregatedInformation', 1);
@@ -186,10 +190,14 @@ describe('Describe entity assertions', () => {
       assert.assertNotNull(accountFrom);
       assert.i32Equals(accountFrom!.sentDonations.load().length, 1);
       assert.i32Equals(accountFrom!.receivedDonations.load().length, 0);
+      assert.i32Equals(accountFrom!.totalDonationsSent.toI32(), 42);
+      assert.i32Equals(accountFrom!.totalDonationsReceived.toI32(), 0);
       const accountTo = Account.load(to);
       assert.assertNotNull(accountTo);
       assert.i32Equals(accountTo!.sentDonations.load().length, 0);
       assert.i32Equals(accountTo!.receivedDonations.load().length, 1);
+      assert.i32Equals(accountTo!.totalDonationsSent.toI32(), 0);
+      assert.i32Equals(accountTo!.totalDonationsReceived.toI32(), 42);
 
       // Assert AggregatedInformation was created and stored
       assert.entityCount('AggregatedInformation', 1);
