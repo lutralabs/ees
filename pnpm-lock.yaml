@@ -135,6 +135,12 @@ importers:
       '@tanstack/react-query-devtools':
         specifier: ^5.40.0
         version: 5.40.0(@tanstack/react-query@5.40.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+      '@vercel/analytics':
+        specifier: ^1.3.1
+        version: 1.3.1(next@14.3.0-canary.87(@babel/core@7.24.5(supports-color@9.4.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+      '@vercel/speed-insights':
+        specifier: ^1.0.11
+        version: 1.0.11(next@14.3.0-canary.87(@babel/core@7.24.5(supports-color@9.4.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)
       '@wagmi/core':
         specifier: ^2.10.5
         version: 2.10.5(@tanstack/query-core@5.40.0)(@types/react@18.3.3)(bufferutil@4.0.8)(immer@10.0.2)(react@19.0.0-rc.0)(typescript@5.4.5)(utf-8-validate@6.0.4)(viem@2.13.2(bufferutil@4.0.8)(typescript@5.4.5)(utf-8-validate@6.0.4))
@@ -4553,6 +4559,40 @@ packages:
     resolution: {integrity: sha512-N/RGKwGAAidBupZ436RpuweRQHEFGU+mvAqBo8PRMAjJEmHoPDttV8RObaMLrJHWLqvX+XUMinHUnD0hFRQISw==}
     peerDependencies:
       '@vanilla-extract/css': ^1.0.0
+
+  '@vercel/analytics@1.3.1':
+    resolution: {integrity: sha512-xhSlYgAuJ6Q4WQGkzYTLmXwhYl39sWjoMA3nHxfkvG+WdBT25c563a7QhwwKivEOZtPJXifYHR1m2ihoisbWyA==}
+    peerDependencies:
+      next: '>= 13'
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+
+  '@vercel/speed-insights@1.0.11':
+    resolution: {integrity: sha512-l9hzSNmJvb2Yqpgd/BzpiT0J0aQDdtqxOf3Xm+iW4PICxVvhY1ef7Otdx4GXI+88dVkws57qMzXiShz19gXzSQ==}
+    peerDependencies:
+      '@sveltejs/kit': ^1 || ^2
+      next: '>= 13'
+      react: ^18 || ^19
+      svelte: ^4
+      vue: ^3
+      vue-router: ^4
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+      next:
+        optional: true
+      react:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
+      vue-router:
+        optional: true
 
   '@wagmi/connectors@5.0.7':
     resolution: {integrity: sha512-EoTtRKnUPhKpU/LFU7LU4iK8yNU/akU5vSgX+K21QXHi8ImhEEsd2nPEU5kfkWriGf+D/raD4gLZYsfppDRUaw==}
@@ -9105,6 +9145,9 @@ packages:
   serve-static@1.15.0:
     resolution: {integrity: sha512-XGuRDNjXUijsUL0vl6nSD7cwURuzEgglbOaFuZM9g3kwDXOWVTck0jLzjPzGD+TazWbboZYu52/9/XPdUgne9g==}
     engines: {node: '>= 0.8.0'}
+
+  server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
 
   set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
@@ -17459,6 +17502,18 @@ snapshots:
     dependencies:
       '@vanilla-extract/css': 1.14.0
 
+  '@vercel/analytics@1.3.1(next@14.3.0-canary.87(@babel/core@7.24.5(supports-color@9.4.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
+    dependencies:
+      server-only: 0.0.1
+    optionalDependencies:
+      next: 14.3.0-canary.87(@babel/core@7.24.5(supports-color@9.4.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+      react: 19.0.0-rc.0
+
+  '@vercel/speed-insights@1.0.11(next@14.3.0-canary.87(@babel/core@7.24.5(supports-color@9.4.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0))(react@19.0.0-rc.0)':
+    optionalDependencies:
+      next: 14.3.0-canary.87(@babel/core@7.24.5(supports-color@9.4.0))(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react@19.0.0-rc.0)
+      react: 19.0.0-rc.0
+
   ? '@wagmi/connectors@5.0.7(@types/react@18.3.3)(@wagmi/core@2.10.5(@tanstack/query-core@5.40.0)(@types/react@18.3.3)(bufferutil@4.0.8)(immer@10.0.2)(react@19.0.0-rc.0)(typescript@5.4.5)(utf-8-validate@6.0.4)(viem@2.13.2(bufferutil@4.0.8)(typescript@5.4.5)(utf-8-validate@6.0.4)))(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-i18next@13.5.0(i18next@22.5.1)(react-dom@19.0.0-rc.0(react@19.0.0-rc.0))(react-native@0.74.1(@babel/core@7.24.5(supports-color@9.4.0))(@babel/preset-env@7.24.5(@babel/core@7.24.5(supports-color@9.4.0))(supports-color@9.4.0))(@types/react@18.3.3)(bufferutil@4.0.8)(encoding@0.1.13)(react@19.0.0-rc.0)(supports-color@9.4.0)(utf-8-validate@6.0.4))(react@19.0.0-rc.0))(react-native@0.74.1(@babel/core@7.24.5(supports-color@9.4.0))(@babel/preset-env@7.24.5(@babel/core@7.24.5(supports-color@9.4.0))(supports-color@9.4.0))(@types/react@18.3.3)(bufferutil@4.0.8)(encoding@0.1.13)(react@19.0.0-rc.0)(supports-color@9.4.0)(utf-8-validate@6.0.4))(react@19.0.0-rc.0)(supports-color@9.4.0)(typescript@5.4.5)(utf-8-validate@6.0.4)(viem@2.13.2(bufferutil@4.0.8)(typescript@5.4.5)(utf-8-validate@6.0.4))'
   : dependencies:
       '@coinbase/wallet-sdk': 4.0.2
@@ -18176,14 +18231,6 @@ snapshots:
   axios@0.21.4(debug@4.3.4):
     dependencies:
       follow-redirects: 1.15.6(debug@4.3.4)
-    transitivePeerDependencies:
-      - debug
-
-  axios@1.7.2:
-    dependencies:
-      follow-redirects: 1.15.6(debug@4.3.4(supports-color@9.4.0))
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
 
@@ -19508,7 +19555,7 @@ snapshots:
   eth-gas-reporter@0.2.27(bufferutil@4.0.8):
     dependencies:
       '@solidity-parser/parser': 0.14.5
-      axios: 1.7.2
+      axios: 1.7.2(debug@4.3.4)
       cli-table3: 0.5.1
       colors: 1.4.0
       ethereum-cryptography: 1.2.0
@@ -22062,7 +22109,7 @@ snapshots:
       '@yarnpkg/lockfile': 1.1.0
       '@yarnpkg/parsers': 3.0.0-rc.46
       '@zkochan/js-yaml': 0.0.7
-      axios: 1.7.2
+      axios: 1.7.2(debug@4.3.4)
       chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
@@ -23201,6 +23248,8 @@ snapshots:
       send: 0.18.0(supports-color@9.4.0)
     transitivePeerDependencies:
       - supports-color
+
+  server-only@0.0.1: {}
 
   set-blocking@2.0.0: {}
 
