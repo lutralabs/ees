@@ -8,7 +8,7 @@ import { APP_ENV } from '@/utils/appEnv';
 
 const getDefaultChainId = () => {
   if (APP_ENV === 'development') {
-    return 1337;
+    return 11155111;
   }
 
   if (APP_ENV === 'staging') {

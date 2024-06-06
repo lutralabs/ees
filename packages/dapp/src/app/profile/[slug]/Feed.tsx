@@ -3,6 +3,8 @@ import type { PlatformType } from '@/utils';
 import { Dashboard } from './Dashboard';
 import { Explorer } from './Explorer';
 import { SocialGraph } from './SocialGraph';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Suspense } from 'react';
 
 const TABS = [
   { value: 'dashboard', label: 'Dashboard' },
@@ -37,9 +39,9 @@ export const Feed = ({ account, platform, tab, network }: FeedProps) => {
 
   return (
     <div>
-      <div className="max-sm:flex max-sm:flex-col sm:h-10 sm:items-center justify-center rounded-md p-1 text-muted-foreground grid w-full grid-cols-3 bg-gray-100">
+      <div className="gap-1 max-sm:flex max-sm:flex-col sm:h-10 sm:items-center justify-center rounded-md p-1 text-muted-foreground grid w-full grid-cols-3 bg-gray-100">
         <Link
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          className="cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           href={`?platform=${platform}&tab=dashboard`}
           data-state={_tab === 'dashboard' ? 'active' : ''}
           scroll={false}
@@ -48,7 +50,7 @@ export const Feed = ({ account, platform, tab, network }: FeedProps) => {
         </Link>
         <Link
           href={`?platform=${platform}&tab=explorer`}
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          className="cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           data-state={_tab === 'explorer' ? 'active' : ''}
           scroll={false}
         >
@@ -56,7 +58,7 @@ export const Feed = ({ account, platform, tab, network }: FeedProps) => {
         </Link>
         <Link
           href={`?platform=${platform}&tab=graph`}
-          className="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+          className="cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           data-state={_tab === 'graph' ? 'active' : ''}
           scroll={false}
         >
@@ -64,11 +66,34 @@ export const Feed = ({ account, platform, tab, network }: FeedProps) => {
         </Link>
       </div>
       <div className="mt-4 w-full">
-        {_tab === 'dashboard' && (
-          <Dashboard account={account} network={network} />
-        )}
-        {_tab === 'explorer' && <Explorer />}
-        {_tab === 'graph' && <SocialGraph />}
+        <Suspense
+          fallback={
+            <div className="mt-4 w-full">
+              <Skeleton className="w-full h-48 bg-gray-200 rounded-sm" />
+            </div>
+          }
+        >
+          {_tab === 'dashboard' && (
+            <Dashboard account={account} network={network} />
+          )}
+          {_tab === 'explorer' && <Explorer />}
+          {_tab === 'graph' && <SocialGraph />}
+        </Suspense>
+      </div>
+    </div>
+  );
+};
+
+export const FeedSkeleton = () => {
+  return (
+    <div>
+      <div className="gap-1 max-sm:flex max-sm:flex-col sm:h-10 sm:items-center justify-center rounded-md p-1 text-muted-foreground grid w-full grid-cols-3 bg-gray-100">
+        <Skeleton className="w-full h-[32px] bg-primary-200 rounded-sm" />
+        <Skeleton className="w-full h-[32px] bg-primary-200 rounded-sm" />
+        <Skeleton className="w-full h-[32px] bg-primary-200 rounded-sm" />
+      </div>
+      <div className="mt-4 w-full">
+        <Skeleton className="w-full h-48 bg-gray-200 rounded-sm" />
       </div>
     </div>
   );

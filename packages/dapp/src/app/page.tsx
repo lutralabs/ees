@@ -1,8 +1,7 @@
 import { Container } from '@/components/Container';
 import { EndorseForm } from '@/components/EndorseForm';
-import { Endorsee } from '@/components/Endorsee';
+import { Endorsee, EndorseeSkeleton } from '@/components/Endorsee';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { PlatformType, validateOrGetDefaultPlatform } from '@/utils';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -33,17 +32,7 @@ export default async function Page({
               endorsee={
                 <Suspense
                   key={JSON.stringify(searchParams)}
-                  fallback={
-                    <>
-                      <div className="relative sm:mt-3">
-                        <Skeleton className="h-[80px] w-[80px] rounded-full bg-primary-200" />
-                      </div>
-                      <div className="flex flex-col w-full sm:ml-4 gap-y-2 max-sm:items-center">
-                        <Skeleton className="w-[160px] h-[32px] rounded-full bg-primary-200" />
-                        <Skeleton className="w-[112px] h-[16px] rounded-full bg-primary-200" />
-                      </div>
-                    </>
-                  }
+                  fallback={<EndorseeSkeleton />}
                 >
                   <Endorsee
                     platform={PlatformType.ens}
@@ -72,17 +61,7 @@ export default async function Page({
           endorsee={
             <Suspense
               key={JSON.stringify(searchParams)}
-              fallback={
-                <>
-                  <div className="relative sm:mt-3">
-                    <Skeleton className="h-[80px] w-[80px] rounded-full bg-primary-200" />
-                  </div>
-                  <div className="flex flex-col w-full sm:ml-4 gap-y-2 max-sm:items-center">
-                    <Skeleton className="w-[160px] h-[32px] rounded-full bg-primary-200" />
-                    <Skeleton className="w-[112px] h-[16px] rounded-full bg-primary-200" />
-                  </div>
-                </>
-              }
+              fallback={<EndorseeSkeleton />}
             >
               <Endorsee
                 platform={platform}
