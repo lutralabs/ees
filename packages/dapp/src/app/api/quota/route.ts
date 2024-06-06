@@ -8,7 +8,10 @@ const SUPPORTED_CRYPTO = new Set<string>(['ETH', 'USDC']);
 export const revalidate = 60; // revalidate at most every 1 minute
 
 const KEY_NAME = process.env.COINBASE_API_KEY_NAME!;
-const KEY_SECRET = process.env.COINBASE_API_KEY_SECRET!.replace(/\\n/g, '\n');
+const KEY_SECRET = (process.env.COINBASE_API_KEY_SECRET ?? '').replace(
+  /\\n/g,
+  '\n'
+);
 const URL = 'api.coinbase.com';
 const REQUEST_PATH = '/api/v3/brokerage/market/products';
 
