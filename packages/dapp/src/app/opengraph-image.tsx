@@ -1,5 +1,3 @@
-import { getProfileInfo } from '@/lib/airstack';
-import { validateOrGetDefaultPlatform } from '@/utils';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs'; // TODO: Test both nodejs and edge

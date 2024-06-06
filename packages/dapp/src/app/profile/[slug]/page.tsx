@@ -82,11 +82,21 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   return {
     title: `Profile | ${slug}`,
-
+    description: 'Check out my profile on Endorse.fun!',
     openGraph: {
+      siteName: 'Endorse.fun',
+      description: '', // FIXME: Add description
+      images: [
+        {
+          url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
+          width: 1200,
+          height: 630,
+          alt: 'Profile Page Image',
+        },
+      ],
       title: 'Check out my profile on Endorse.fun!',
       type: 'article',
-      url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
+      url: `/profile/${slug}?platform=${searchParams.platform}`,
     },
     twitter: {
       card: 'summary_large_image',
