@@ -31,11 +31,26 @@ export default async function Page({
           <div className="sm:hover:mt-24 animated-transition md:w-[70%] lg:w-[50%] sm:mt-36 mx-auto relative">
             <EndorseForm
               endorsee={
-                <Endorsee
-                  platform={PlatformType.ens}
-                  displayValue="pseudobun.eth"
-                  intro={true}
-                />
+                <Suspense
+                  key={JSON.stringify(searchParams)}
+                  fallback={
+                    <>
+                      <div className="relative sm:mt-3">
+                        <Skeleton className="h-[80px] w-[80px] rounded-full bg-primary-200" />
+                      </div>
+                      <div className="flex flex-col w-full sm:ml-4 gap-y-2 max-sm:items-center">
+                        <Skeleton className="w-[160px] h-[32px] rounded-full bg-primary-200" />
+                        <Skeleton className="w-[112px] h-[16px] rounded-full bg-primary-200" />
+                      </div>
+                    </>
+                  }
+                >
+                  <Endorsee
+                    platform={PlatformType.ens}
+                    displayValue="pseudobun.eth"
+                    intro={true}
+                  />
+                </Suspense>
               }
             />
             <Link
@@ -56,6 +71,7 @@ export default async function Page({
         <EndorseForm
           endorsee={
             <Suspense
+              key={JSON.stringify(searchParams)}
               fallback={
                 <>
                   <div className="relative sm:mt-3">
