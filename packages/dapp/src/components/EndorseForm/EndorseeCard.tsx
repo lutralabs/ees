@@ -48,14 +48,9 @@ export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
                 clear();
 
                 /*
-                 * Clear search params and refresh page
-                 * Refresh is needed as the global store can get out of sync
-                 * with the search params and we get a stale (buggy) state
+                 * Clear search params
                  */
                 router.replace('/');
-
-                // TODO[Martin]: In the future check if there is a better way to resolve this bug
-                router.refresh();
               }}
               className="font-semibold p-0 h-5"
             >
