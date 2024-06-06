@@ -70,7 +70,7 @@ export const PLATFORM_DATA: { [key in PlatformType]: SocialPlatform } = {
   [PlatformType.farcaster]: {
     key: PlatformType.farcaster,
     color: '#8a63d2',
-    bgColor: '#E2E8F0',
+    bgColor: '#F3E8FF',
     icon: '/icons/icon-farcaster.svg',
     label: 'Farcaster',
     urlPrefix: 'https://warpcast.com/',
