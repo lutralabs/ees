@@ -51,7 +51,10 @@ export const getAvatarForPlatform = (
     // For ethereum addresss we check first entry in each social
     case PlatformType.ethereum: {
       // ENS profile
-      if (data?.Wallet?.primaryDomain?.avatar) {
+      if (
+        data?.Wallet?.primaryDomain?.avatar ||
+        data?.Wallet?.primaryDomain?.tokenNft?.contentValue?.image?.small
+      ) {
         const isIpfsAvatar =
           data.Wallet.primaryDomain.avatar?.startsWith('ipfs://');
 

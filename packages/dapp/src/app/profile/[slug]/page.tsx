@@ -7,7 +7,7 @@ import { validateOrGetDefaultPlatform } from '@/utils/platform';
 import { Badges } from './Badges';
 import Link from 'next/link';
 import { ShareDialog } from './ShareDialog';
-import { ProfileAvatar } from './ProfileAvatar';
+import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { Feed } from './Feed';
 import { validateOrGetDefaultNetwork } from '@/utils/validateOrGetDefaultNetwork';
 import type { Metadata } from 'next';
@@ -78,16 +78,28 @@ export default async function Page({
 
 export async function generateMetadata({
   params: { slug },
+  searchParams,
 }: PageProps): Promise<Metadata> {
   return {
     title: `Profile | ${slug}`,
+
     openGraph: {
+      title: 'Check out my profile on Endorse.fun!',
       type: 'article',
+      url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Check out my profile',
+      title: 'Check out my profile on Endorse.fun!',
       description: 'Profile Page',
+      images: [
+        {
+          url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
+          width: 1200,
+          height: 630,
+          alt: 'Profile Page Image',
+        },
+      ],
     },
   };
 }

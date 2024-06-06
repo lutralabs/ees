@@ -1,7 +1,7 @@
 import { Container } from '@/components/Container';
-import { ProfileAvatarSkeleton } from './ProfileAvatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FeedSkeleton } from './Feed';
+import { ProfileAvatarSkeleton } from '@/components/ProfileAvatar';
 
 export const PageSkeleton = () => {
   return (

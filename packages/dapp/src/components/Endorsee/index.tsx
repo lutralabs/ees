@@ -1,10 +1,11 @@
 import { EndorseeDialog } from './EndorseeDialog';
 import { EndorseeBadge } from './EndorseeBadge';
-import type { PlatformType } from '@/utils/platform';
-import { getMinimalProfileInfoByPlatform } from '@/lib/airstack/getMinimalProfileInfoByPlatform';
+import { PlatformType } from '@/utils/platform';
+import { getMinimalProfileInfoByPlatform } from '@/lib/airstack';
 import { SearchParamsStateSync } from './SearchParamsStateSync';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ProfileAvatarSkeleton } from '@/app/profile/[slug]/ProfileAvatar';
+import { getMinimalProfileFromAddress } from '@/lib/airstack/getMinimalProfileFromAddress';
+import { ProfileAvatarSkeleton } from '@/components/ProfileAvatar';
 
 type EndorseeProps = {
   platform: PlatformType;
@@ -28,10 +29,10 @@ export const Endorsee = async ({
       'https://assets.airstack.xyz/v2/image/social/10/8GnKRP2z0DZmg1H4wesg4o9fmVVND1rhv9clPqF6y7sq7Dx5tYx7WfqYTbq3h4GtIJl8mNHSB7vBZyBkgRnAH8RZ3RK3pMKhg/liZlFLAwk2GndPk43U0vfTP/UBOqmmxBfJnOwWplobI3v1icOprrTz8fcWJ64YecoWETk1eLhwevNHdV450lUnYFBnqAvv2rB4wGXz7cACQh5X9kqcrLtceCiCf9ZQt8Cf184ePEE=/small.jpg';
     error = null;
   } else {
-    const result = await getMinimalProfileInfoByPlatform(
-      platform,
-      displayValue
-    );
+    const result =
+      platform === PlatformType.ethereum
+        ? await getMinimalProfileFromAddress(displayValue as `0x${string}`)
+        : await getMinimalProfileInfoByPlatform(platform, displayValue);
 
     displayName = result.displayName;
     address = result.address;

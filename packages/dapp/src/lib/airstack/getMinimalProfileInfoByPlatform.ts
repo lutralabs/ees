@@ -11,6 +11,7 @@ import { PlatformType } from '@/utils';
 type GetMinimalProfileInfoByPlatformResult = {
   displayName: string | null;
   address: `0x${string}` | null;
+  description: string | null;
   avatar: string | null;
   error: string | null;
 };
@@ -18,7 +19,6 @@ type GetMinimalProfileInfoByPlatformResult = {
 const getQueryForPlatform = (platform: PlatformType) => {
   switch (platform) {
     case PlatformType.ens:
-    case PlatformType.ethereum:
       return GetProfileFromEnsDocument;
     case PlatformType.farcaster:
       return GetProfileFromFarcasterDocument;
@@ -37,6 +37,7 @@ export const getMinimalProfileInfoByPlatform = async (
     return {
       displayName: null,
       address: null,
+      description: null,
       avatar: null,
       error: null,
     };
@@ -86,6 +87,7 @@ export const getMinimalProfileInfoByPlatform = async (
           return {
             displayName: identity,
             address: null,
+            description: null,
             avatar: null,
             error: 'No ENS profile found',
           };
@@ -100,6 +102,7 @@ export const getMinimalProfileInfoByPlatform = async (
         return {
           displayName: identity,
           address: data.Wallet.addresses[0],
+          description: null,
           avatar: isHtttpsAvatar
             ? data.Wallet.primaryDomain.avatar!
             : isIpfsAvatar
@@ -123,6 +126,7 @@ export const getMinimalProfileInfoByPlatform = async (
           return {
             displayName: null,
             address: null,
+            description: null,
             avatar: null,
             error: 'No Lens profile found',
           };
@@ -136,6 +140,7 @@ export const getMinimalProfileInfoByPlatform = async (
           return {
             displayName: null,
             address: null,
+            description: null,
             avatar: null,
             error: 'No matching address for the Lens profile found',
           };
@@ -144,6 +149,7 @@ export const getMinimalProfileInfoByPlatform = async (
         return {
           displayName: identity,
           address: data.Wallet.addresses[0],
+          description: data.lensSocials.Social[0].profileBio ?? null,
           avatar:
             data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
             null,
@@ -161,6 +167,7 @@ export const getMinimalProfileInfoByPlatform = async (
           return {
             displayName: null,
             address: null,
+            description: null,
             avatar: null,
             error: 'No Farcaster profile found',
           };
@@ -173,6 +180,7 @@ export const getMinimalProfileInfoByPlatform = async (
           return {
             displayName: null,
             address: null,
+            description: null,
             avatar: null,
             error: "Farcaster profile doesn't have any connected addresses",
           };
@@ -186,6 +194,7 @@ export const getMinimalProfileInfoByPlatform = async (
           return {
             displayName: null,
             address: null,
+            description: null,
             avatar: null,
             error:
               "Farcaster profile's connected address is the same as the farcaster user address",
@@ -195,55 +204,28 @@ export const getMinimalProfileInfoByPlatform = async (
         return {
           displayName: identity,
           address: connectedAddresses[0].address,
+          description: data.farcasterSocials.Social[0].profileBio ?? null,
           avatar:
             data.farcasterSocials.Social[0].profileImageContentValue?.image
               ?.small ?? null,
           error: null,
         };
       }
-      case PlatformType.ethereum: {
-        const data = jsonResponse.data as GetProfileFromEnsQuery;
-
-        // TODO: Validate address format
-        if (
-          !data.Wallet ||
-          !data.Wallet.primaryDomain ||
-          !data.Wallet.addresses ||
-          data.Wallet.addresses.length === 0
-        ) {
-          return {
-            displayName: null,
-            address: identity as `0x${string}`,
-            avatar: null,
-            error: null,
-          };
-        }
-
-        const isHtttpsAvatar =
-          data.Wallet.primaryDomain.avatar?.startsWith('https');
-
-        return {
-          displayName: data.Wallet.primaryDomain.name ?? null,
-          address: data.Wallet.addresses[0],
-          avatar: isHtttpsAvatar
-            ? data.Wallet.primaryDomain.avatar!
-            : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
-              null,
-          error: null,
-        };
-      }
-      default:
+      default: {
         return {
           displayName: null,
           address: null,
+          description: null,
           avatar: null,
           error: 'Unsupported platform',
         };
+      }
     }
   } catch (error) {
     return {
       displayName: null,
       address: null,
+      description: null,
       avatar: null,
       error: 'Unknown error',
     };

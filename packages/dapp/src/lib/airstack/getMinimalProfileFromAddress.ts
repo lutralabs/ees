@@ -6,12 +6,24 @@ import {
 type GetMinimalProfileInfoByPlatformResult = {
   displayName: string | null;
   address: `0x${string}` | null;
+  description: string | null;
   avatar: string | null;
+  error: string | null;
 };
 
 export const getMinimalProfileFromAddress = async (
-  address: `0x${string}`
+  address: `0x${string}` | null
 ): Promise<GetMinimalProfileInfoByPlatformResult> => {
+  if (!address) {
+    return {
+      displayName: null,
+      address: null,
+      description: null,
+      avatar: null,
+      error: 'No address provided',
+    };
+  }
+
   try {
     const result = await fetch(process.env.AIRSTACK_API_URL!, {
       method: 'POST',
@@ -33,7 +45,9 @@ export const getMinimalProfileFromAddress = async (
       return {
         displayName: null,
         address: address,
+        description: null,
         avatar: null,
+        error: 'Failed to fetch profile',
       };
     }
 
@@ -44,7 +58,9 @@ export const getMinimalProfileFromAddress = async (
       return {
         displayName: null,
         address: address,
+        description: null,
         avatar: null,
+        error: 'Failed to fetch profile',
       };
     }
 
@@ -61,6 +77,7 @@ export const getMinimalProfileFromAddress = async (
       return {
         displayName: data.Wallet.primaryDomain.name ?? null,
         address: address,
+        description: null,
         avatar: isHtttpsAvatar
           ? data.Wallet.primaryDomain.avatar!
           : isIpfsAvatar
@@ -70,6 +87,7 @@ export const getMinimalProfileFromAddress = async (
               )
             : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
               null,
+        error: null,
       };
     }
 
@@ -78,9 +96,11 @@ export const getMinimalProfileFromAddress = async (
       return {
         displayName: data.lensSocials.Social[0].profileHandle ?? null,
         address: address,
+        description: data.lensSocials.Social[0].profileBio ?? null,
         avatar:
           data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
           null,
+        error: null,
       };
     }
 
@@ -89,22 +109,28 @@ export const getMinimalProfileFromAddress = async (
       return {
         displayName: data.farcasterSocials.Social[0].profileHandle ?? null,
         address: address,
+        description: data.farcasterSocials.Social[0].profileBio ?? null,
         avatar:
           data.farcasterSocials.Social[0].profileImageContentValue?.image
             ?.small ?? null,
+        error: null,
       };
     }
 
     return {
       displayName: null,
       address: address,
+      description: null,
       avatar: null,
+      error: null,
     };
   } catch (error) {
     return {
       displayName: null,
       address: address,
+      description: null,
       avatar: null,
+      error: 'Failed to fetch profile',
     };
   }
 };

@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
-import { ProfileAvatar } from './ProfileAvatar';
+import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { Card } from '@/components/ui/card';
 import { MemoizedImage } from '@/components/MemoizedImage';
 

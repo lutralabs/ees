@@ -1,5 +1,5 @@
 import { Card } from '@/components/ui/card';
-import { ProfileAvatar } from './ProfileAvatar';
+import { ProfileAvatar } from '@/components/ProfileAvatar';
 
 import { getMinimalProfileFromAddress } from '@/lib/airstack/getMinimalProfileFromAddress';
 import { formatAddress } from '@/utils';

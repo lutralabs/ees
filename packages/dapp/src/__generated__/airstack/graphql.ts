@@ -2315,7 +2315,7 @@ export type GetMinimalProfileFromAddressQueryVariables = Exact<{
 }>;
 
 
-export type GetMinimalProfileFromAddressQuery = { __typename?: 'Query', Wallet?: { __typename?: 'Wallet', primaryDomain?: { __typename?: 'Domain', name?: string | null, avatar?: string | null, tokenNft?: { __typename?: 'TokenNft', contentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null } | null } | null } | null, farcasterSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileHandle?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null, lensSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileHandle?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null };
+export type GetMinimalProfileFromAddressQuery = { __typename?: 'Query', Wallet?: { __typename?: 'Wallet', primaryDomain?: { __typename?: 'Domain', name?: string | null, avatar?: string | null, tokenNft?: { __typename?: 'TokenNft', contentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null } | null } | null } | null, farcasterSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileHandle?: string | null, profileBio?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null, lensSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileHandle?: string | null, profileBio?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null };
 
 export type GetProfileFromEnsQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
@@ -2380,6 +2380,7 @@ export const GetMinimalProfileFromAddressDocument = new TypedDocumentString(`
   ) {
     Social {
       profileHandle
+      profileBio
       profileImageContentValue {
         image {
           small
@@ -2392,6 +2393,7 @@ export const GetMinimalProfileFromAddressDocument = new TypedDocumentString(`
   ) {
     Social {
       profileHandle
+      profileBio
       profileImageContentValue {
         image {
           small

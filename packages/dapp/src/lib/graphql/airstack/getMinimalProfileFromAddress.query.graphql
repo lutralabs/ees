@@ -17,6 +17,7 @@ query GetMinimalProfileFromAddress($identity: Identity!) {
   ) {
     Social {
       profileHandle
+      profileBio
       profileImageContentValue {
         image {
           small
@@ -29,6 +30,7 @@ query GetMinimalProfileFromAddress($identity: Identity!) {
   ) {
     Social {
       profileHandle
+      profileBio
       profileImageContentValue {
         image {
           small
