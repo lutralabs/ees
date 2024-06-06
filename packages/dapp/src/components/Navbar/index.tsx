@@ -32,9 +32,7 @@ export const Navbar = () => {
           </div>
         </Link>
         <div className="flex flex-1 gap-x-4 items-center">
-          <div className="pl-16 flex flex-1 max-lg:justify-end">
-            <Searchbar />
-          </div>
+          <Searchbar />
           <ClaimNavigationLink />
           <div className="flex items-center">
             <ConnectButton />

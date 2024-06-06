@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MemoizedSVG } from '@/components/MemoizedSVG';
+import { useAccount } from 'wagmi';
 
 const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
   {
@@ -27,6 +28,9 @@ const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
 ];
 
 export const Searchbar = () => {
+  // Hooks
+  const { address } = useAccount();
+
   // Local state
   const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -182,7 +186,12 @@ export const Searchbar = () => {
   }, [query]);
 
   return (
-    <>
+    <div
+      className={cn(
+        'flex flex-1 max-lg:justify-end',
+        address ? 'pl-16' : 'lg:pr-8'
+      )}
+    >
       <Button
         onMouseDown={() => setModalOpen(true)}
         size="icon"
@@ -235,6 +244,6 @@ export const Searchbar = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
