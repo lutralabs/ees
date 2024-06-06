@@ -8,6 +8,8 @@ import { Providers } from '@/components/Providers';
 import { cookieToInitialState } from '@/lib/wagmi/cookieToInitialState';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -36,6 +38,8 @@ export default function RootLayout(props: { children: ReactNode }) {
             <Toaster />
           </Providers>
         </div>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

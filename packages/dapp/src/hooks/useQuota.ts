@@ -13,7 +13,7 @@ export const useQuota = ({
     queryKey: ['quota', fiat, crypto],
     queryFn: async () => {
       const res = await fetch(`/api/quota?fiat=${fiat}&crypto=${crypto}`, {
-        next: { revalidate: 60 }, // Cache for 2 minutes
+        next: { revalidate: 60 }, // Cache for 1 minute
       });
 
       if (!res.ok) {

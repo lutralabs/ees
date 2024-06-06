@@ -31,8 +31,8 @@ export const getTopEndorsersAndDonators = async ({
           account,
         },
       }),
-      // Cache for 30 seconds
-      next: { revalidate: 30 },
+      // Cache for 1 minute
+      next: { revalidate: 60 },
     });
 
     // Check if request was successful
