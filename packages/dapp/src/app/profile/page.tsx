@@ -2,8 +2,8 @@ import { Container } from '@/components/Container';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Profiles',
-  description: 'Browse Profile if you know you know',
+  title: 'Profile',
+  description: '', // TODO: Add description
 };
 
 export default function Page() {
@@ -11,7 +11,7 @@ export default function Page() {
     <Container className="pt-16">
       <div className="w-full">
         <div className="text-center">
-          <h1 className="text-3xl font-medium tracking-tight text-gray-900 sm:text-4xl">
+          <h1 className="text-lg font-medium tracking-tight text-gray-900 sm:text-xl">
             Explore any address, ENS domain or social account.
           </h1>
         </div>
