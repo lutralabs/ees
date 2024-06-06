@@ -5,7 +5,7 @@ import { randomBytes } from 'node:crypto';
 const SUPPORTED_FIAT = new Set<string>(['USD', 'EUR']);
 const SUPPORTED_CRYPTO = new Set<string>(['ETH', 'USDC']);
 
-export const revalidate = 60; // revalidate at most every 2 minutes
+export const revalidate = 60; // revalidate at most every 1 minute
 
 const KEY_NAME = process.env.COINBASE_API_KEY_NAME!;
 const KEY_SECRET = process.env.COINBASE_API_KEY_SECRET!.replace(/\\n/g, '\n');
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      next: { revalidate: 60 }, // Cache for 2 minutes
+      next: { revalidate: 60 }, // Cache for 1 minute
     }
   );
 
