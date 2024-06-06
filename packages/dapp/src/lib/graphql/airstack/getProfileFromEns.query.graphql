@@ -1,0 +1,16 @@
+query GetProfileFromEns($identity: Identity!) {
+  Wallet(input: { identity: $identity, blockchain: ethereum }) {
+    addresses
+    primaryDomain {
+      name
+      avatar
+      tokenNft {
+        contentValue {
+          image {
+            small
+          }
+        }
+      }
+    }
+  }
+}

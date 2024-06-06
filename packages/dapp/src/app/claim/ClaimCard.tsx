@@ -52,11 +52,11 @@ export const ClaimCard = () => {
     })
       .then((txHash) => {
         toast(
-          <div className="flex space-x-2">
+          <div className="flex gap-x-2">
             <div className="flex items-center justify-center">
               <CheckCircle2 className="w-6 h-6 text-green-500" />
             </div>
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col gap-y-1">
               <h3 className="font-semibold justify-start items-center">
                 Transaction submitted
               </h3>
@@ -84,11 +84,11 @@ export const ClaimCard = () => {
         if (error.name === 'TransactionExecutionError') {
           if (error.cause.name === 'UserRejectedRequestError') {
             return toast(
-              <div className="flex space-x-2">
+              <div className="flex gap-x-2">
                 <div className="flex items-center justify-center">
                   <CircleAlert className="w-6 h-6 text-red-500" />
                 </div>
-                <div className="flex flex-col space-y-1 items-center justify-center">
+                <div className="flex flex-col gap-y-1 items-center justify-center">
                   <h3 className="font-semibold">Transaction rejected</h3>
                 </div>
               </div>,
@@ -100,11 +100,11 @@ export const ClaimCard = () => {
         }
 
         return toast(
-          <div className="flex space-x-2">
+          <div className="flex gap-x-2">
             <div className="flex items-center justify-center">
               <CircleAlert className="w-6 h-6 text-red-500" />
             </div>
-            <div className="flex flex-col space-y-1 items-center justify-center">
+            <div className="flex flex-col gap-y-1 items-center justify-center">
               <h3 className="font-semibold">Something went wrong</h3>
             </div>
           </div>,

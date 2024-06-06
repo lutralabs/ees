@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -22,11 +22,6 @@ export type Scalars = {
    *
    */
   Int8: { input: any; output: any; }
-  /**
-   * A string representation of microseconds UNIX timestamp (16 digits)
-   *
-   */
-  Timestamp: { input: any; output: any; }
 };
 
 export type Account = {
@@ -38,6 +33,8 @@ export type Account = {
   sentEndorsements: Array<Endorsement>;
   totalDonationsReceived: Scalars['BigInt']['output'];
   totalDonationsSent: Scalars['BigInt']['output'];
+  totalEndorsementsReceived: Scalars['BigInt']['output'];
+  totalEndorsementsSent: Scalars['BigInt']['output'];
   withdrawals: Array<Withdrawal>;
 };
 
@@ -121,6 +118,22 @@ export type Account_Filter = {
   totalDonationsSent_lte?: InputMaybe<Scalars['BigInt']['input']>;
   totalDonationsSent_not?: InputMaybe<Scalars['BigInt']['input']>;
   totalDonationsSent_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalEndorsementsReceived?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsReceived_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsReceived_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsReceived_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalEndorsementsReceived_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsReceived_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsReceived_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsReceived_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalEndorsementsSent?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsSent_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsSent_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsSent_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalEndorsementsSent_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsSent_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsSent_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsementsSent_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   withdrawals_?: InputMaybe<Withdrawal_Filter>;
 };
 
@@ -132,12 +145,111 @@ export enum Account_OrderBy {
   SentEndorsements = 'sentEndorsements',
   TotalDonationsReceived = 'totalDonationsReceived',
   TotalDonationsSent = 'totalDonationsSent',
+  TotalEndorsementsReceived = 'totalEndorsementsReceived',
+  TotalEndorsementsSent = 'totalEndorsementsSent',
   Withdrawals = 'withdrawals'
 }
 
-export enum Aggregation_Interval {
-  Day = 'day',
-  Hour = 'hour'
+export type AggregatedInformation = {
+  __typename?: 'AggregatedInformation';
+  donationAmount: Scalars['BigInt']['output'];
+  endorsementCount: Scalars['BigInt']['output'];
+  from: Account;
+  id: Scalars['Bytes']['output'];
+  to: Account;
+};
+
+export type AggregatedInformation_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<AggregatedInformation_Filter>>>;
+  donationAmount?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  donationAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  endorsementCount?: InputMaybe<Scalars['BigInt']['input']>;
+  endorsementCount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  endorsementCount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  endorsementCount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  endorsementCount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  endorsementCount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  endorsementCount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  endorsementCount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  from?: InputMaybe<Scalars['String']['input']>;
+  from_?: InputMaybe<Account_Filter>;
+  from_contains?: InputMaybe<Scalars['String']['input']>;
+  from_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  from_ends_with?: InputMaybe<Scalars['String']['input']>;
+  from_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  from_gt?: InputMaybe<Scalars['String']['input']>;
+  from_gte?: InputMaybe<Scalars['String']['input']>;
+  from_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  from_lt?: InputMaybe<Scalars['String']['input']>;
+  from_lte?: InputMaybe<Scalars['String']['input']>;
+  from_not?: InputMaybe<Scalars['String']['input']>;
+  from_not_contains?: InputMaybe<Scalars['String']['input']>;
+  from_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  from_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  from_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  from_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  from_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  from_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  from_starts_with?: InputMaybe<Scalars['String']['input']>;
+  from_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['Bytes']['input']>;
+  id_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  id_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  id_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  id_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  id_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  id_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  id_not?: InputMaybe<Scalars['Bytes']['input']>;
+  id_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<AggregatedInformation_Filter>>>;
+  to?: InputMaybe<Scalars['String']['input']>;
+  to_?: InputMaybe<Account_Filter>;
+  to_contains?: InputMaybe<Scalars['String']['input']>;
+  to_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  to_ends_with?: InputMaybe<Scalars['String']['input']>;
+  to_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  to_gt?: InputMaybe<Scalars['String']['input']>;
+  to_gte?: InputMaybe<Scalars['String']['input']>;
+  to_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  to_lt?: InputMaybe<Scalars['String']['input']>;
+  to_lte?: InputMaybe<Scalars['String']['input']>;
+  to_not?: InputMaybe<Scalars['String']['input']>;
+  to_not_contains?: InputMaybe<Scalars['String']['input']>;
+  to_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  to_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  to_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  to_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  to_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  to_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  to_starts_with?: InputMaybe<Scalars['String']['input']>;
+  to_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+};
+
+export enum AggregatedInformation_OrderBy {
+  DonationAmount = 'donationAmount',
+  EndorsementCount = 'endorsementCount',
+  From = 'from',
+  FromId = 'from__id',
+  FromTotalDonationsReceived = 'from__totalDonationsReceived',
+  FromTotalDonationsSent = 'from__totalDonationsSent',
+  FromTotalEndorsementsReceived = 'from__totalEndorsementsReceived',
+  FromTotalEndorsementsSent = 'from__totalEndorsementsSent',
+  Id = 'id',
+  To = 'to',
+  ToId = 'to__id',
+  ToTotalDonationsReceived = 'to__totalDonationsReceived',
+  ToTotalDonationsSent = 'to__totalDonationsSent',
+  ToTotalEndorsementsReceived = 'to__totalEndorsementsReceived',
+  ToTotalEndorsementsSent = 'to__totalEndorsementsSent'
 }
 
 export type BlockChangedFilter = {
@@ -231,15 +343,20 @@ export enum Donation_OrderBy {
   FromId = 'from__id',
   FromTotalDonationsReceived = 'from__totalDonationsReceived',
   FromTotalDonationsSent = 'from__totalDonationsSent',
+  FromTotalEndorsementsReceived = 'from__totalEndorsementsReceived',
+  FromTotalEndorsementsSent = 'from__totalEndorsementsSent',
   Id = 'id',
   To = 'to',
   ToId = 'to__id',
   ToTotalDonationsReceived = 'to__totalDonationsReceived',
-  ToTotalDonationsSent = 'to__totalDonationsSent'
+  ToTotalDonationsSent = 'to__totalDonationsSent',
+  ToTotalEndorsementsReceived = 'to__totalEndorsementsReceived',
+  ToTotalEndorsementsSent = 'to__totalEndorsementsSent'
 }
 
 export type Endorsement = {
   __typename?: 'Endorsement';
+  donationAmount: Scalars['BigInt']['output'];
   easUid: Scalars['Bytes']['output'];
   endorsmentType: Scalars['String']['output'];
   from: Account;
@@ -251,6 +368,14 @@ export type Endorsement_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<Endorsement_Filter>>>;
+  donationAmount?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  donationAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  donationAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   easUid?: InputMaybe<Scalars['Bytes']['input']>;
   easUid_contains?: InputMaybe<Scalars['Bytes']['input']>;
   easUid_gt?: InputMaybe<Scalars['Bytes']['input']>;
@@ -337,17 +462,22 @@ export type Endorsement_Filter = {
 };
 
 export enum Endorsement_OrderBy {
+  DonationAmount = 'donationAmount',
   EasUid = 'easUid',
   EndorsmentType = 'endorsmentType',
   From = 'from',
   FromId = 'from__id',
   FromTotalDonationsReceived = 'from__totalDonationsReceived',
   FromTotalDonationsSent = 'from__totalDonationsSent',
+  FromTotalEndorsementsReceived = 'from__totalEndorsementsReceived',
+  FromTotalEndorsementsSent = 'from__totalEndorsementsSent',
   Id = 'id',
   To = 'to',
   ToId = 'to__id',
   ToTotalDonationsReceived = 'to__totalDonationsReceived',
-  ToTotalDonationsSent = 'to__totalDonationsSent'
+  ToTotalDonationsSent = 'to__totalDonationsSent',
+  ToTotalEndorsementsReceived = 'to__totalEndorsementsReceived',
+  ToTotalEndorsementsSent = 'to__totalEndorsementsSent'
 }
 
 export type FeeWithdrawal = {
@@ -432,6 +562,8 @@ export type Query = {
   _meta?: Maybe<_Meta_>;
   account?: Maybe<Account>;
   accounts: Array<Account>;
+  aggregatedInformation?: Maybe<AggregatedInformation>;
+  aggregatedInformations: Array<AggregatedInformation>;
   donation?: Maybe<Donation>;
   donations: Array<Donation>;
   endorsement?: Maybe<Endorsement>;
@@ -463,6 +595,24 @@ export type QueryAccountsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Account_Filter>;
+};
+
+
+export type QueryAggregatedInformationArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryAggregatedInformationsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AggregatedInformation_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AggregatedInformation_Filter>;
 };
 
 
@@ -543,6 +693,8 @@ export type Subscription = {
   _meta?: Maybe<_Meta_>;
   account?: Maybe<Account>;
   accounts: Array<Account>;
+  aggregatedInformation?: Maybe<AggregatedInformation>;
+  aggregatedInformations: Array<AggregatedInformation>;
   donation?: Maybe<Donation>;
   donations: Array<Donation>;
   endorsement?: Maybe<Endorsement>;
@@ -574,6 +726,24 @@ export type SubscriptionAccountsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   subgraphError?: _SubgraphErrorPolicy_;
   where?: InputMaybe<Account_Filter>;
+};
+
+
+export type SubscriptionAggregatedInformationArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionAggregatedInformationsArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<AggregatedInformation_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<AggregatedInformation_Filter>;
 };
 
 
@@ -706,6 +876,8 @@ export enum Withdrawal_OrderBy {
   AddressId = 'address__id',
   AddressTotalDonationsReceived = 'address__totalDonationsReceived',
   AddressTotalDonationsSent = 'address__totalDonationsSent',
+  AddressTotalEndorsementsReceived = 'address__totalEndorsementsReceived',
+  AddressTotalEndorsementsSent = 'address__totalEndorsementsSent',
   Amount = 'amount',
   Id = 'id'
 }
@@ -716,8 +888,6 @@ export type _Block_ = {
   hash?: Maybe<Scalars['Bytes']['output']>;
   /** The block number */
   number: Scalars['Int']['output'];
-  /** The hash of the parent block */
-  parentHash?: Maybe<Scalars['Bytes']['output']>;
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']['output']>;
 };
@@ -746,18 +916,53 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
-export type GetAccountQueryVariables = Exact<{
-  address: Scalars['ID']['input'];
+export type GetTopEndorsersAndDonatorsQueryVariables = Exact<{
+  account: Scalars['String']['input'];
 }>;
 
 
-export type GetAccountQuery = { __typename?: 'Query', account?: { __typename?: 'Account', id: any, totalDonationsReceived: any, totalDonationsSent: any } | null };
+export type GetTopEndorsersAndDonatorsQuery = { __typename?: 'Query', topEndorsers: Array<{ __typename?: 'AggregatedInformation', id: any, from: { __typename?: 'Account', id: any, totalEndorsementsReceived: any } }>, topDonators: Array<{ __typename?: 'AggregatedInformation', id: any, donationAmount: any, from: { __typename?: 'Account', id: any } }> };
 
-export type GetAccountsQueryVariables = Exact<{ [key: string]: never; }>;
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
 
+  constructor(private value: string, public __meta__?: Record<string, any>) {
+    super(value);
+  }
 
-export type GetAccountsQuery = { __typename?: 'Query', accounts: Array<{ __typename?: 'Account', id: any, totalDonationsReceived: any, totalDonationsSent: any }> };
+  toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
 
-
-export const GetAccountDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAccount"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"address"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"account"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"address"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsReceived"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsSent"}}]}}]}}]} as unknown as DocumentNode<GetAccountQuery, GetAccountQueryVariables>;
-export const GetAccountsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAccounts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"accounts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsReceived"}},{"kind":"Field","name":{"kind":"Name","value":"totalDonationsSent"}}]}}]}}]} as unknown as DocumentNode<GetAccountsQuery, GetAccountsQueryVariables>;
+export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
+    query GetTopEndorsersAndDonators($account: String!) {
+  topEndorsers: aggregatedInformations(
+    where: {to: $account}
+    orderBy: from__totalEndorsementsReceived
+    orderDirection: desc
+    first: 6
+  ) {
+    id
+    from {
+      id
+      totalEndorsementsReceived
+    }
+  }
+  topDonators: aggregatedInformations(
+    where: {to: $account}
+    orderBy: from__totalEndorsementsReceived
+    orderDirection: desc
+    first: 6
+  ) {
+    id
+    from {
+      id
+    }
+    donationAmount
+  }
+}
+    `) as unknown as TypedDocumentString<GetTopEndorsersAndDonatorsQuery, GetTopEndorsersAndDonatorsQueryVariables>;

@@ -1,0 +1,21 @@
+query GetProfileFromFarcaster($identity: Identity!) {
+  farcasterSocials: Socials(
+    input: {limit: 1, filter: {identity: {_eq: $identity}, dappName: {_eq: farcaster}}, blockchain: ethereum, order: {followerCount: DESC}}
+  ) {
+    Social {
+      connectedAddresses {
+        address
+      }
+      userAddress
+      profileName
+      profileDisplayName
+      profileHandle
+      profileBio
+      profileImageContentValue {
+        image {
+          small
+        }
+      }
+    }
+  }
+}

@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import SVG from 'react-inlinesvg';
 import { isAddress } from 'viem';
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid';
 import { PLATFORM_DATA, PlatformType } from '@/utils/platform';
@@ -10,6 +9,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { MemoizedSVG } from '@/components/MemoizedSVG';
 
 const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
   {
@@ -83,12 +83,15 @@ export const Searchbar = () => {
             return (
               <Link
                 key={account.value}
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${account.value}`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${account.value}?platform=${account.platform}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
                 <div className="flex gap-x-2 items-center">
-                  <SVG
+                  <MemoizedSVG
                     fill={PLATFORM_DATA[account.platform].color}
                     src={PLATFORM_DATA[account.platform].icon}
                     width={20}
@@ -103,11 +106,14 @@ export const Searchbar = () => {
         <div className={cn('w-full', query === '' && 'hidden')}>
           {isEthereumAddress ? (
             <Link
-              onClick={() => setShowDropdown(false)}
-              href={`/profile/${query}`}
+              onClick={() => {
+                setShowDropdown(false);
+                setModalOpen(false);
+              }}
+              href={`/profile/${query}?platform=${PlatformType.ethereum}`}
               className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
             >
-              <SVG
+              <MemoizedSVG
                 fill={PLATFORM_DATA[PlatformType.ethereum].color}
                 src={PLATFORM_DATA[PlatformType.ethereum].icon}
                 width={20}
@@ -121,11 +127,14 @@ export const Searchbar = () => {
                 Results
               </div>
               <Link
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${query}.eth`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${query}.eth?platform=${PlatformType.ens}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
-                <SVG
+                <MemoizedSVG
                   fill={PLATFORM_DATA[PlatformType.ens].color}
                   src={PLATFORM_DATA[PlatformType.ens].icon}
                   width={20}
@@ -134,11 +143,14 @@ export const Searchbar = () => {
                 {query}.eth
               </Link>
               <Link
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${query}.lens`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${query}.lens?platform=${PlatformType.lens}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
-                <SVG
+                <MemoizedSVG
                   fill={PLATFORM_DATA[PlatformType.lens].color}
                   src={PLATFORM_DATA[PlatformType.lens].icon}
                   width={20}
@@ -147,11 +159,14 @@ export const Searchbar = () => {
                 {query}.lens
               </Link>
               <Link
-                onClick={() => setShowDropdown(false)}
-                href={`/profile/${query}.farcaster`}
+                onClick={() => {
+                  setShowDropdown(false);
+                  setModalOpen(false);
+                }}
+                href={`/profile/${query}?platform=${PlatformType.farcaster}`}
                 className="w-full justify-start gap-x-2 hover:bg-gray-100 inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
               >
-                <SVG
+                <MemoizedSVG
                   fill={PLATFORM_DATA[PlatformType.farcaster].color}
                   src={PLATFORM_DATA[PlatformType.farcaster].icon}
                   width={20}

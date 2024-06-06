@@ -1,7 +1,0 @@
-query GetAccounts {
-  accounts {
-    id
-    totalDonationsReceived
-    totalDonationsSent
-  }
-}

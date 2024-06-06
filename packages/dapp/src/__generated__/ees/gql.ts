@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as types from './graphql';
-import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+
+
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,42 +14,15 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'query GetAccount($address: ID!) {\n  account(id: $address) {\n    id\n    totalDonationsReceived\n    totalDonationsSent\n  }\n}':
-    types.GetAccountDocument,
-  'query GetAccounts {\n  accounts {\n    id\n    totalDonationsReceived\n    totalDonationsSent\n  }\n}':
-    types.GetAccountsDocument,
+    "query GetTopEndorsersAndDonators($account: String!) {\n  topEndorsers: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n      totalEndorsementsReceived\n    }\n  }\n  topDonators: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n    }\n    donationAmount\n  }\n}": types.GetTopEndorsersAndDonatorsDocument,
 };
 
 /**
  * The gqlEES function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- *
- *
- * @example
- * ```ts
- * const query = gqlEES(`query GetUser($id: ID!) { user(id: $id) { name } }`);
- * ```
- *
- * The query argument is unknown!
- * Please regenerate the types.
  */
-export function gqlEES(source: string): unknown;
+export function gqlEES(source: "query GetTopEndorsersAndDonators($account: String!) {\n  topEndorsers: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n      totalEndorsementsReceived\n    }\n  }\n  topDonators: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n    }\n    donationAmount\n  }\n}"): typeof import('./graphql').GetTopEndorsersAndDonatorsDocument;
 
-/**
- * The gqlEES function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gqlEES(
-  source: 'query GetAccount($address: ID!) {\n  account(id: $address) {\n    id\n    totalDonationsReceived\n    totalDonationsSent\n  }\n}'
-): (typeof documents)['query GetAccount($address: ID!) {\n  account(id: $address) {\n    id\n    totalDonationsReceived\n    totalDonationsSent\n  }\n}'];
-/**
- * The gqlEES function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gqlEES(
-  source: 'query GetAccounts {\n  accounts {\n    id\n    totalDonationsReceived\n    totalDonationsSent\n  }\n}'
-): (typeof documents)['query GetAccounts {\n  accounts {\n    id\n    totalDonationsReceived\n    totalDonationsSent\n  }\n}'];
 
 export function gqlEES(source: string) {
   return (documents as any)[source] ?? {};
 }
-
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
-  TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;

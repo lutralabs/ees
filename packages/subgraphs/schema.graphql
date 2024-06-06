@@ -32,11 +32,25 @@ type FeeWithdrawal @entity(immutable: true) {
 # Aggregated entities
 type Account @entity(immutable: false) {
   id: Bytes! # address
+
+  # Relationships
   receivedDonations: [Donation!]! @derivedFrom(field: "to")
   receivedEndorsements: [Endorsement!]! @derivedFrom(field: "to")
   withdrawals: [Withdrawal!]! @derivedFrom(field: "address")
   sentDonations: [Donation!]! @derivedFrom(field: "from")
   sentEndorsements: [Endorsement!]! @derivedFrom(field: "from")
+
+  # Aggregated data
   totalDonationsReceived: BigInt!
+  totalEndorsementsReceived: BigInt!
   totalDonationsSent: BigInt!
+  totalEndorsementsSent: BigInt!
+}
+
+type AggregatedInformation @entity(immutable: false) {
+  id: Bytes! # from - to
+  from: Account!
+  to: Account!
+  donationAmount: BigInt!
+  endorsementCount: BigInt!
 }

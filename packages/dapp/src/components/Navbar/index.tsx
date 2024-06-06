@@ -4,7 +4,7 @@ import { Nunito } from 'next/font/google';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ClaimNavigationLink } from './ClaimNavigationLink';
-import { MemoizedImage } from '../MemoizedImage';
+import { MemoizedImage } from '@/components/MemoizedImage';
 
 const nunito = Nunito({ subsets: ['latin'] });
 
@@ -31,7 +31,7 @@ export const Navbar = () => {
             </div>
           </div>
         </Link>
-        <div className="flex flex-1 space-x-4 items-center">
+        <div className="flex flex-1 gap-x-4 items-center">
           <div className="col-span-6 flex flex-1 items-center justify-center max-lg:justify-end">
             <Searchbar />
           </div>

@@ -1,0 +1,20 @@
+query GetProfileFromLens($identity: Identity!) {
+  Wallet(input: {identity: $identity, blockchain: ethereum}) {
+    addresses
+  }
+  lensSocials: Socials(
+    input: {limit: 1, filter: {identity: {_eq: $identity}, dappName: {_eq: lens}}, blockchain: ethereum, order: {followerCount: DESC}}
+  ) {
+    Social {
+      profileName
+      profileDisplayName
+      profileHandle
+      profileBio
+      profileImageContentValue {
+        image {
+          small
+        }
+      }
+    }
+  }
+}

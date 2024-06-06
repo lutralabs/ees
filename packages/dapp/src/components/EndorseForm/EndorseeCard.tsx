@@ -7,8 +7,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Endorsee } from './Endorsee';
 import { useEndorsementStore } from '@/stores';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 const ENDORSMENT_OPTIONS = [
@@ -19,7 +19,14 @@ const ENDORSMENT_OPTIONS = [
   { value: 'trader', label: 'Trader' },
 ];
 
-export const EndorseeCard = () => {
+type EndorseeCardProps = {
+  endorsee: React.ReactNode;
+};
+
+export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
+  const router = useRouter();
+
+  // Global state
   const { address, endorsementType, changeEndorsementType, clear } =
     useEndorsementStore((state) => ({
       address: state.address,
@@ -36,7 +43,20 @@ export const EndorseeCard = () => {
           <div className="flex-1 flex items-center justify-end">
             <Button
               variant="link"
-              onMouseDown={clear}
+              onMouseDown={() => {
+                // Clear global store
+                clear();
+
+                /*
+                 * Clear search params and refresh page
+                 * Refresh is needed as the global store can get out of sync
+                 * with the search params and we get a stale (buggy) state
+                 */
+                router.replace('/');
+
+                // TODO[Martin]: In the future check if there is a better way to resolve this bug
+                router.refresh();
+              }}
               className="font-semibold p-0 h-5"
             >
               Clear
@@ -45,7 +65,8 @@ export const EndorseeCard = () => {
         )}
       </div>
       <div className="flex max-sm:flex-col max-sm:pt-4 max-sm:gap-y-4 justify-between items-center">
-        <Endorsee />
+        {endorsee}
+
         <Select
           defaultValue="web3"
           value={endorsementType}

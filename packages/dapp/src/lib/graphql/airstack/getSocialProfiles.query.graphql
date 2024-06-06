@@ -1,0 +1,50 @@
+query GetProfileInfo($identity: Identity!) {
+  Wallet(input: {identity: $identity, blockchain: ethereum}) {
+    addresses
+    primaryDomain {
+      name
+      avatar
+      tokenNft {
+        contentValue {
+          image {
+            small
+          }
+        }
+      }
+    }
+  }
+  farcasterSocials: Socials(
+    input: {filter: {identity: {_eq: $identity}, dappName: {_eq: farcaster}}, blockchain: ethereum, order: {followerCount: DESC}}
+  ) {
+    Social {
+      connectedAddresses {
+        address
+      }
+      userAddress
+      profileName
+      profileDisplayName
+      profileHandle
+      profileBio
+      profileImageContentValue {
+        image {
+          small
+        }
+      }
+    }
+  }
+  lensSocials: Socials(
+    input: {filter: {identity: {_eq: $identity}, dappName: {_eq: lens}}, blockchain: ethereum, order: {followerCount: DESC}}
+  ) {
+    Social {
+      profileName
+      profileDisplayName
+      profileHandle
+      profileBio
+      profileImageContentValue {
+        image {
+          small
+        }
+      }
+    }
+  }
+}

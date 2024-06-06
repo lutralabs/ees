@@ -258,7 +258,7 @@ export const FeeDisplay = ({
           >
             <div
               className={cn(
-                'flex flex-col space-y-2 pt-2 transition-all duration-300 ease-in-out',
+                'flex flex-col gap-y-2 pt-2 transition-all duration-300 ease-in-out',
                 showDetailedFees && 'border-t-2 border-gray-200'
               )}
             >

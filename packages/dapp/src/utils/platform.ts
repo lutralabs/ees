@@ -134,3 +134,18 @@ export const PLATFORM_DATA: { [key in PlatformType]: SocialPlatform } = {
     system: PlatformSystem.web3,
   },
 };
+
+export const validateOrGetDefaultPlatform = (
+  platform: string | undefined | null
+): PlatformType => {
+  if (!platform) return PlatformType.ens;
+  // Check if the platform is valid
+  const lowercasePlatform = platform.toLowerCase();
+
+  if (Object.values(PlatformType).includes(lowercasePlatform as PlatformType)) {
+    return PlatformType[lowercasePlatform as keyof typeof PlatformType];
+  }
+
+  // If the platform is not valid, return the default platform
+  return PlatformType.ens;
+};

@@ -20,6 +20,7 @@ import {
 } from './ees-utils';
 import {
   Account,
+  AggregatedInformation,
   Donation,
   Endorsement,
   FeeWithdrawal,
@@ -78,10 +79,28 @@ describe('Describe entity assertions', () => {
       assert.assertNotNull(accountFrom);
       assert.i32Equals(accountFrom!.sentEndorsements.load().length, 1);
       assert.i32Equals(accountFrom!.receivedEndorsements.load().length, 0);
+      assert.i32Equals(accountFrom!.totalEndorsementsSent.toI32(), 1);
+      assert.i32Equals(accountFrom!.totalEndorsementsReceived.toI32(), 0);
       const accountTo = Account.load(to);
       assert.assertNotNull(accountTo);
       assert.i32Equals(accountTo!.sentEndorsements.load().length, 0);
       assert.i32Equals(accountTo!.receivedEndorsements.load().length, 1);
+      assert.i32Equals(accountTo!.totalEndorsementsSent.toI32(), 0);
+      assert.i32Equals(accountTo!.totalEndorsementsReceived.toI32(), 1);
+
+      // Assert AggregatedInformation was created and stored
+      assert.entityCount('AggregatedInformation', 1);
+      const aggregatedInformation = AggregatedInformation.load(
+        Bytes.fromUTF8(`${from.toHexString()}-${to.toHexString()}`)
+      );
+
+      assert.assertNotNull(aggregatedInformation);
+      assert.stringEquals(aggregatedInformation!.from.toHex(), from.toHex());
+      assert.stringEquals(aggregatedInformation!.to.toHex(), to.toHex());
+      assert.bigIntEquals(
+        aggregatedInformation!.endorsementCount,
+        BigInt.fromI32(1)
+      );
     });
 
     test('Multiple endorsements created and stored', () => {
@@ -138,6 +157,9 @@ describe('Describe entity assertions', () => {
       assert.assertNotNull(account3);
       assert.i32Equals(account3!.sentEndorsements.load().length, 1);
       assert.i32Equals(account3!.receivedEndorsements.load().length, 1);
+
+      // Assert AggregatedInformation was created and stored
+      assert.entityCount('AggregatedInformation', 3);
     });
   });
   describe('Donation', () => {
@@ -168,10 +190,28 @@ describe('Describe entity assertions', () => {
       assert.assertNotNull(accountFrom);
       assert.i32Equals(accountFrom!.sentDonations.load().length, 1);
       assert.i32Equals(accountFrom!.receivedDonations.load().length, 0);
+      assert.i32Equals(accountFrom!.totalDonationsSent.toI32(), 42);
+      assert.i32Equals(accountFrom!.totalDonationsReceived.toI32(), 0);
       const accountTo = Account.load(to);
       assert.assertNotNull(accountTo);
       assert.i32Equals(accountTo!.sentDonations.load().length, 0);
       assert.i32Equals(accountTo!.receivedDonations.load().length, 1);
+      assert.i32Equals(accountTo!.totalDonationsSent.toI32(), 0);
+      assert.i32Equals(accountTo!.totalDonationsReceived.toI32(), 42);
+
+      // Assert AggregatedInformation was created and stored
+      assert.entityCount('AggregatedInformation', 1);
+      const aggregatedInformation = AggregatedInformation.load(
+        Bytes.fromUTF8(`${from.toHexString()}-${to.toHexString()}`)
+      );
+
+      assert.assertNotNull(aggregatedInformation);
+      assert.stringEquals(aggregatedInformation!.from.toHex(), from.toHex());
+      assert.stringEquals(aggregatedInformation!.to.toHex(), to.toHex());
+      assert.bigIntEquals(
+        aggregatedInformation!.donationAmount,
+        BigInt.fromI32(42)
+      );
     });
 
     test('Multiple donations created and stored', () => {
@@ -221,6 +261,9 @@ describe('Describe entity assertions', () => {
       assert.i32Equals(account3!.receivedDonations.load().length, 2);
       assert.bigIntEquals(account3!.totalDonationsReceived, BigInt.fromI32(55));
       assert.bigIntEquals(account3!.totalDonationsSent, BigInt.fromI32(0));
+
+      // Assert AggregatedInformation was created and stored
+      assert.entityCount('AggregatedInformation', 3);
     });
   });
   describe('Withdrawal', () => {
@@ -270,6 +313,90 @@ describe('Describe entity assertions', () => {
       assert.stringEquals(feeWithdrawal!.withdrawalType, 'ALL');
       assert.stringEquals(feeWithdrawal!.address.toHex(), recipient.toHex());
       assert.bigIntEquals(feeWithdrawal!.amount, amount);
+    });
+  });
+  describe('AggregatedInformation', () => {
+    test('AggregatedInformation updated', () => {
+      const from = Address.fromString(TEST_ACCOUNTS[0]);
+      const to = Address.fromString(TEST_ACCOUNTS[1]);
+      const amount = BigInt.fromI32(42);
+
+      // Create donate events (`from` and `to` are always the same accounts)
+      let newDonateEvent = createDonateEvent(from, to, amount);
+      handleDonate(newDonateEvent);
+      newDonateEvent = createDonateEvent(from, to, amount, BigInt.fromI32(2));
+      handleDonate(newDonateEvent);
+      newDonateEvent = createDonateEvent(from, to, amount, BigInt.fromI32(3));
+      handleDonate(newDonateEvent);
+      newDonateEvent = createDonateEvent(from, to, amount, BigInt.fromI32(4));
+      handleDonate(newDonateEvent);
+
+      let newEndorseEvent = createEndorseEvent(
+        from,
+        to,
+        'Developer',
+        Bytes.fromHexString(
+          '0xb03f4550dec1c92b8183d4ffbfe55772165257eb588b3a77bdbfa06a54d0c483'
+        ),
+        BigInt.fromI32(1),
+        BigInt.fromI32(42)
+      );
+
+      handleEndorse(newEndorseEvent);
+      newEndorseEvent = createEndorseEvent(
+        from,
+        to,
+        'Developer',
+        Bytes.fromHexString(
+          '0x323f15542940c9f346dbef380e684fc8d8d99d96aa0cb85d9254ff9c30a6562b'
+        ),
+        BigInt.fromI32(2),
+        BigInt.fromI32(0)
+      );
+
+      handleEndorse(newEndorseEvent);
+      newEndorseEvent = createEndorseEvent(
+        from,
+        to,
+        'Developer',
+        Bytes.fromHexString(
+          '0x323f15542940c9f346dbef380e684fc8d8d99d96aa0cb85d9254ff9c30a6562b'
+        ),
+        BigInt.fromI32(3),
+        BigInt.fromI32(0)
+      );
+
+      handleEndorse(newEndorseEvent);
+      newEndorseEvent = createEndorseEvent(
+        from,
+        to,
+        'Developer',
+        Bytes.fromHexString(
+          '0x323f15542940c9f346dbef380e684fc8d8d99d96aa0cb85d9254ff9c30a6562b'
+        ),
+        BigInt.fromI32(4),
+        BigInt.fromI32(0)
+      );
+
+      handleEndorse(newEndorseEvent);
+
+      // Check if AggregatedInformation was created and stored
+      assert.entityCount('AggregatedInformation', 1);
+      const aggregatedInformation = AggregatedInformation.load(
+        Bytes.fromUTF8(`${from.toHexString()}-${to.toHexString()}`)
+      );
+
+      assert.assertNotNull(aggregatedInformation);
+      assert.stringEquals(aggregatedInformation!.from.toHex(), from.toHex());
+      assert.stringEquals(aggregatedInformation!.to.toHex(), to.toHex());
+      assert.bigIntEquals(
+        aggregatedInformation!.endorsementCount,
+        BigInt.fromI32(4)
+      );
+      assert.bigIntEquals(
+        aggregatedInformation!.donationAmount,
+        BigInt.fromI32(168)
+      );
     });
   });
 });
