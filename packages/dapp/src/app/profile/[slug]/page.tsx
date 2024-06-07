@@ -108,7 +108,9 @@ export async function generateMetadata({
       description: 'Profile Page',
       images: [
         {
-          url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
+          url: `/api/og?account=${slug}${
+            searchParams.platform ? `&platform=${searchParams.platform}` : ''
+          }`,
           width: 1200,
           height: 630,
           alt: 'Profile Page Image',
