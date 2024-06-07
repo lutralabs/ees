@@ -7,6 +7,8 @@ import {
 } from '@/utils';
 import { ImageResponse } from 'next/og';
 import type { NextRequest } from 'next/server';
+import { blo } from 'blo';
+import { APP_URL } from '@/utils';
 
 export const runtime = 'edge';
 
@@ -25,7 +27,6 @@ export async function GET(req: NextRequest) {
 
     const _platform = validateOrGetDefaultPlatform(platform);
 
-    // FIXME: Add description
     const { address, avatar, description, displayName, error } =
       _platform === PlatformType.ethereum
         ? await getMinimalProfileFromAddress(account as `0x${string}`)
@@ -54,18 +55,12 @@ export async function GET(req: NextRequest) {
         <div tw="flex justify-center">
           <div tw="flex justify-center w-full flex-col p-12 md:flex-row md:items-center">
             <div tw="pl-8 flex flex-3 flex-col">
-              {avatar ? (
-                <img
-                  tw="rounded-full"
-                  alt="Profile avatar"
-                  width={160}
-                  src={avatar}
-                />
-              ) : (
-                <div tw="w-[160px] h-[160px] flex items-center justify-center text-7xl font-semibold bg-blue-200 text-primary-800 rounded-full">
-                  {/* TODO */}A
-                </div>
-              )}
+              <img
+                tw="rounded-full"
+                alt="Profile avatar"
+                width={160}
+                src={avatar ?? blo(address, 160)}
+              />
               <h2
                 tw="text-6xl"
                 style={{
@@ -78,11 +73,7 @@ export async function GET(req: NextRequest) {
               {description && <div tw="flex text-2xl">{description}</div>}{' '}
             </div>
             <div tw="flex flex-2 flex-col items-center justify-end">
-              <img
-                alt="EES Logo"
-                width={256}
-                src="https://i.imgur.com/QpxIqHT.png" //FIXME: Replace with deployed URL and fetch from PUBLIC folder
-              />
+              <img alt="EES Logo" width={256} src={`${APP_URL}/endorse.png`} />
             </div>
           </div>
         </div>

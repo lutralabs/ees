@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Profile',
-  description: '', // TODO: Add description
+  description: 'Explore any address, ENS domain or social profile.',
 };
 
 export default function Page() {

@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MemoizedImage } from '@/components/MemoizedImage';
+import { blo } from 'blo';
 
 type AvatarSize =
   | 'xs'
@@ -19,6 +20,7 @@ type AvatarSize =
 
 type ProfileAvatarProps = {
   avatar: string | null;
+  address: `0x${string}`;
   size?: AvatarSize;
 };
 
@@ -35,30 +37,12 @@ const AVATAR_SIZES = {
   '6xl': 192,
 };
 
-export const ProfileAvatar = ({ avatar, size = 'md' }: ProfileAvatarProps) => {
+export const ProfileAvatar = ({
+  avatar,
+  address,
+  size = 'md',
+}: ProfileAvatarProps) => {
   const [isLoading, setIsLoading] = useState(true);
-
-  if (!avatar) {
-    return (
-      <div
-        className={cn(
-          'flex items-center justify-center text-7xl font-semibold bg-primary-200 text-primary-800 rounded-full',
-          size === 'xs' && 'w-[14px] h-[14px]',
-          size === 'sm' && 'w-[24px] h-[24px]',
-          size === 'md' && 'w-[36px] h-[36px]',
-          size === 'lg' && 'w-[48px] h-[48px]',
-          size === 'xl' && 'w-[64px] h-[64px]',
-          size === '2xl' && 'w-[80px] h-[80px]',
-          size === '3xl' && 'w-[96px] h-[96px]',
-          size === '4xl' && 'w-[128px] h-[128px]',
-          size === '5xl' && 'w-[160px] h-[160px]',
-          size === '6xl' && 'w-[192px] h-[192px]'
-        )}
-      >
-        V
-      </div>
-    );
-  }
 
   return (
     <div
@@ -78,7 +62,7 @@ export const ProfileAvatar = ({ avatar, size = 'md' }: ProfileAvatarProps) => {
     >
       <MemoizedImage
         className={cn('absolute rounded-full')}
-        src={avatar}
+        src={avatar ?? blo(address, AVATAR_SIZES[size])}
         alt="Profile avatar"
         width={AVATAR_SIZES[size]}
         height={AVATAR_SIZES[size]}

@@ -1,16 +1,21 @@
+import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Address } from '@/components/Address';
 import { Container } from '@/components/Container';
-import { getAvatarForPlatform, getProfileInfo } from '@/lib/airstack';
-import { getBasicPlatformProfileInfo } from '@/lib/airstack/getBasicPlatformProfileInfo';
-import { formatAddress } from '@/utils';
-import { validateOrGetDefaultPlatform } from '@/utils/platform';
+import {
+  getAvatarForPlatform,
+  getProfileInfo,
+  getBasicPlatformProfileInfo,
+} from '@/lib/airstack';
+import { APP_URL, formatAddress } from '@/utils';
+import {
+  validateOrGetDefaultPlatform,
+  validateOrGetDefaultNetwork,
+} from '@/utils';
 import { Badges } from './Badges';
-import Link from 'next/link';
 import { ShareDialog } from './ShareDialog';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { Feed } from './Feed';
-import { validateOrGetDefaultNetwork } from '@/utils/validateOrGetDefaultNetwork';
-import type { Metadata } from 'next';
 
 type PageProps = {
   params: { slug: string };
@@ -34,7 +39,7 @@ export default async function Page({
       <div className="flex max-lg:flex-col w-full gap-4">
         <div className="lg:w-[30%] min-w-[300px] w-full">
           <div className="flex flex-col gap-y-2 text-center items-center">
-            <ProfileAvatar avatar={avatar} size="5xl" />
+            <ProfileAvatar avatar={avatar} address={mainAddress} size="5xl" />
             <div className="text-3xl font-semibold">
               {basicProfileInfo.name ?? formatAddress(mainAddress)}
             </div>
@@ -42,9 +47,8 @@ export default async function Page({
               <Address address={mainAddress} />
               <ShareDialog
                 avatar={avatar}
-                shareLink={
-                  'http://localhost:3000/profile/pseudobun.eth?platform=ens'
-                }
+                address={mainAddress}
+                shareLink={`${APP_URL}/profile/${slug}?platform=${_platform}`}
                 displayName={
                   basicProfileInfo.name ?? formatAddress(mainAddress)
                 }
@@ -85,7 +89,7 @@ export async function generateMetadata({
     description: 'Check out my profile on Endorse.fun!',
     openGraph: {
       siteName: 'Endorse.fun',
-      description: '', // FIXME: Add description
+      description: 'The next generation Web3 social layer.',
       images: [
         {
           url: `/api/og?account=${slug}&platform=${searchParams.platform}`,

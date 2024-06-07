@@ -1,6 +1,5 @@
 import { Card } from '@/components/ui/card';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
-
 import { getMinimalProfileFromAddress } from '@/lib/airstack/getMinimalProfileFromAddress';
 import { formatAddress } from '@/utils';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -29,7 +28,7 @@ export const UserBadge = async ({
     <div className="flex justify-center items-center">
       <div className="w-[128px] h-[120px] relative">
         <div className="w-full flex justify-center">
-          <ProfileAvatar avatar={data.avatar} size="3xl" />
+          <ProfileAvatar avatar={data.avatar} address={address} size="3xl" />
         </div>
         <Card className="absolute h-18 text-sm w-full bottom-[-16px] p-2 hover:bg-gray-50 animated-transition overflow-hidden text-nowrap">
           <div className="w-full flex flex-col justify-center items-center font-medium">

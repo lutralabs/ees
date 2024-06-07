@@ -45,7 +45,7 @@ export const FeeDisplay = ({
     data: endorsementPrice,
     isPending: isEndorsementPricePending,
     isError: isEndorsementPriceError,
-  } = useEndorsmentPrice(chainId ?? DEFAULT_CHAIN_ID); // FIXME: Replace with proper chainId
+  } = useEndorsmentPrice(chainId ?? DEFAULT_CHAIN_ID);
 
   const {
     data: feesPerGas,

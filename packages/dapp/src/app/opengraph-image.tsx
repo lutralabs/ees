@@ -1,6 +1,7 @@
+import { APP_URL } from '@/utils';
 import { ImageResponse } from 'next/og';
 
-export const runtime = 'nodejs'; // TODO: Test both nodejs and edge
+export const runtime = 'nodejs';
 export const alt = 'Check out my profile on Endorse.fun!';
 export const size = {
   width: 1200,
@@ -44,11 +45,12 @@ export default async function Image() {
           </div>
           <div tw="h-[256px] w-[2px] bg-gray-600 mx-8" />
           <div tw="flex flex-2 flex-col items-center justify-center">
-            <img
-              alt="EES Logo"
+            {/* FIXME: Use in next commit */}
+            {/* <img
+              alt="EES Logo with text"
               width={256}
-              src="https://i.imgur.com/QpxIqHT.png" //FIXME: Replace with deployed URL and fetch from PUBLIC folder
-            />
+              src={`${APP_URL}/endorse.png`}
+            /> */}
           </div>
         </div>
       </div>

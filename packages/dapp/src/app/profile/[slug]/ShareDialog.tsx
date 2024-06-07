@@ -19,12 +19,14 @@ import { MemoizedImage } from '@/components/MemoizedImage';
 
 type ShareDialogProps = {
   avatar: string | null;
+  address: `0x${string}`;
   shareLink: string;
   displayName: string;
 };
 
 export function ShareDialog({
   avatar,
+  address,
   shareLink,
   displayName,
 }: ShareDialogProps) {
@@ -49,7 +51,7 @@ export function ShareDialog({
         </DialogHeader>
 
         <Card className="flex gap-x-2 p-4 items-center">
-          <ProfileAvatar avatar={avatar} size="2xl" />
+          <ProfileAvatar avatar={avatar} address={address} size="2xl" />
           <div className="text-3xl font-semibold">{displayName}</div>
         </Card>
 

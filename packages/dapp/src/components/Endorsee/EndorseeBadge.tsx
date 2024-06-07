@@ -1,15 +1,9 @@
-'use client';
-
-import { useMemo, useState } from 'react';
-
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { PLATFORM_DATA, PlatformType } from '@/utils/platform';
 import { cn } from '@/lib/utils';
-import { Skeleton } from '@/components/ui/skeleton';
 import { formatAddress } from '@/utils';
-import { Check } from 'lucide-react';
-import { MemoizedImage } from '@/components/MemoizedImage';
 import { MemoizedSVG } from '@/components/MemoizedSVG';
+import { ProfileAvatar } from '@/components/ProfileAvatar';
+import { CopyIcon } from '@/components/CopyIcon';
 
 type EndorseeBadgeProps = {
   type: PlatformType;
@@ -24,49 +18,6 @@ export const EndorseeBadge = ({
   handle,
   address,
 }: EndorseeBadgeProps) => {
-  // Local state
-  const [avatarLoading, setAvatarLoading] = useState(true);
-  const [isCopied, setIsCopied] = useState(false);
-
-  // Hooks
-  const Avatar = useMemo(() => {
-    if (!avatar) {
-      return (
-        <div className="h-[80px] w-[80px] flex items-center justify-center text-3xl font-semibold bg-primary-200 text-primary-800 rounded-full">
-          {/* FIXME: First leter of handle if it exists */}TODO
-        </div>
-      );
-    }
-
-    return (
-      <div className="relative h-[80px] w-[80px]">
-        <MemoizedImage
-          className={cn('absolute rounded-full')}
-          src={avatar}
-          alt="Avatar"
-          width={80}
-          height={80}
-          onLoad={() => setAvatarLoading(false)}
-        />
-        <Skeleton
-          className={cn(
-            'absolute h-[80px] w-[80px] rounded-full bg-primary-200',
-            !avatarLoading && 'hidden'
-          )}
-        />
-      </div>
-    );
-  }, [avatar, avatarLoading, handle]);
-
-  // Functions
-  const handleCopy = () => {
-    setIsCopied(true);
-    navigator.clipboard.writeText(address);
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 1000);
-  };
-
   switch (type) {
     case PlatformType.ens:
     case PlatformType.lens:
@@ -75,7 +26,7 @@ export const EndorseeBadge = ({
       return (
         <>
           <div className="relative sm:mt-3">
-            {Avatar}
+            <ProfileAvatar avatar={avatar} address={address} size="2xl" />
             <div className={'absolute -bottom-2 -right-2'}>
               <MemoizedSVG
                 fill={PLATFORM_DATA[type].color as string}
@@ -98,19 +49,7 @@ export const EndorseeBadge = ({
             </div>
             <div className="flex items-center text-sm sm:text-md text-gray-600 font-normal max-sm:justify-center gap-x-1">
               {formatAddress(address)}
-              <DocumentDuplicateIcon
-                className={cn(
-                  'w-4 h-4 cursor-pointer hover:text-primary-400',
-                  isCopied && 'hidden'
-                )}
-                onMouseDown={handleCopy}
-              />
-              <Check
-                className={cn(
-                  'w-4 h-4 cursor-pointer hover:text-primary-400',
-                  !isCopied && 'hidden'
-                )}
-              />
+              <CopyIcon value={address} />
             </div>
           </div>
         </>
