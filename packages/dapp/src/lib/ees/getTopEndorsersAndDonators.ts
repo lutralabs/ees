@@ -32,7 +32,7 @@ export const getTopEndorsersAndDonators = async ({
         },
       }),
       // Cache for 1 minute
-      next: { revalidate: 60 },
+      next: { revalidate: 86400 },
     });
 
     // Check if request was successful

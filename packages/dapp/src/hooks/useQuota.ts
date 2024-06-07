@@ -29,6 +29,6 @@ export const useQuota = ({
       return data;
     },
     enabled,
-    refetchInterval: 1000 * 120, // Refetch every 2 minutes
+    refetchInterval: 120000, // Refetch every 2 minutes
   });
 };
