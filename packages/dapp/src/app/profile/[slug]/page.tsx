@@ -40,7 +40,7 @@ export default async function Page({
         <div className="lg:w-[30%] min-w-[300px] w-full">
           <div className="flex flex-col gap-y-2 text-center items-center">
             <ProfileAvatar avatar={avatar} address={mainAddress} size="5xl" />
-            <div className="text-3xl font-semibold">
+            <div className="text-3xl font-bold">
               {basicProfileInfo.name ?? formatAddress(mainAddress)}
             </div>
             <div className="flex gap-x-1 items-center text-md text-gray-600 font-medium">
@@ -55,13 +55,15 @@ export default async function Page({
               />
             </div>
             {basicProfileInfo.description && (
-              <div className="text-lg py-2">{basicProfileInfo.description}</div>
+              <div className="text-lg py-2 font-semibold">
+                {basicProfileInfo.description}
+              </div>
             )}
             <Badges data={data} />
 
             <Link
               href={`/?account=${slug}&platform=${_platform}`}
-              className="mt-4 px-4 py-2 rounded-md bg-primary text-primary-foreground shadow hover:bg-primary/90"
+              className="mt-4 px-4 py-2 rounded-md bg-primary font-semibold text-primary-foreground shadow-md hover:bg-primary/90"
             >
               Endorse {basicProfileInfo.name ?? formatAddress(mainAddress)}
             </Link>

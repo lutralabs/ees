@@ -18,7 +18,7 @@ const Badge = ({
       href={link}
       target="_blank"
       className={cn(
-        'flex items-center gap-x-1 p-1 px-4 rounded-full w-min text-nowrap hover:opacity-80 animated-transition',
+        'flex items-center gap-x-1 p-1 px-4 rounded-full w-min text-nowrap hover:opacity-80 animated-transition shadow-sm',
         platform === PlatformType.lens && 'bg-[#E2FFE5]',
         platform === PlatformType.farcaster && 'bg-[#F3E8FF]',
         platform === PlatformType.ens && 'bg-[#DBEDFF]'

@@ -21,8 +21,8 @@ export const Dashboard = async ({ account, network }: DashboardProps) => {
   );
 
   return (
-    <div className="flex flex-col gap-y-2 overflow-auto">
-      <Card className="rounded-sm">
+    <div className="flex flex-col gap-y-4 overflow-auto px-2 pb-2">
+      <Card className="rounded-sm shadow-md border-2 border-b-1 border-gray-200">
         <CardHeader>
           <CardTitle>Top Endorsers</CardTitle>
           <CardDescription>
@@ -55,7 +55,7 @@ export const Dashboard = async ({ account, network }: DashboardProps) => {
           ))}
         </CardContent>
       </Card>
-      <Card className="rounded-sm">
+      <Card className="rounded-sm shadow-md border-2 border-b-1 border-gray-200">
         <CardHeader>
           <CardTitle>Top Donators</CardTitle>
           <CardDescription>

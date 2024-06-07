@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MemoizedSVG } from '@/components/MemoizedSVG';
-import { useAccount } from 'wagmi';
 
 const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
   {
@@ -28,9 +27,6 @@ const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
 ];
 
 export const Searchbar = () => {
-  // Hooks
-  const { address } = useAccount();
-
   // Local state
   const [query, setQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -186,12 +182,7 @@ export const Searchbar = () => {
   }, [query]);
 
   return (
-    <div
-      className={cn(
-        'flex flex-1 max-lg:justify-end',
-        address ? 'pl-16' : 'lg:pr-8'
-      )}
-    >
+    <div className={cn('w-full flex flex-1 max-lg:justify-end')}>
       <Button
         onMouseDown={() => setModalOpen(true)}
         size="icon"
@@ -200,8 +191,8 @@ export const Searchbar = () => {
         <MagnifyingGlassIcon className="h-4 w-4" />
       </Button>
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="sm:max-w-[525px] lg:hidden">
-          <div className="sm:max-w-[525px]">
+        <DialogContent className="lg:hidden w-full overflow-hidden">
+          <div>
             <div className="relative flex items-center">
               <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
               <Input
@@ -217,17 +208,14 @@ export const Searchbar = () => {
       </Dialog>
       <div className="relative w-full max-lg:hidden">
         <div className="relative w-full flex justify-center">
-          <div
-            id="input"
-            className="relative flex flex-1 md:max-w-md xl:max-w-2xl"
-          >
+          <div id="input" className="relative flex flex-1 justify-center">
             <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
             <Input
               placeholder="Search for Ethereum (ENS), Farcaster, Lens..."
               value={query}
               isSearchbar={true}
               onChange={handleInputChange}
-              className="pl-8"
+              className="pl-8 shadow-md"
               onFocus={() => setShowDropdown(true)}
             />
           </div>
@@ -236,7 +224,7 @@ export const Searchbar = () => {
           <div
             id="dropdown"
             className={cn(
-              'absolute w-full md:max-w-md xl:max-w-2xl mt-1 p-2 bg-white rounded-2xl shadow-lg border-1 border-blue-100',
+              'absolute w-full mt-1 p-2 bg-white rounded-2xl shadow-lg border-1 border-blue-100',
               !showDropdown && 'hidden'
             )}
           >

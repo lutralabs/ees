@@ -36,7 +36,7 @@ export function ShareDialog({
         <Button
           variant="ghost"
           size="sm"
-          className="flex gap-x-1 items-center text-md font-medium bg-slate-200 px-4 rounded-full"
+          className="flex gap-x-1 items-center text-md shadow-sm font-medium bg-slate-200 px-4 rounded-full"
         >
           <ArrowUpTrayIcon className="w-6 h-6" />
           Share

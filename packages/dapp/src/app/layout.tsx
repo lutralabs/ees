@@ -43,7 +43,7 @@ export default function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(inter.className, 'antialiased')}>
-        <div className="h-full w-full overflow-hidden bg-gradient-radial from-blue-50 via-blue-50 to-blue-200">
+        <div className="h-full w-full overflow-hidden bg-slate-50">
           <Providers initialState={initialState}>
             <Navbar />
             <main className="h-full w-full overflow-auto pb-32">
