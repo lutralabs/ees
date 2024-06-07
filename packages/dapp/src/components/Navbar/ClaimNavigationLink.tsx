@@ -26,7 +26,7 @@ export const ClaimNavigationLink = () => {
   return (
     <Link
       href="/claim"
-      className="relative p-2 h-10 w-10 bg-white text-gray-900 hover:bg-white hover:scale-105 transition-all duration-200 shadow-lg rounded-xl"
+      className="relative p-2 min-w-10 min-h-10 h-10 w-10 bg-white text-gray-900 hover:bg-white hover:scale-105 transition-all duration-200 shadow-lg rounded-xl"
     >
       <GiftIcon className="text-primary" />
       <Circle
