@@ -67,6 +67,7 @@ export function ShareDialog({
               <TwitterIcon size={32} round />
             </TwitterShareButton>
             <Link
+              prefetch={false}
               href={`https://hey.xyz/?text=${encodeURIComponent(
                 `Check out my profile on Endorse.fun!\n ${shareLink}\n`
               )}&hashtags=${encodeURIComponent('Masca,Identity,Credential')}`}
@@ -80,6 +81,7 @@ export function ShareDialog({
               />
             </Link>
             <Link
+              prefetch={false}
               href={`https://warpcast.com/~/compose?text=${encodeURIComponent(
                 'Check out my profile on Endorse.fun!'
               )}&embeds[]=${shareLink}`}
