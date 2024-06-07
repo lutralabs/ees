@@ -45,12 +45,11 @@ export default async function Image() {
           </div>
           <div tw="h-[256px] w-[2px] bg-gray-600 mx-8" />
           <div tw="flex flex-2 flex-col items-center justify-center">
-            {/* FIXME: Use in next commit */}
-            {/* <img
+            <img
               alt="EES Logo with text"
               width={256}
               src={`${APP_URL}/endorse.png`}
-            /> */}
+            />
           </div>
         </div>
       </div>
