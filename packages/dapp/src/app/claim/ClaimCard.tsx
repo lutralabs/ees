@@ -122,7 +122,7 @@ export const ClaimCard = () => {
 
     if (isQuotaError || isDonationBalanceError) {
       return (
-        <div className="text-sm text-red-500">Could not estimate value</div>
+        <div className="text-sm text-red-500">Couldn't estimate value.</div>
       );
     }
 
@@ -177,7 +177,7 @@ export const ClaimCard = () => {
     <Card className="p-4 flex flex-col gap-y-4 overflow-hidden shadow-lg">
       <div className="bg-primary-50 rounded-xl text-primary-800 p-4">
         <div className="flex items-center gap-x-1 text-thin text-gray-600 text-sm pb-4">
-          Unclaimed donations
+          Tips available to claim
         </div>
         <div className="flex flex-col text-xl font-semibold max-h-72 overflow-auto">
           {DonationBalance}
@@ -219,7 +219,7 @@ export const ClaimCard = () => {
         >
           {donationBalance?.toString() === '0'
             ? 'Nothing to claim'
-            : 'Claim donations'}
+            : 'Claim tips'}
         </Button>
       )}
     </Card>

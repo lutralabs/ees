@@ -48,7 +48,7 @@ export const Feed = ({ account, platform, tab, network }: FeedProps) => {
             scroll={false}
             prefetch={false}
           >
-            Dashboard
+            Summary
           </Link>
           <Link
             href={`?platform=${platform}&tab=explorer`}

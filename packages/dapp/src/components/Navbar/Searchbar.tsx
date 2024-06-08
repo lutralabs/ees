@@ -23,7 +23,7 @@ const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
   },
   {
     platform: PlatformType.farcaster,
-    value: 'pseudobun',
+    value: 'jessepollak',
   },
 ];
 
@@ -81,7 +81,7 @@ export const Searchbar = () => {
           )}
         >
           <div className="text-thin mb-2 text-gray-600 text-sm">
-            Suggested Accounts
+            Suggested accounts
           </div>
           {SUGGESTED_ACCOUNTS.map((account) => {
             return (
@@ -210,7 +210,7 @@ export const Searchbar = () => {
             <div className="relative flex items-center">
               <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
               <Input
-                placeholder="Search for Ethereum (ENS), Farcaster, Lens..."
+                placeholder="Search ENS, Farcaster and Lens"
                 value={query}
                 onChange={handleInputChange}
                 className="pl-8 rounded-b-none"
@@ -225,7 +225,7 @@ export const Searchbar = () => {
           <div id="input" className="relative flex flex-1 justify-center">
             <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
             <Input
-              placeholder="Search for Ethereum (ENS), Farcaster, Lens..."
+              placeholder="Search ENS, Farcaster and Lens"
               value={query}
               isSearchbar={true}
               onChange={handleInputChange}

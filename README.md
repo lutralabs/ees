@@ -3,6 +3,7 @@
 ## Intro to monorepo
 
 The monorepo consists of three main parts:
+
 * [Contracts](packages/contracts)
 * [Dapp](packages/dapp)
 * [Subgraphs](packages/subgraphs)
@@ -18,7 +19,7 @@ pnpm lint
 
 ## Deployed contracts and EAS schemas
 
-### EESCore deployed contracts:
+### EESCore deployed contracts
 
 * Mainnet: TODO
 * Base: TODO

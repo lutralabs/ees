@@ -15,24 +15,24 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://ees-eosin.vercel.app'),
-  title: 'Endorse - Ethereum Endorsement Service',
-  description: 'The next generation Web3 social layer.',
+  title: 'endorse.fun - Ethereum Endorsement Service',
+  description: 'The next upgrade for Web3 social layer.',
   robots: {
     // FIXME: Update for production release
     index: false,
     follow: false,
   },
   openGraph: {
-    description: 'The next generation Web3 social layer.',
-    siteName: 'Endorse.fun',
-    title: 'Endorse - Ethereum Endorsement Service',
+    description: 'The next upgrade for Web3 social layer.',
+    siteName: 'endorse.fun',
+    title: 'endorse.fun - Ethereum Endorsement Service',
     type: 'article',
     url: '/',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Endorse - Ethereum Endorsement Service',
-    description: 'The next generation Web3 social layer.',
+    title: 'endorse.fun - Ethereum Endorsement Service',
+    description: 'The next upgrade for Web3 social layer.',
   },
 };
 

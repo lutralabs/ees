@@ -12,7 +12,7 @@ export const CommentButton = ({ onMouseDown }: CommentButtonProps) => {
       className="bg-primary-50 hover:bg-primary-100 rounded-full flex gap-x-2"
     >
       <ChatBubbleBottomCenterTextIcon className="w-6 h-6 text-primary" />
-      <div className="text-thin text-gray-600 text-sm">Add Comment</div>
+      <div className="text-thin text-gray-600 text-sm">Add comment</div>
     </Button>
   );
 };

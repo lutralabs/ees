@@ -2,7 +2,7 @@ import { APP_URL } from '@/utils';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
-export const alt = 'Check out my profile on Endorse.fun!';
+export const alt = 'Check out my profile on endorse.fun!';
 export const size = {
   width: 1200,
   height: 630,
@@ -34,7 +34,7 @@ export default async function Image() {
                 fontWeight: 'bold',
               }}
             >
-              Endorse.fun
+              endorse.fun
             </h2>
             <div tw="flex text-2xl">
               <div>{'Build Web3 '}</div>

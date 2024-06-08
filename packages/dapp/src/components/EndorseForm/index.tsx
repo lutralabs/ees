@@ -281,7 +281,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
           {isPending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
           {previousErrorInsufficientFunds
             ? 'Insufficient funds'
-            : 'Make an Endorsement'}
+            : 'Send an endorsement'}
         </Button>
       )}
       <FeeDisplay

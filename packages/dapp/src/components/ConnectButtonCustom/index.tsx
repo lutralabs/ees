@@ -17,7 +17,7 @@ const ConnectButtonCustom = React.forwardRef<HTMLButtonElement, ButtonProps>(
               {...props}
               ref={ref}
             >
-              Connect Wallet
+              Connect wallet
             </Button>
           );
         }}

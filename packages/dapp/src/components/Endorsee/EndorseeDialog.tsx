@@ -23,7 +23,7 @@ const SUGGESTED_ACCOUNTS: { platform: PlatformType; value: string }[] = [
   },
   {
     platform: PlatformType.farcaster,
-    value: 'pseudobun',
+    value: 'jessepollak',
   },
 ];
 
@@ -57,7 +57,7 @@ export function EndorseeDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="font-semibold text-lg max-sm:w-full" size="lg">
-          Who to Endorse?
+          Who to endorse?
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[525px]">
@@ -65,7 +65,7 @@ export function EndorseeDialog() {
           <div className="relative flex items-center">
             <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
             <Input
-              placeholder="Search for Ethereum (ENS), Farcaster, Lens..."
+              placeholder="Search ENS, Farcaster and Lens"
               value={query}
               onChange={handleInputChange}
               className="pl-8 rounded-b-none"
@@ -78,7 +78,7 @@ export function EndorseeDialog() {
             )}
           >
             <div className="text-thin mb-2 text-gray-600 text-sm">
-              Suggested Accounts
+              Suggested accounts
             </div>
             {SUGGESTED_ACCOUNTS.map((account) => {
               return (

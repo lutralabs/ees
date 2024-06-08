@@ -18,7 +18,7 @@ export const CommentCard = ({ close }: CommentCardProps) => {
       <div className="flex justify-between">
         <div className="flex items-center gap-x-1">
           <ChatBubbleBottomCenterTextIcon className="w-6 h-6 text-primary" />
-          <div className="text-thin text-gray-600 text-sm">Add Comment</div>
+          <div className="text-thin text-gray-600 text-sm">Add comment</div>
         </div>
         <Button
           onMouseDown={() => {
