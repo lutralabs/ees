@@ -10,12 +10,12 @@ import { getTopEndorsersAndDonators } from '@/lib/ees';
 import React, { Fragment, Suspense } from 'react';
 import { cn } from '@/lib/utils';
 
-type DashboardProps = {
+type SummaryProps = {
   account: `0x${string}`;
   network: number;
 };
 
-export const Dashboard = async ({ account, network }: DashboardProps) => {
+export const Summary = async ({ account, network }: SummaryProps) => {
   const { topEndorsers, topDonators, error } = await getTopEndorsersAndDonators(
     { chainId: network, account }
   );

@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import type { PlatformType } from '@/utils';
-import { Dashboard } from './Dashboard';
+import { Summary } from './Summary';
 import { Explorer } from './Explorer';
 import { SocialGraph } from './SocialGraph';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Suspense } from 'react';
 
 const TABS = [
-  { value: 'dashboard', label: 'Dashboard' },
+  { value: 'summary', label: 'Summary' },
   { value: 'explorer', label: 'Endorsement Explorer' },
   { value: 'graph', label: 'Social Graph' },
 ] as const;
@@ -15,7 +15,7 @@ const TABS = [
 type TabType = (typeof TABS)[number]['value'];
 
 const validateOrGetDefaultTab = (tab: string | undefined) => {
-  if (!tab) return 'dashboard';
+  if (!tab) return 'summary';
   // Check if the tab is valid
   const lowercaseTab = tab.toLowerCase();
 
@@ -24,7 +24,7 @@ const validateOrGetDefaultTab = (tab: string | undefined) => {
   }
 
   // If the tab is not valid, return the default tab
-  return 'dashboard';
+  return 'summary';
 };
 
 type FeedProps = {
@@ -43,8 +43,8 @@ export const Feed = ({ account, platform, tab, network }: FeedProps) => {
         <div className="gap-1 border-1 border-gray-200 shadow-md max-sm:flex max-sm:flex-col sm:items-center justify-center rounded-md p-1 text-muted-foreground grid w-full grid-cols-3 bg-gray-100">
           <Link
             className="cursor-pointer inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            href={`?platform=${platform}&tab=dashboard`}
-            data-state={_tab === 'dashboard' ? 'active' : ''}
+            href={`?platform=${platform}&tab=summary`}
+            data-state={_tab === 'summary' ? 'active' : ''}
             scroll={false}
             prefetch={false}
           >
@@ -79,8 +79,8 @@ export const Feed = ({ account, platform, tab, network }: FeedProps) => {
             </div>
           }
         >
-          {_tab === 'dashboard' && (
-            <Dashboard account={account} network={network} />
+          {_tab === 'summary' && (
+            <Summary account={account} network={network} />
           )}
           {_tab === 'explorer' && <Explorer />}
           {_tab === 'graph' && <SocialGraph />}
