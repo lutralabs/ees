@@ -1,7 +1,6 @@
 import { ChevronUpIcon } from '@radix-ui/react-icons';
 import { useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useAccount, useEstimateFeesPerGas } from 'wagmi';
 import { config } from '@/lib/wagmi/config';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -241,51 +240,35 @@ export const FeeDisplay = ({
         <div className="flex-1">Total fees</div>
         {TotalFee}
       </div>
-      <AnimatePresence initial={false} mode="wait">
-        {showDetailedFees && (
-          <motion.div
-            key="content"
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: { opacity: 1, height: 'auto' },
-              collapsed: { opacity: 0, height: 0 },
-            }}
-            transition={{
-              ease: [0.04, 0.62, 0.23, 0.98],
-            }}
-          >
-            <div
-              className={cn(
-                'flex flex-col gap-y-2 pt-2 transition-all duration-300 ease-in-out',
-                showDetailedFees && 'border-t-2 border-gray-200'
-              )}
-            >
-              <div className="flex justify-between items-center">
-                <p className="text-sm">Network cost</p>
-                <div className="flex items-center">{NetworkCost}</div>
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="text-sm">Tip</p>
-                {DonationAmount}
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="text-sm">Endorsement price</p>
-                <div className="flex items-center">{EndorsmentPrice}</div>
-              </div>
-              <div className="flex justify-between items-center">
-                <p className="text-sm">{`Donation fee (${
-                  donationFeePercentage
-                    ? (Number(donationFeePercentage) / 100).toString()
-                    : '...'
-                }%)`}</p>
-                <div className="flex items-center">{DonationFeeCut}</div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showDetailedFees && (
+        <div
+          className={cn(
+            'flex flex-col gap-y-2 pt-2 transition-all duration-300 ease-in-out',
+            showDetailedFees && 'border-t-2 border-gray-200'
+          )}
+        >
+          <div className="flex justify-between items-center">
+            <p className="text-sm">Network cost</p>
+            <div className="flex items-center">{NetworkCost}</div>
+          </div>
+          <div className="flex justify-between items-center">
+            <p className="text-sm">Tip</p>
+            {DonationAmount}
+          </div>
+          <div className="flex justify-between items-center">
+            <p className="text-sm">Endorsement price</p>
+            <div className="flex items-center">{EndorsmentPrice}</div>
+          </div>
+          <div className="flex justify-between items-center">
+            <p className="text-sm">{`Donation fee (${
+              donationFeePercentage
+                ? (Number(donationFeePercentage) / 100).toString()
+                : '...'
+            }%)`}</p>
+            <div className="flex items-center">{DonationFeeCut}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
