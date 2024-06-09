@@ -267,11 +267,11 @@ export const FeeDisplay = ({
                 <div className="flex items-center">{NetworkCost}</div>
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-sm">Donation amount</p>
+                <p className="text-sm">Tip</p>
                 {DonationAmount}
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-sm">Endorsment price</p>
+                <p className="text-sm">Endorsement price</p>
                 <div className="flex items-center">{EndorsmentPrice}</div>
               </div>
               <div className="flex justify-between items-center">

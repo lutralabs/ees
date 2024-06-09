@@ -20,10 +20,10 @@ export default async function Page({
             <br /> with <span className="text-primary">Endorsements</span>
           </h1>
           <h3 className="text-2xl mt-4 font-medium tracking-tight text-center text-gray-700">
-            Endorse any address, ENS domain or social account.
+            Endorse any Ethereum address, ENS or social account.
           </h3>
           <Button size="lg" className="mt-12 text-xl font-semibold p-6">
-            <Link href="/">Start Endorsing</Link>
+            <Link href="/">Launch App</Link>
           </Button>
         </div>
         <Container className="pt-16 max-w-[1440px]">

@@ -25,9 +25,7 @@ export const Dashboard = async ({ account, network }: DashboardProps) => {
       <Card className="rounded-sm shadow-md border-2 border-b-1 border-gray-200">
         <CardHeader>
           <CardTitle>Top Endorsers</CardTitle>
-          <CardDescription>
-            Most endorsed accounts, that endorsed this profile!
-          </CardDescription>
+          <CardDescription>Who already endorsed this profile?</CardDescription>
         </CardHeader>
         <CardContent
           className={cn(
@@ -41,7 +39,7 @@ export const Dashboard = async ({ account, network }: DashboardProps) => {
         >
           {error && <div className="text-sm text-red-500">{error}</div>}
           {topEndorsers.length === 0 && (
-            <div className="text-sm text-gray-600">No endorsements yet</div>
+            <div className="text-sm text-gray-600">No endorsements yet!</div>
           )}
           {topEndorsers.map((endorser) => (
             <Fragment key={endorser.id}>
@@ -57,9 +55,9 @@ export const Dashboard = async ({ account, network }: DashboardProps) => {
       </Card>
       <Card className="rounded-sm shadow-md border-2 border-b-1 border-gray-200">
         <CardHeader>
-          <CardTitle>Top Donators</CardTitle>
+          <CardTitle>Top Tippers</CardTitle>
           <CardDescription>
-            Accounts that donated the most to this profile!
+            Who sent the highest tips to this profile?
           </CardDescription>
         </CardHeader>
         <CardContent
@@ -74,7 +72,7 @@ export const Dashboard = async ({ account, network }: DashboardProps) => {
         >
           {error && <div className="text-sm text-red-500">{error}</div>}
           {topDonators.length === 0 && (
-            <div className="text-sm text-gray-600">No donations yet</div>
+            <div className="text-sm text-gray-600">No tips yet!</div>
           )}
           {topDonators.map((donator) => (
             <Fragment key={donator.id}>

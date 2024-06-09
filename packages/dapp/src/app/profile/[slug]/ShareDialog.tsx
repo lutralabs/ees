@@ -60,7 +60,7 @@ export function ShareDialog({
             <div>Share on</div>
             <TwitterShareButton
               url={shareLink}
-              title={'Check out my profile on Endorse.fun!'}
+              title={'Check out my profile on endorse.fun!'}
               hashtags={['web3', 'endorsements', 'reputation']}
               className="flex items-center justify-center gap-x-2"
             >
@@ -69,7 +69,7 @@ export function ShareDialog({
             <Link
               prefetch={false}
               href={`https://hey.xyz/?text=${encodeURIComponent(
-                `Check out my profile on Endorse.fun!\n ${shareLink}\n`
+                `Check out my profile on endorse.fun!\n ${shareLink}\n`
               )}&hashtags=${encodeURIComponent('Masca,Identity,Credential')}`}
               target="_blank"
             >
@@ -83,7 +83,7 @@ export function ShareDialog({
             <Link
               prefetch={false}
               href={`https://warpcast.com/~/compose?text=${encodeURIComponent(
-                'Check out my profile on Endorse.fun!'
+                'Check out my profile on endorse.fun!'
               )}&embeds[]=${shareLink}`}
               target="_blank"
             >

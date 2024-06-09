@@ -88,10 +88,10 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   return {
     title: `Profile | ${slug}`,
-    description: 'Check out my profile on Endorse.fun!',
+    description: 'Check out my profile on endorse.fun!',
     openGraph: {
-      siteName: 'Endorse.fun',
-      description: 'The next generation Web3 social layer.',
+      siteName: 'endorse.fun',
+      description: 'The next upgrade for Web3 social layer.',
       images: [
         {
           url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
@@ -100,13 +100,13 @@ export async function generateMetadata({
           alt: 'Profile Page Image',
         },
       ],
-      title: 'Check out my profile on Endorse.fun!',
+      title: 'Check out my profile on endorse.fun!',
       type: 'article',
       url: `/profile/${slug}?platform=${searchParams.platform}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Check out my profile on Endorse.fun!',
+      title: 'Check out my profile on endorse.fun!',
       description: 'Profile Page',
       images: [
         {

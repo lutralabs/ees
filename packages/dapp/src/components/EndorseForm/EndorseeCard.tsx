@@ -11,12 +11,16 @@ import { useEndorsementStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
-const ENDORSMENT_OPTIONS = [
-  { value: 'web3', label: 'Web3Explorer' },
+const ENDORSEMENT_OPTIONS = [
+  { value: 'web3', label: 'Web3 explorer' },
   { value: 'dev', label: 'Developer' },
   { value: 'art', label: 'Artist' },
-  { value: 'content', label: 'Content Creator' },
+  { value: 'blogger', label: 'Blogger' },
   { value: 'trader', label: 'Trader' },
+  { value: 'friend', label: 'Friend' },
+  { value: 'hacker', label: 'Hacker' },
+  { value: 'buidler', label: 'Buidler' },
+  { value: 'memer', label: 'Memer' },
 ];
 
 type EndorseeCardProps = {
@@ -68,12 +72,12 @@ export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
           onValueChange={changeEndorsementType}
         >
           <SelectTrigger className="w-[180px] max-sm:w-full">
-            <SelectValue placeholder="Endorsement Type" />
+            <SelectValue placeholder="Type of endorsement" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Endorsement Type</SelectLabel>
-              {ENDORSMENT_OPTIONS.map((option) => (
+              <SelectLabel>Type of endorsement</SelectLabel>
+              {ENDORSEMENT_OPTIONS.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
