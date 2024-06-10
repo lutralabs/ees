@@ -27,7 +27,7 @@ export default async function Page({
           </Button>
         </div>
         <Container className="pt-16 max-w-[1440px]">
-          <div className="sm:hover:mt-24 animated-transition md:w-[70%] lg:w-[50%] sm:mt-36 mx-auto relative">
+          <div className="sm:hover:mt-0 animated-transition md:w-[70%] lg:w-[50%] sm:mt-16 mx-auto relative">
             <EndorseForm
               endorsee={
                 <Suspense
@@ -44,7 +44,7 @@ export default async function Page({
             />
             <Link
               href="/"
-              className="bg-gradient-to-b from-white/0 via-white/30 to-white/100 absolute top-0 left-0 rounded-md h-full w-full"
+              className="bg-gradient-to-b from-white/0 via-slate-100/75 to-slate-100 absolute top-0 left-0 rounded-md h-full w-full"
             />
           </div>
         </Container>
@@ -56,7 +56,7 @@ export default async function Page({
 
   return (
     <Container className="pt-16 max-w-[1440px]">
-      <div className="md:w-[70%] lg:w-[60%] xl:w-[50%] sm:mt-24 mx-auto">
+      <div className="md:w-[70%] lg:w-[60%] xl:w-[50%] mx-auto">
         <EndorseForm
           endorsee={
             <Suspense
