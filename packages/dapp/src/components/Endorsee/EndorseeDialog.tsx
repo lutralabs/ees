@@ -56,12 +56,12 @@ export function EndorseeDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="font-semibold text-lg max-sm:w-full" size="lg">
+        <Button className="font-semibold text-lg max-lg:w-full" size="lg">
           Who to endorse?
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[525px]">
-        <div className="max-w-[525px] overflow-hidden max-sm:max-w-full">
+        <div className="max-w-[525px] overflow-hidden max-lg:max-w-full">
           <div className="relative flex items-center">
             <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
             <Input

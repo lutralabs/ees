@@ -65,7 +65,7 @@ export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
           </div>
         )}
       </div>
-      <div className="flex max-sm:flex-col max-sm:pt-4 max-sm:gap-y-4 justify-between items-center">
+      <div className="flex max-lg:flex-col max-lg:pt-4 max-lg:gap-y-4 justify-between items-center">
         {endorsee}
 
         <Select
@@ -73,7 +73,7 @@ export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
           value={endorsementType}
           onValueChange={changeEndorsementType}
         >
-          <SelectTrigger className="w-[180px] max-sm:w-full">
+          <SelectTrigger className="min-w-[160px] w-[160px] max-lg:w-full">
             <SelectValue placeholder="Type of endorsement" />
           </SelectTrigger>
           <SelectContent>

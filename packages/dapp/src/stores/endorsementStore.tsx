@@ -29,7 +29,7 @@ export const endorsementStoreInitialState = {
   address: null,
   platform: null,
   displayValue: null,
-  endorsementType: 'web3',
+  endorsementType: 'Based energy 🔵',
   donationValue: '',
   comment: '',
 };

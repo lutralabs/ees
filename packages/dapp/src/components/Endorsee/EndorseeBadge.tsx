@@ -44,10 +44,10 @@ export const EndorseeBadge = ({
             </div>
           </div>
           <div className="w-full sm:ml-4">
-            <div className="text-xl sm:text-3xl font-semibold max-sm:text-center">
+            <div className="text-xl sm:text-3xl font-semibold max-lg:text-center">
               {handle}
             </div>
-            <div className="flex items-center text-sm sm:text-md text-gray-600 font-normal max-sm:justify-center gap-x-1">
+            <div className="flex items-center text-sm sm:text-md text-gray-600 font-normal max-lg:justify-center gap-x-1">
               {formatAddress(address)}
               <CopyIcon value={address} />
             </div>

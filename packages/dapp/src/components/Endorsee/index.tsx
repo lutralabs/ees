@@ -73,7 +73,7 @@ export const EndorseeSkeleton = () => {
       <div className="sm:mt-3">
         <ProfileAvatarSkeleton size="2xl" />
       </div>
-      <div className="flex flex-col w-full sm:ml-4 gap-y-2 max-sm:items-center">
+      <div className="flex flex-col w-full lg:ml-4 gap-y-2 max-lg:items-center">
         <Skeleton className="w-[160px] h-[32px] rounded-full bg-primary-200" />
         <Skeleton className="w-[112px] h-[16px] rounded-full bg-primary-200" />
       </div>
