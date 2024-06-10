@@ -20,7 +20,7 @@ export const UserBadge = async ({
 }: UserBadgeProps) => {
   const data = await getMinimalProfileFromAddress(address);
 
-  const title = totalEndorsements ? 'Endorsements' : 'Donations';
+  const title = totalEndorsements ? 'Endorsements' : 'Tips';
   const value = totalEndorsements
     ? totalEndorsements
     : `${Number(formatEther(BigInt(donationAmount ?? '0'))).toFixed(4)} ETH`;
