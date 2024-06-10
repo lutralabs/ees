@@ -1,0 +1,9 @@
+query GetAggregatedAccountData($account: ID!) {
+  account(id: $account) {
+    id
+    totalEndorsementsReceived
+    totalEndorsementsSent
+    totalDonationsReceived
+    totalDonationsSent
+  }
+}

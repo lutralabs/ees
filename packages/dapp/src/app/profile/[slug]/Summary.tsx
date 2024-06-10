@@ -43,11 +43,10 @@ export const Summary = async ({ account, network }: SummaryProps) => {
           )}
           {topEndorsers.map((endorser) => (
             <Fragment key={endorser.id}>
-              <Suspense fallback={<UserBadgeSkeleton />}>
-                <UserBadge
-                  address={endorser.from.id}
-                  totalEndorsements={endorser.from.totalEndorsementsReceived}
-                />
+              <Suspense
+                fallback={<UserBadgeSkeleton isEndorsementBadge={true} />}
+              >
+                <UserBadge address={endorser.from.id} />
               </Suspense>
             </Fragment>
           ))}
@@ -76,7 +75,9 @@ export const Summary = async ({ account, network }: SummaryProps) => {
           )}
           {topDonators.map((donator) => (
             <Fragment key={donator.id}>
-              <Suspense fallback={<UserBadgeSkeleton />}>
+              <Suspense
+                fallback={<UserBadgeSkeleton isEndorsementBadge={false} />}
+              >
                 <UserBadge
                   address={donator.from.id}
                   donationAmount={donator.donationAmount}

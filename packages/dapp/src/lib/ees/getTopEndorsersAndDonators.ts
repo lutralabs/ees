@@ -55,9 +55,11 @@ export const getTopEndorsersAndDonators = async ({
       };
     }
 
+    const data = jsonResponse.data as GetTopEndorsersAndDonatorsQuery;
+
     return {
-      topEndorsers: jsonResponse.data.topEndorsers ?? [],
-      topDonators: jsonResponse.data.topDonators ?? [],
+      topEndorsers: data.topEndorsers ?? [],
+      topDonators: data.topDonators ?? [],
       error: null,
     };
   } catch (error) {

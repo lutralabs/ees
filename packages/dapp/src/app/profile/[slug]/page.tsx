@@ -16,6 +16,7 @@ import { Badges } from './Badges';
 import { ShareDialog } from './ShareDialog';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { Feed } from './Feed';
+import { getAggregatedAccountData } from '@/lib/ees';
 
 type PageProps = {
   params: { slug: string };
@@ -33,6 +34,11 @@ export default async function Page({
   const mainAddress = data.Wallet!.addresses![0] as `0x${string}`;
   const avatar = getAvatarForPlatform(data, _platform);
   const basicProfileInfo = getBasicPlatformProfileInfo(data, _platform);
+
+  const accountAggregatedData = await getAggregatedAccountData({
+    account: mainAddress,
+    chainId: _network,
+  });
 
   return (
     <Container className="pt-16 max-w-[1440px] overflow-auto">
@@ -53,6 +59,9 @@ export default async function Page({
                   basicProfileInfo.name ?? formatAddress(mainAddress)
                 }
               />
+            </div>
+            <div className="text-xl mt-2 font-semibold">
+              Endorsements: {accountAggregatedData.totalEndorsementsReceived}
             </div>
             {basicProfileInfo.description && (
               <div className="text-lg py-2 font-semibold">

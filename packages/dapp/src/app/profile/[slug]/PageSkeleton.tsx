@@ -18,6 +18,7 @@ export const PageSkeleton = () => {
               <Skeleton className="w-[100px] h-8 bg-primary-200 rounded-3xl" />
             </div>
             <Skeleton className="mt-2 w-[260px] h-6 bg-primary-200 rounded-3xl" />
+            <Skeleton className="mt-2 w-[260px] h-6 bg-primary-200 rounded-3xl" />
           </div>
         </div>
         <div className="w-full">

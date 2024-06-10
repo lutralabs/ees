@@ -193,7 +193,7 @@ export const Searchbar = () => {
   return (
     <div
       className={cn(
-        'w-full flex max-lg:justify-end 2xl:w-full',
+        'w-full flex max-lg:justify-end 2xl:w-full xl:pr-0',
         address ? 'lg:pr-14 lg:w-[80%]' : 'lg:w-full'
       )}
     >

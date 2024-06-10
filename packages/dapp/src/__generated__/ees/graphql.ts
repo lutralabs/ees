@@ -916,12 +916,19 @@ export enum _SubgraphErrorPolicy_ {
   Deny = 'deny'
 }
 
+export type GetAggregatedAccountDataQueryVariables = Exact<{
+  account: Scalars['ID']['input'];
+}>;
+
+
+export type GetAggregatedAccountDataQuery = { __typename?: 'Query', account?: { __typename?: 'Account', id: any, totalEndorsementsReceived: any, totalEndorsementsSent: any, totalDonationsReceived: any, totalDonationsSent: any } | null };
+
 export type GetTopEndorsersAndDonatorsQueryVariables = Exact<{
   account: Scalars['String']['input'];
 }>;
 
 
-export type GetTopEndorsersAndDonatorsQuery = { __typename?: 'Query', topEndorsers: Array<{ __typename?: 'AggregatedInformation', id: any, from: { __typename?: 'Account', id: any, totalEndorsementsReceived: any } }>, topDonators: Array<{ __typename?: 'AggregatedInformation', id: any, donationAmount: any, from: { __typename?: 'Account', id: any } }> };
+export type GetTopEndorsersAndDonatorsQuery = { __typename?: 'Query', topEndorsers: Array<{ __typename?: 'AggregatedInformation', id: any, from: { __typename?: 'Account', id: any } }>, topDonators: Array<{ __typename?: 'AggregatedInformation', id: any, donationAmount: any, from: { __typename?: 'Account', id: any } }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -938,6 +945,17 @@ export class TypedDocumentString<TResult, TVariables>
   }
 }
 
+export const GetAggregatedAccountDataDocument = new TypedDocumentString(`
+    query GetAggregatedAccountData($account: ID!) {
+  account(id: $account) {
+    id
+    totalEndorsementsReceived
+    totalEndorsementsSent
+    totalDonationsReceived
+    totalDonationsSent
+  }
+}
+    `) as unknown as TypedDocumentString<GetAggregatedAccountDataQuery, GetAggregatedAccountDataQueryVariables>;
 export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
     query GetTopEndorsersAndDonators($account: String!) {
   topEndorsers: aggregatedInformations(
@@ -949,11 +967,10 @@ export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
     id
     from {
       id
-      totalEndorsementsReceived
     }
   }
   topDonators: aggregatedInformations(
-    where: {to: $account}
+    where: {to: $account, donationAmount_gt: 0}
     orderBy: donationAmount
     orderDirection: desc
     first: 6

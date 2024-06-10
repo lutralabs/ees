@@ -1,2 +1,3 @@
 export * from './getGraphqlApiUrl';
 export * from './getTopEndorsersAndDonators';
+export * from './getAggregatedAccountData';

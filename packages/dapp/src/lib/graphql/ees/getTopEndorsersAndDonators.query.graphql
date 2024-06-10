@@ -8,11 +8,10 @@ query GetTopEndorsersAndDonators($account: String!) {
     id
     from {
       id
-      totalEndorsementsReceived
     }
   }
   topDonators: aggregatedInformations(
-    where: {to: $account}
+    where: {to: $account, donationAmount_gt: 0}
     orderBy: donationAmount
     orderDirection: desc
     first: 6

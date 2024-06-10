@@ -46,7 +46,7 @@ export function ShareDialog({
         <DialogHeader>
           <DialogTitle>Share this profile</DialogTitle>
           <DialogDescription>
-            Share your profile with others to get more endorsements!
+            Share the profile with others to get more endorsements!
           </DialogDescription>
         </DialogHeader>
 
