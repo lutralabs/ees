@@ -47,7 +47,7 @@ export default async function Image() {
           <div tw="flex flex-2 flex-col items-center justify-center">
             <img
               alt="EES Logo with text"
-              width={256}
+              width={384}
               src={`${APP_URL}/endorse.png`}
             />
           </div>

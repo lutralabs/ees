@@ -358,7 +358,7 @@ export type Endorsement = {
   __typename?: 'Endorsement';
   donationAmount: Scalars['BigInt']['output'];
   easUid: Scalars['Bytes']['output'];
-  endorsmentType: Scalars['String']['output'];
+  endorsementType: Scalars['String']['output'];
   from: Account;
   id: Scalars['Bytes']['output'];
   to: Account;
@@ -386,26 +386,26 @@ export type Endorsement_Filter = {
   easUid_not?: InputMaybe<Scalars['Bytes']['input']>;
   easUid_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
   easUid_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
-  endorsmentType?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_contains?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_ends_with?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_gt?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_gte?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  endorsmentType_lt?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_lte?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_not?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_not_contains?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_not_ends_with?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
-  endorsmentType_not_starts_with?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_starts_with?: InputMaybe<Scalars['String']['input']>;
-  endorsmentType_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  endorsementType?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_contains?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_ends_with?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_gt?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_gte?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  endorsementType_lt?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_lte?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_not?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_not_contains?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_not_contains_nocase?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_not_ends_with?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_not_ends_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_not_in?: InputMaybe<Array<Scalars['String']['input']>>;
+  endorsementType_not_starts_with?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_not_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_starts_with?: InputMaybe<Scalars['String']['input']>;
+  endorsementType_starts_with_nocase?: InputMaybe<Scalars['String']['input']>;
   from?: InputMaybe<Scalars['String']['input']>;
   from_?: InputMaybe<Account_Filter>;
   from_contains?: InputMaybe<Scalars['String']['input']>;
@@ -464,7 +464,7 @@ export type Endorsement_Filter = {
 export enum Endorsement_OrderBy {
   DonationAmount = 'donationAmount',
   EasUid = 'easUid',
-  EndorsmentType = 'endorsmentType',
+  EndorsementType = 'endorsementType',
   From = 'from',
   FromId = 'from__id',
   FromTotalDonationsReceived = 'from__totalDonationsReceived',

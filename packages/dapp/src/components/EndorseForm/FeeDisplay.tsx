@@ -8,7 +8,7 @@ import { formatEther } from 'viem';
 import {
   useDonationFeePercentage,
   useEndorseEstimateGas,
-  useEndorsmentPrice,
+  useEndorsementPrice,
   useQuota,
 } from '@/hooks';
 import { DEFAULT_CHAIN_ID } from '@/lib/contracts';
@@ -45,7 +45,7 @@ export const FeeDisplay = ({
     data: endorsementPrice,
     isPending: isEndorsementPricePending,
     isError: isEndorsementPriceError,
-  } = useEndorsmentPrice(chainId ?? DEFAULT_CHAIN_ID);
+  } = useEndorsementPrice(chainId ?? DEFAULT_CHAIN_ID);
 
   const {
     data: feesPerGas,
@@ -182,7 +182,7 @@ export const FeeDisplay = ({
     donationFeeCut,
   ]);
 
-  const EndorsmentPrice = useMemo(() => {
+  const EndorsementPrice = useMemo(() => {
     if (isEndorsementPricePending || isQuotaPending) {
       return <Skeleton className="h-4 w-16 bg-gray-400" />;
     }
@@ -260,7 +260,7 @@ export const FeeDisplay = ({
           </div>
           <div className="flex justify-between items-center">
             <p className="text-sm">Endorsement price</p>
-            <div className="flex items-center">{EndorsmentPrice}</div>
+            <div className="flex items-center">{EndorsementPrice}</div>
           </div>
           <div className="flex justify-between items-center">
             <p className="text-sm">{`Tip fee (${

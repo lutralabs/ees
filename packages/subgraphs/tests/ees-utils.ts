@@ -10,7 +10,7 @@ import {
 export function createEndorseEvent(
   from: Address,
   to: Address,
-  endorsmentType: string,
+  endorsementType: string,
   easUid: Bytes,
   logIndex: BigInt,
   donationAmount: BigInt
@@ -39,8 +39,8 @@ export function createEndorseEvent(
 
   event.parameters.push(
     new ethereum.EventParam(
-      'endorsmentType',
-      ethereum.Value.fromString(endorsmentType)
+      'endorsementType',
+      ethereum.Value.fromString(endorsementType)
     )
   );
 

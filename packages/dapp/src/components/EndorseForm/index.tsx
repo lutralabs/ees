@@ -25,7 +25,7 @@ import { CheckCircle2, CircleAlert } from 'lucide-react';
 import { EXPLORERS } from '@/lib/contracts/explorers';
 import { useDebounce } from 'react-use';
 import {
-  useEndorsmentPrice,
+  useEndorsementPrice,
   useEndorseEstimateGas,
   useDonationFeePercentage,
 } from '@/hooks';
@@ -96,7 +96,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
     data: endorsementPrice,
     isPending: isEndorsementPricePending,
     isError: isEndorsementPriceError,
-  } = useEndorsmentPrice(chainId ?? DEFAULT_CHAIN_ID);
+  } = useEndorsementPrice(chainId ?? DEFAULT_CHAIN_ID);
 
   const { isPending: isFeesPerGasPending, isError: isFeesPerGasError } =
     useEstimateFeesPerGas({

@@ -42,7 +42,7 @@ describe('Describe entity assertions', () => {
     test('Endorsement created and stored', () => {
       const from = Address.fromString(TEST_ACCOUNTS[0]);
       const to = Address.fromString(TEST_ACCOUNTS[1]);
-      const endorsmentType = 'Developer';
+      const endorsementType = 'Developer';
       const easUid = Bytes.fromHexString(
         '0xb03f4550dec1c92b8183d4ffbfe55772165257eb588b3a77bdbfa06a54d0c483'
       );
@@ -50,7 +50,7 @@ describe('Describe entity assertions', () => {
       const newEndorseEvent = createEndorseEvent(
         from,
         to,
-        endorsmentType,
+        endorsementType,
         easUid,
         BigInt.fromI32(1),
         BigInt.fromI32(42)
@@ -69,7 +69,7 @@ describe('Describe entity assertions', () => {
       assert.assertNotNull(endorsement);
       assert.stringEquals(endorsement!.from.toHex(), from.toHex());
       assert.stringEquals(endorsement!.to.toHex(), to.toHex());
-      assert.stringEquals(endorsement!.endorsmentType, endorsmentType);
+      assert.stringEquals(endorsement!.endorsementType, endorsementType);
       assert.stringEquals(endorsement!.easUid.toHex(), easUid.toHex());
       assert.bigIntEquals(endorsement!.donationAmount, BigInt.fromI32(42));
 

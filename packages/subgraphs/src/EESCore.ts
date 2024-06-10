@@ -101,7 +101,7 @@ export function handleEndorse(event: EndorseEvent): void {
 
   endorsement.from = fromAccount.id;
   endorsement.to = toAccount.id;
-  endorsement.endorsmentType = event.params.endorsementType;
+  endorsement.endorsementType = event.params.endorsementType;
   endorsement.easUid = event.params.uid;
   endorsement.donationAmount = event.params.donationAmount;
 

@@ -10,7 +10,7 @@ type Endorsement @entity(immutable: true) {
   id: Bytes!
   from: Account!
   to: Account!
-  endorsmentType: String!
+  endorsementType: String!
   easUid: Bytes!
   donationAmount: BigInt!
 }
