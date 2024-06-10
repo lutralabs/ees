@@ -69,7 +69,7 @@ export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
         {endorsee}
 
         <Select
-          defaultValue="web3"
+          defaultValue="Based energy 🔵"
           value={endorsementType}
           onValueChange={changeEndorsementType}
         >
