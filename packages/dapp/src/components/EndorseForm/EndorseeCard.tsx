@@ -12,15 +12,17 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 const ENDORSEMENT_OPTIONS = [
-  { value: 'web3', label: 'Web3 explorer' },
-  { value: 'dev', label: 'Developer' },
-  { value: 'art', label: 'Artist' },
-  { value: 'blogger', label: 'Blogger' },
-  { value: 'trader', label: 'Trader' },
-  { value: 'friend', label: 'Friend' },
-  { value: 'hacker', label: 'Hacker' },
-  { value: 'buidler', label: 'Buidler' },
-  { value: 'memer', label: 'Memer' },
+  { value: 'Web3 explorer', label: 'Web3 explorer' },
+  { value: 'Developer', label: 'Developer' },
+  { value: 'Artist', label: 'Artist' },
+  { value: 'Blogger', label: 'Blogger' },
+  { value: 'Trader', label: 'Trader' },
+  { value: 'Friend', label: 'Friend' },
+  { value: 'Based energy 🔵', label: 'Based energy 🔵' },
+  { value: 'Hacker', label: 'Hacker' },
+  { value: 'Buidler', label: 'Buidler' },
+  { value: 'Memer', label: 'Memer' },
+  { value: 'Degen', label: 'Degen' },
 ];
 
 type EndorseeCardProps = {

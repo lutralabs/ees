@@ -60,8 +60,8 @@ export function ShareDialog({
             <div>Share on</div>
             <TwitterShareButton
               url={shareLink}
-              title={'Check out my profile on endorse.fun!'}
-              hashtags={['web3', 'endorsements', 'reputation']}
+              title={'Check out my profile on @endorsedotfun!'}
+              hashtags={['endorse', 'reputation']}
               className="flex items-center justify-center gap-x-2"
             >
               <TwitterIcon size={32} round />
@@ -69,8 +69,8 @@ export function ShareDialog({
             <Link
               prefetch={false}
               href={`https://hey.xyz/?text=${encodeURIComponent(
-                `Check out my profile on endorse.fun!\n ${shareLink}\n`
-              )}&hashtags=${encodeURIComponent('Masca,Identity,Credential')}`}
+                `Check out my profile on @endorsedotfun!\n ${shareLink}\n`
+              )}&hashtags=${encodeURIComponent('reputation,endorse')}`}
               target="_blank"
             >
               <MemoizedImage

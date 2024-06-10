@@ -260,7 +260,7 @@ export const FeeDisplay = ({
             <div className="flex items-center">{EndorsmentPrice}</div>
           </div>
           <div className="flex justify-between items-center">
-            <p className="text-sm">{`Donation fee (${
+            <p className="text-sm">{`Tip fee (${
               donationFeePercentage
                 ? (Number(donationFeePercentage) / 100).toString()
                 : '...'
