@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
               {description && <div tw="flex text-2xl">{description}</div>}{' '}
             </div>
             <div tw="flex flex-2 flex-col items-center justify-end">
-              <img alt="EES Logo" width={256} src={`${APP_URL}/endorse.png`} />
+              <img alt="EES Logo" width={384} src={`${APP_URL}/endorse.png`} />
             </div>
           </div>
         </div>
