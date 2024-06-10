@@ -954,7 +954,7 @@ export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
   }
   topDonators: aggregatedInformations(
     where: {to: $account}
-    orderBy: from__totalEndorsementsReceived
+    orderBy: donationAmount
     orderDirection: desc
     first: 6
   ) {

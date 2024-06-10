@@ -13,7 +13,7 @@ query GetTopEndorsersAndDonators($account: String!) {
   }
   topDonators: aggregatedInformations(
     where: {to: $account}
-    orderBy: from__totalEndorsementsReceived
+    orderBy: donationAmount
     orderDirection: desc
     first: 6
   ) {
