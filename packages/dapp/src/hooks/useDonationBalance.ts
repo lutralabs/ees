@@ -15,6 +15,7 @@ export const useDonationBalance = (
     args: [account],
     query: {
       enabled,
+      refetchInterval: 4000,
     },
   });
 };

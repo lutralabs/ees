@@ -13,6 +13,7 @@ import {
 } from '@/hooks';
 import { DEFAULT_CHAIN_ID } from '@/lib/contracts';
 import { calculateNetworkCost } from '@/utils/calculateNetworkCost';
+import { MemoizedSVG } from '@/components/MemoizedSVG';
 
 type FeeDisplayProps = {
   donationValue: string;
@@ -213,15 +214,17 @@ export const FeeDisplay = ({
       return <span className="text-red-500">Can't estimate gas.</span>;
     }
 
+    const _networkCost = calculateNetworkCost(
+      gasEstimate,
+      feesPerGas?.maxFeePerGas,
+      quota?.price
+    );
+
     return (
-      <p className="text-sm">
-        $
-        {calculateNetworkCost(
-          gasEstimate,
-          feesPerGas?.maxFeePerGas,
-          quota?.price
-        ).toFixed(2)}
-      </p>
+      <div className="flex items-center justify-center text-sm">
+        <MemoizedSVG src="/icons/icon-gas.svg" className="w-4 h-4 mr-1" />
+        {_networkCost < 0.01 ? '<$0.01' : `$${_networkCost.toFixed(2)}`}
+      </div>
     );
   }, [
     isGasEstimateFetching,

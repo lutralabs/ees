@@ -16,6 +16,9 @@ export const Balance = () => {
   const balance = useBalance({
     address: account.address,
     chainId: account.chainId,
+    query: {
+      refetchInterval: 4000,
+    },
   });
 
   const balanceValue = useMemo(() => {
