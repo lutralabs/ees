@@ -91,19 +91,6 @@ export const getMinimalProfileFromAddress = async (
       };
     }
 
-    // Lens profile
-    if (data?.lensSocials?.Social?.length === 1) {
-      return {
-        displayName: data.lensSocials.Social[0].profileHandle ?? null,
-        address: address,
-        description: data.lensSocials.Social[0].profileBio ?? null,
-        avatar:
-          data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
-          null,
-        error: null,
-      };
-    }
-
     // Farcaster profile
     if (data?.farcasterSocials?.Social?.length === 1) {
       return {
@@ -113,6 +100,19 @@ export const getMinimalProfileFromAddress = async (
         avatar:
           data.farcasterSocials.Social[0].profileImageContentValue?.image
             ?.small ?? null,
+        error: null,
+      };
+    }
+
+    // Lens profile
+    if (data?.lensSocials?.Social?.length === 1) {
+      return {
+        displayName: data.lensSocials.Social[0].profileHandle ?? null,
+        address: address,
+        description: data.lensSocials.Social[0].profileBio ?? null,
+        avatar:
+          data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
+          null,
         error: null,
       };
     }

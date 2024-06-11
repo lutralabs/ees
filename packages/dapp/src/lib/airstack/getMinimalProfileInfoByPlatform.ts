@@ -115,47 +115,6 @@ export const getMinimalProfileInfoByPlatform = async (
           error: null,
         };
       }
-      case PlatformType.lens: {
-        const data = jsonResponse.data as GetProfileFromLensQuery;
-
-        if (
-          !data.lensSocials ||
-          !data.lensSocials.Social ||
-          data.lensSocials.Social.length === 0
-        ) {
-          return {
-            displayName: null,
-            address: null,
-            description: null,
-            avatar: null,
-            error: 'No Lens profile found',
-          };
-        }
-
-        if (
-          !data.Wallet ||
-          !data.Wallet.addresses ||
-          data.Wallet.addresses.length === 0
-        ) {
-          return {
-            displayName: null,
-            address: null,
-            description: null,
-            avatar: null,
-            error: 'No matching address for the Lens profile found',
-          };
-        }
-
-        return {
-          displayName: identity,
-          address: data.Wallet.addresses[0],
-          description: data.lensSocials.Social[0].profileBio ?? null,
-          avatar:
-            data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
-            null,
-          error: null,
-        };
-      }
       case PlatformType.farcaster: {
         const data = jsonResponse.data as GetProfileFromFarcasterQuery;
 
@@ -208,6 +167,47 @@ export const getMinimalProfileInfoByPlatform = async (
           avatar:
             data.farcasterSocials.Social[0].profileImageContentValue?.image
               ?.small ?? null,
+          error: null,
+        };
+      }
+      case PlatformType.lens: {
+        const data = jsonResponse.data as GetProfileFromLensQuery;
+
+        if (
+          !data.lensSocials ||
+          !data.lensSocials.Social ||
+          data.lensSocials.Social.length === 0
+        ) {
+          return {
+            displayName: null,
+            address: null,
+            description: null,
+            avatar: null,
+            error: 'No Lens profile found',
+          };
+        }
+
+        if (
+          !data.Wallet ||
+          !data.Wallet.addresses ||
+          data.Wallet.addresses.length === 0
+        ) {
+          return {
+            displayName: null,
+            address: null,
+            description: null,
+            avatar: null,
+            error: 'No matching address for the Lens profile found',
+          };
+        }
+
+        return {
+          displayName: identity,
+          address: data.Wallet.addresses[0],
+          description: data.lensSocials.Social[0].profileBio ?? null,
+          avatar:
+            data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
+            null,
           error: null,
         };
       }
