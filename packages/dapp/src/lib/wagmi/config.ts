@@ -32,7 +32,7 @@ const connectors = connectorsForWallets(
     },
   ],
   {
-    projectId: 'f68e3ee8babb84b20171ecabda673673', // FIXME: Create a production project
+    projectId: '94edd1d8986f8dac6fb7aa72bcb85e27',
     appName: 'endorse.fun',
     appDescription: 'The next upgrade for Web3 social layer.',
     appUrl:
