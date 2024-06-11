@@ -8,11 +8,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: EESCore
-    network: base-sepolia
+    network: base
     source:
       abi: EESCore
-      address: "0x63F610a03Caa82ca32386BDb6F447a93d4D6F6e7"
-      startBlock: 10868305
+      address: "0x6BbcC7D0E661a4f5441F74Dc0Ab324ac4327D940"
+      startBlock: 15656723
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7

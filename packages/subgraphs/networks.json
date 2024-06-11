@@ -1,8 +1,8 @@
 {
   "base": {
     "EESCore": {
-      "address": "",
-      "startBlock": 0
+      "address": "0x6BbcC7D0E661a4f5441F74Dc0Ab324ac4327D940",
+      "startBlock": 15656723
     }
   },
   "test": {
