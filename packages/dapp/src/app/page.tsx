@@ -2,8 +2,10 @@ import { Container } from '@/components/Container';
 import { EndorseForm } from '@/components/EndorseForm';
 import { Endorsee, EndorseeSkeleton } from '@/components/Endorsee';
 import { Button } from '@/components/ui/button';
-import { PlatformType, validateOrGetDefaultPlatform } from '@/utils';
+import { APP_URL, PlatformType, validateOrGetDefaultPlatform } from '@/utils';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function Page({
@@ -11,6 +13,10 @@ export default async function Page({
 }: {
   searchParams: { platform?: string; account?: string; intro?: string };
 }) {
+  // Read cookies
+  const _cookies = cookies();
+  const intro = _cookies.get('intro');
+
   if (searchParams.intro === 'true') {
     return (
       <div>
@@ -50,6 +56,10 @@ export default async function Page({
         </Container>
       </div>
     );
+  }
+
+  if (!intro) {
+    return redirect(`${APP_URL}/?intro=true`);
   }
 
   const platform = validateOrGetDefaultPlatform(searchParams.platform);

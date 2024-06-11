@@ -29,18 +29,8 @@ export function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  // Check path
-  if (request.nextUrl.pathname === '/') {
-    // Read cookies
-    const intro = request.cookies.get('intro');
-
-    if (!intro) {
-      const redirectResponse = NextResponse.redirect(
-        new URL('/?intro=true', request.url)
-      );
-      redirectResponse.cookies.set('intro', 'true', { path: '/' });
-      return redirectResponse;
-    }
+  if (request.nextUrl.searchParams.get('intro') === 'true') {
+    response.headers.set('Set-Cookie', 'intro=true');
   }
 
   return response;
