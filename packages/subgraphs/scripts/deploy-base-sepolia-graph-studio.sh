@@ -9,5 +9,5 @@ if [ -z "$VERSION_LABEL_BASE_SEPOLIA" ]; then
 fi
 
 # Deploy to Base Sepolia
-graph deploy --studio ees-base-sepolia --version-label $VERSION_LABEL_BASE_SEPOLIA
+graph deploy --network base-sepolia --studio ees-base-sepolia --version-label $VERSION_LABEL_BASE_SEPOLIA
 

@@ -9,5 +9,5 @@ if [ -z "$VERSION_LABEL_BASE" ]; then
 fi
 
 # Deploy to Base
-graph deploy --studio ees-base --version-label $VERSION_LABEL_BASE
+graph deploy --network base --studio ees-base --version-label $VERSION_LABEL_BASE
 
