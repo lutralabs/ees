@@ -15,7 +15,7 @@ import { APP_URL } from '@/utils';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ees-eosin.vercel.app'),
+  metadataBase: new URL(APP_URL),
   title: 'endorse.fun - Ethereum Endorsement Service',
   description: 'The next upgrade for Web3 social layer.',
   robots: {

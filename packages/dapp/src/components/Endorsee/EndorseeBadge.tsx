@@ -7,6 +7,8 @@ import { MemoizedSVG } from '@/components/MemoizedSVG';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { CopyIcon } from '@/components/CopyIcon';
 import { useEffect, useMemo, useState } from 'react';
+import { useEndorsementStore } from '@/stores';
+import { ENDORSEMENT_OPTIONS } from '../EndorseForm/EndorseeCard';
 
 type EndorseeBadgeProps = {
   type: PlatformType;
@@ -56,7 +58,12 @@ export const EndorseeBadge = ({
   address,
   intro = false,
 }: EndorseeBadgeProps) => {
+  const changeEndorsementType = useEndorsementStore(
+    (state) => state.changeEndorsementType
+  );
+
   const [index, setIndex] = useState(0);
+  const [endorsementTypeIndex, setEndorsementTypeIndex] = useState(0);
 
   const user = useMemo(
     () =>
@@ -71,17 +78,23 @@ export const EndorseeBadge = ({
     [index]
   );
 
-  let interval: NodeJS.Timeout | undefined;
-
-  if (intro) {
-    interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % introEndorsees.length);
-    }, 5000);
-  }
-
   useEffect(() => {
+    let interval: NodeJS.Timeout | undefined;
+
+    if (intro) {
+      interval = setInterval(() => {
+        setIndex((prevIndex) => (prevIndex + 1) % introEndorsees.length);
+        setEndorsementTypeIndex(
+          (prevIndex) => (prevIndex + 1) % ENDORSEMENT_OPTIONS.length
+        );
+      }, 2000);
+    }
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    changeEndorsementType(ENDORSEMENT_OPTIONS[endorsementTypeIndex].value);
+  }, [index]);
 
   switch (user.type) {
     case PlatformType.ens:

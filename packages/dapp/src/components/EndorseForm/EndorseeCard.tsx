@@ -11,7 +11,7 @@ import { useEndorsementStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
-const ENDORSEMENT_OPTIONS = [
+export const ENDORSEMENT_OPTIONS = [
   { value: 'Developer', label: 'Developer' },
   { value: 'Hacker', label: 'Hacker' },
   { value: 'Buidler', label: 'Buidler' },
