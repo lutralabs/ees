@@ -42,7 +42,7 @@ export default async function Page({
                 >
                   <Endorsee
                     platform={PlatformType.ens}
-                    displayValue="pseudobun.eth"
+                    displayValue={null}
                     intro={true}
                   />
                 </Suspense>

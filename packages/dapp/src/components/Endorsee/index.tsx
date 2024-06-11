@@ -20,25 +20,31 @@ export const Endorsee = async ({
 }: EndorseeProps) => {
   let address: `0x${string}` | null;
   let avatar;
-  let error;
   let displayName = displayValue;
 
   if (intro) {
-    address = '0x32b1172e786a31a65b46710cd946b2521e13ac96';
-    avatar =
-      'https://assets.airstack.xyz/v2/image/social/10/8GnKRP2z0DZmg1H4wesg4o9fmVVND1rhv9clPqF6y7sq7Dx5tYx7WfqYTbq3h4GtIJl8mNHSB7vBZyBkgRnAH8RZ3RK3pMKhg/liZlFLAwk2GndPk43U0vfTP/UBOqmmxBfJnOwWplobI3v1icOprrTz8fcWJ64YecoWETk1eLhwevNHdV450lUnYFBnqAvv2rB4wGXz7cACQh5X9kqcrLtceCiCf9ZQt8Cf184ePEE=/small.jpg';
-    error = null;
-  } else {
-    const result =
-      platform === PlatformType.ethereum
-        ? await getMinimalProfileFromAddress(displayValue as `0x${string}`)
-        : await getMinimalProfileInfoByPlatform(platform, displayValue);
-
-    displayName = result.displayName;
-    address = result.address;
-    avatar = result.avatar;
-    error = result.error;
+    return (
+      <>
+        <EndorseeBadge
+          type={platform}
+          handle={''}
+          avatar={null}
+          address={'0x'}
+          intro={true}
+        />
+      </>
+    );
   }
+
+  const result =
+    platform === PlatformType.ethereum
+      ? await getMinimalProfileFromAddress(displayValue as `0x${string}`)
+      : await getMinimalProfileInfoByPlatform(platform, displayValue);
+
+  displayName = result.displayName;
+  address = result.address;
+  avatar = result.avatar;
+  const error = result.error;
 
   if (address) {
     return (
