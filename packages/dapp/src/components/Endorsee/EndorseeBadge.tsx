@@ -6,7 +6,7 @@ import { formatAddress } from '@/utils';
 import { MemoizedSVG } from '@/components/MemoizedSVG';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { CopyIcon } from '@/components/CopyIcon';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 type EndorseeBadgeProps = {
   type: PlatformType;
@@ -56,25 +56,34 @@ export const EndorseeBadge = ({
   address,
   intro = false,
 }: EndorseeBadgeProps) => {
-  let index = 0;
-  const [currentUser, setCurrentUser] = useState(introEndorsees[index]);
+  const [index, setIndex] = useState(0);
+
+  const user = useMemo(
+    () =>
+      intro
+        ? introEndorsees[index]
+        : {
+            type,
+            avatar,
+            handle,
+            address,
+          },
+    [index]
+  );
+
+  let interval: NodeJS.Timeout | undefined;
 
   if (intro) {
-    type = currentUser.type;
-    avatar = currentUser.avatar;
-    handle = currentUser.handle;
-    address = currentUser.address;
-
-    useEffect(() => {
-      const interval = setInterval(() => {
-        index = (index + 1) % introEndorsees.length;
-        setCurrentUser(introEndorsees[index]);
-      }, 5000);
-      return () => clearInterval(interval);
-    }, []);
+    interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % introEndorsees.length);
+    }, 5000);
   }
 
-  switch (type) {
+  useEffect(() => {
+    return () => clearInterval(interval);
+  }, []);
+
+  switch (user.type) {
     case PlatformType.ens:
     case PlatformType.lens:
     case PlatformType.farcaster:
@@ -82,18 +91,22 @@ export const EndorseeBadge = ({
       return (
         <>
           <div className="relative sm:mt-3">
-            <ProfileAvatar avatar={avatar} address={address} size="2xl" />
+            <ProfileAvatar
+              avatar={user.avatar}
+              address={user.address}
+              size="2xl"
+            />
             <div className={'absolute -bottom-2 -right-2'}>
               <MemoizedSVG
-                fill={PLATFORM_DATA[type].color as string}
+                fill={PLATFORM_DATA[user.type].color as string}
                 className={cn(
                   'p-1 rounded-full',
-                  type === PlatformType.lens && 'bg-green-100',
-                  type === PlatformType.farcaster && 'bg-purple-100',
-                  type === PlatformType.ens ||
-                    (type === PlatformType.ethereum && 'bg-blue-100')
+                  user.type === PlatformType.lens && 'bg-green-100',
+                  user.type === PlatformType.farcaster && 'bg-purple-100',
+                  user.type === PlatformType.ens ||
+                    (user.type === PlatformType.ethereum && 'bg-blue-100')
                 )}
-                src={PLATFORM_DATA[type].icon as string}
+                src={PLATFORM_DATA[user.type].icon as string}
                 width={30}
                 height={30}
               />
@@ -101,11 +114,11 @@ export const EndorseeBadge = ({
           </div>
           <div className="w-full sm:ml-4">
             <div className="text-xl sm:text-3xl font-semibold max-lg:text-center">
-              {handle}
+              {user.handle}
             </div>
             <div className="flex items-center text-sm sm:text-md text-gray-600 font-normal max-lg:justify-center gap-x-1">
-              {formatAddress(address)}
-              <CopyIcon value={address} />
+              {formatAddress(user.address)}
+              <CopyIcon value={user.address} />
             </div>
           </div>
         </>
