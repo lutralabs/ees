@@ -13,7 +13,7 @@ const networkToSchemaUid = {
   mainnet: 'not-yet-deployed',
   sepolia: '0x28bb35c3774b2963e8703dccbe93a3d1620ddf91ee3eee4678cdb8fb8e1a8bbb',
   local: '0x28bb35c3774b2963e8703dccbe93a3d1620ddf91ee3eee4678cdb8fb8e1a8bbb',
-  base: 'not-yet-deployed',
+  base: '0xc15bb007fcd98a5a99c0fd98286fba2f62f997de62c11ea24dfd30d274eef99f',
   baseSepolia:
     '0xc15bb007fcd98a5a99c0fd98286fba2f62f997de62c11ea24dfd30d274eef99f',
 };
@@ -44,12 +44,12 @@ async function main() {
   );
   await deployment.waitForDeployment();
 
+  console.log('EESCore deployed to: ', await deployment.getAddress());
   if (hre.network.name !== 'local') {
     await run('verify:verify', {
       address: await deployment.getAddress(),
     });
   }
-  console.log('EESCore deployed to: ', await deployment.getAddress());
 }
 
 main().catch((error) => {
