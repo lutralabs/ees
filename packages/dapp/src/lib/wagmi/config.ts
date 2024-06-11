@@ -33,9 +33,8 @@ const connectors = connectorsForWallets(
   ],
   {
     projectId: 'f68e3ee8babb84b20171ecabda673673', // FIXME: Create a production project
-    appName: 'EES - Ethereum Endorsement Service',
-    appDescription:
-      'Endorse users and projects on Ethereum with a decentralized protocol leveraging EAS, and ENS.',
+    appName: 'endorse.fun',
+    appDescription: 'The next upgrade for Web3 social layer.',
     appUrl:
       APP_ENV === 'development'
         ? 'http://localhost:3000'

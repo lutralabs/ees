@@ -10,11 +10,12 @@ import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { APP_URL } from '@/utils';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ees-eosin.vercel.app'),
+  metadataBase: new URL(APP_URL),
   title: 'endorse.fun - Ethereum Endorsement Service',
   description: 'The next upgrade for Web3 social layer.',
   robots: {
