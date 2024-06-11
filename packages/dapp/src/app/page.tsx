@@ -59,7 +59,8 @@ export default async function Page({
   }
 
   if (!intro) {
-    return redirect(`${APP_URL}/?intro=true`);
+    return redirect('http://localhost:3000?intro=true');
+    // return redirect(`${APP_URL}/?intro=true`);
   }
 
   const platform = validateOrGetDefaultPlatform(searchParams.platform);

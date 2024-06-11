@@ -61,11 +61,10 @@ export const ProfileAvatar = ({
       )}
     >
       <MemoizedImage
-        className={cn('absolute rounded-full shadow-md')}
+        className={cn('absolute rounded-full shadow-md object-cover')}
         src={avatar ?? blo(address, AVATAR_SIZES[size])}
         alt="Profile avatar"
-        width={AVATAR_SIZES[size]}
-        height={AVATAR_SIZES[size]}
+        fill
         onLoad={() => setIsLoading(false)}
       />
       <Skeleton
