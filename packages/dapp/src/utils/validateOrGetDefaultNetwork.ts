@@ -6,7 +6,7 @@ const PROD_NETWORKS = ['base'];
 const STAGING_NETWORKS = ['sepolia', 'base-sepolia', ...PROD_NETWORKS];
 const DEVELOPMENT_NETWORKS = ['localhost', ...STAGING_NETWORKS];
 
-const NETWORK_NAME_TO_CHAIN_ID: { [key: string]: number } = {
+export const NETWORK_NAME_TO_CHAIN_ID: { [key: string]: number } = {
   // Production
   base: 8453,
   // Staging
@@ -14,6 +14,16 @@ const NETWORK_NAME_TO_CHAIN_ID: { [key: string]: number } = {
   'base-sepolia': 84532,
   // Local development
   localhost: 1337,
+};
+
+export const CHAIN_ID_TO_NETWORK_NAME: { [key: number]: string } = {
+  // Production
+  8453: 'base',
+  // Staging
+  11155111: 'sepolia',
+  84532: 'base-sepolia',
+  // Local development
+  1337: 'localhost',
 };
 
 export const validateOrGetDefaultNetwork = (

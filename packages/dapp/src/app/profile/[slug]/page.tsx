@@ -7,7 +7,7 @@ import {
   getProfileInfo,
   getBasicPlatformProfileInfo,
 } from '@/lib/airstack';
-import { APP_URL, formatAddress } from '@/utils';
+import { APP_ENV, APP_URL, formatAddress } from '@/utils';
 import {
   validateOrGetDefaultPlatform,
   validateOrGetDefaultNetwork,
@@ -17,6 +17,8 @@ import { ShareDialog } from './ShareDialog';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { Feed } from './Feed';
 import { getAggregatedAccountData } from '@/lib/ees';
+import { NetworkSelect } from './NetworkSelect';
+import { cn } from '@/lib/utils';
 
 type PageProps = {
   params: { slug: string };
@@ -78,7 +80,19 @@ export default async function Page({
             </Link>
           </div>
         </div>
-        <div className="w-full">
+        <div
+          className={cn(
+            'relative w-full',
+            APP_ENV !== 'production' && 'max-lg:mt-12'
+          )}
+        >
+          {APP_ENV !== 'production' && (
+            <div className="absolute sm:right-8 -top-12 px-2 max-sm:w-full">
+              <div className="w-32 max-sm:w-full">
+                <NetworkSelect network={_network} />
+              </div>
+            </div>
+          )}
           <Feed
             account={mainAddress}
             platform={_platform}
