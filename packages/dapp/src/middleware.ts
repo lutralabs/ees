@@ -23,9 +23,23 @@ export function middleware(request: NextRequest) {
     response.headers.set(key, value);
   });
 
+  // Check path
+  if (request.nextUrl.pathname === '/') {
+    // Read cookies
+    const intro = request.cookies.get('intro');
+
+    if (!intro) {
+      const redirectResponse = NextResponse.redirect(
+        new URL('/?intro=true', request.url)
+      );
+      redirectResponse.cookies.set('intro', 'true', { path: '/' });
+      return redirectResponse;
+    }
+  }
+
   return response;
 }
 
 export const config = {
-  matcher: '/api/:path*',
+  matcher: '/:path*',
 };
