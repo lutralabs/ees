@@ -169,15 +169,16 @@ export const getMinimalProfileInfoByPlatform = async (
         let mainAddress = data.Wallet?.primaryDomain?.resolvedAddress;
 
         // If ENS is not available, check if Lens is available
-        if(!mainAddress) {
-          if(data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
+        if (!mainAddress) {
+          if (data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
             mainAddress = data.lensSocials.Social[0].userAddress;
           }
         }
 
         // If `mainAddress` is still null, use the last connected address
-        if(!mainAddress) {
-          mainAddress = connectedAddresses[connectedAddresses.length - 1].address;
+        if (!mainAddress) {
+          mainAddress =
+            connectedAddresses[connectedAddresses.length - 1].address;
         }
 
         return {

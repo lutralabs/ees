@@ -79,7 +79,7 @@ export const getProfileInfo = async (
     }
 
     // Use Lens if available
-    if(data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
+    if (data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
       data.Wallet.addresses = [data.lensSocials.Social[0].userAddress];
       return data;
     }
