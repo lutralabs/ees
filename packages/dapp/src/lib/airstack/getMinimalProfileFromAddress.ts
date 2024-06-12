@@ -37,7 +37,7 @@ export const getMinimalProfileFromAddress = async (
           identity: address,
         },
       }),
-      next: { revalidate: 0 }, // Cache for 1 day
+      next: { revalidate: 86400 }, // Cache for 1 day
     });
 
     // Check if request was successful
