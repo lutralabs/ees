@@ -60,7 +60,7 @@ export const getMinimalProfileInfoByPlatform = async (
               : identity,
         },
       }),
-      next: { revalidate: 60 }, // Cache for 1 day
+      next: { revalidate: 86400 }, // Cache for 1 day
     });
 
     // Check if request was successful
