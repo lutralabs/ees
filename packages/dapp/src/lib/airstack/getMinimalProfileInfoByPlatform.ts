@@ -60,7 +60,7 @@ export const getMinimalProfileInfoByPlatform = async (
               : identity,
         },
       }),
-      next: { revalidate: 86400 }, // Cache for 1 day
+      next: { revalidate: 60 }, // Cache for 1 day
     });
 
     // Check if request was successful
@@ -165,8 +165,7 @@ export const getMinimalProfileInfoByPlatform = async (
           };
         }
 
-        const mainAddress =
-          connectedAddresses[connectedAddresses.length - 1].address;
+        const mainAddress = data.Wallet?.primaryDomain?.resolvedAddress ?? connectedAddresses[connectedAddresses.length - 1].address;
 
         return {
           displayName: identity,

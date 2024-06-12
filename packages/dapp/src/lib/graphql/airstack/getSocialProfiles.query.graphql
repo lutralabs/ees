@@ -4,6 +4,7 @@ query GetProfileInfo($identity: Identity!) {
     primaryDomain {
       name
       avatar
+      resolvedAddress
       tokenNft {
         contentValue {
           image {

@@ -2329,7 +2329,7 @@ export type GetProfileFromFarcasterQueryVariables = Exact<{
 }>;
 
 
-export type GetProfileFromFarcasterQuery = { __typename?: 'Query', farcasterSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', userAddress?: any | null, profileName?: string | null, profileDisplayName?: string | null, profileHandle?: string | null, profileBio?: string | null, connectedAddresses?: Array<{ __typename?: 'ConnectedAddress', address?: any | null }> | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null };
+export type GetProfileFromFarcasterQuery = { __typename?: 'Query', Wallet?: { __typename?: 'Wallet', primaryDomain?: { __typename?: 'Domain', resolvedAddress?: any | null } | null } | null, farcasterSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', userAddress?: any | null, profileName?: string | null, profileDisplayName?: string | null, profileHandle?: string | null, profileBio?: string | null, connectedAddresses?: Array<{ __typename?: 'ConnectedAddress', address?: any | null }> | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null };
 
 export type GetProfileFromLensQueryVariables = Exact<{
   identity: Scalars['Identity']['input'];
@@ -2343,7 +2343,7 @@ export type GetProfileInfoQueryVariables = Exact<{
 }>;
 
 
-export type GetProfileInfoQuery = { __typename?: 'Query', Wallet?: { __typename?: 'Wallet', addresses?: Array<any> | null, primaryDomain?: { __typename?: 'Domain', name?: string | null, avatar?: string | null, tokenNft?: { __typename?: 'TokenNft', contentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null } | null } | null } | null, farcasterSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', userAddress?: any | null, profileName?: string | null, profileDisplayName?: string | null, profileHandle?: string | null, profileBio?: string | null, connectedAddresses?: Array<{ __typename?: 'ConnectedAddress', address?: any | null }> | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null, lensSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileName?: string | null, profileDisplayName?: string | null, profileHandle?: string | null, profileBio?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null };
+export type GetProfileInfoQuery = { __typename?: 'Query', Wallet?: { __typename?: 'Wallet', addresses?: Array<any> | null, primaryDomain?: { __typename?: 'Domain', name?: string | null, avatar?: string | null, resolvedAddress?: any | null, tokenNft?: { __typename?: 'TokenNft', contentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null } | null } | null } | null, farcasterSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', userAddress?: any | null, profileName?: string | null, profileDisplayName?: string | null, profileHandle?: string | null, profileBio?: string | null, connectedAddresses?: Array<{ __typename?: 'ConnectedAddress', address?: any | null }> | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null, lensSocials?: { __typename?: 'SocialsOutput', Social?: Array<{ __typename?: 'Social', profileName?: string | null, profileDisplayName?: string | null, profileHandle?: string | null, profileBio?: string | null, profileImageContentValue?: { __typename?: 'Media', image?: { __typename?: 'ImageSizes', small?: string | null } | null } | null }> | null } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -2423,6 +2423,11 @@ export const GetProfileFromEnsDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<GetProfileFromEnsQuery, GetProfileFromEnsQueryVariables>;
 export const GetProfileFromFarcasterDocument = new TypedDocumentString(`
     query GetProfileFromFarcaster($identity: Identity!) {
+  Wallet(input: {identity: $identity, blockchain: ethereum}) {
+    primaryDomain {
+      resolvedAddress
+    }
+  }
   farcasterSocials: Socials(
     input: {limit: 1, filter: {identity: {_eq: $identity}, dappName: {_eq: farcaster}}, blockchain: ethereum, order: {followerCount: DESC}}
   ) {
@@ -2473,6 +2478,7 @@ export const GetProfileInfoDocument = new TypedDocumentString(`
     primaryDomain {
       name
       avatar
+      resolvedAddress
       tokenNft {
         contentValue {
           image {

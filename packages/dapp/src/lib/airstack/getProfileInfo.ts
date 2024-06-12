@@ -26,7 +26,7 @@ export const getProfileInfo = async (
       query: GetProfileInfoDocument,
       variables,
     }),
-    next: { revalidate: 86400 }, // Cache for 1 day
+    next: { revalidate: 60 }, // Cache for 1 day
   });
 
   // Check if request was successful
@@ -69,6 +69,13 @@ export const getProfileInfo = async (
       farcasterSocials[0].connectedAddresses.length === 0
     ) {
       return notFound();
+    }
+
+    const primaryDomainAddress = data.Wallet.primaryDomain?.resolvedAddress;
+    console.log('primaryDomainAddress', primaryDomainAddress);
+    if(primaryDomainAddress) {
+      data.Wallet.addresses = [primaryDomainAddress];
+      return data;
     }
 
     // Just in case, we remove the Farcaster user address from the addresses array
