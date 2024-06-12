@@ -71,14 +71,20 @@ export const getProfileInfo = async (
       return notFound();
     }
 
+    // Use ENS if available
     const primaryDomainAddress = data.Wallet.primaryDomain?.resolvedAddress;
-    console.log('primaryDomainAddress', primaryDomainAddress);
-    if(primaryDomainAddress) {
+    if (primaryDomainAddress) {
       data.Wallet.addresses = [primaryDomainAddress];
       return data;
     }
 
-    // Just in case, we remove the Farcaster user address from the addresses array
+    // Use Lens if available
+    if(data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
+      data.Wallet.addresses = [data.lensSocials.Social[0].userAddress];
+      return data;
+    }
+
+    // Remove the Farcaster user address from the addresses array
     data.Wallet.addresses = data.Wallet.addresses.filter(
       (address) => address !== farcasterSocials[0].userAddress
     );
@@ -88,7 +94,7 @@ export const getProfileInfo = async (
       isAddress(address)
     );
 
-    // Check if still more than address remove all except the last one
+    // Check if still more than 1 address, then use the last one in the array
     if (data.Wallet.addresses.length > 1) {
       data.Wallet.addresses = [
         data.Wallet.addresses[data.Wallet.addresses.length - 1],

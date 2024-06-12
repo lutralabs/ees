@@ -23,4 +23,11 @@ query GetProfileFromFarcaster($identity: Identity!) {
       }
     }
   }
+  lensSocials: Socials(
+    input: {filter: {identity: {_eq: $identity}, dappName: {_eq: lens}}, blockchain: ethereum, order: {followerCount: DESC}}
+  ) {
+    Social {
+      userAddress
+    }
+  }
 }

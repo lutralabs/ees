@@ -165,7 +165,20 @@ export const getMinimalProfileInfoByPlatform = async (
           };
         }
 
-        const mainAddress = data.Wallet?.primaryDomain?.resolvedAddress ?? connectedAddresses[connectedAddresses.length - 1].address;
+        // Use ENS if available
+        let mainAddress = data.Wallet?.primaryDomain?.resolvedAddress;
+
+        // If ENS is not available, check if Lens is available
+        if(!mainAddress) {
+          if(data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
+            mainAddress = data.lensSocials.Social[0].userAddress;
+          }
+        }
+
+        // If `mainAddress` is still null, use the last connected address
+        if(!mainAddress) {
+          mainAddress = connectedAddresses[connectedAddresses.length - 1].address;
+        }
 
         return {
           displayName: identity,

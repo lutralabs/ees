@@ -37,6 +37,7 @@ query GetProfileInfo($identity: Identity!) {
     input: {filter: {identity: {_eq: $identity}, dappName: {_eq: lens}}, blockchain: ethereum, order: {followerCount: DESC}}
   ) {
     Social {
+      userAddress
       profileName
       profileDisplayName
       profileHandle
