@@ -5,6 +5,7 @@ import {
 } from '@/__generated__/airstack/graphql';
 import { PlatformType } from '@/utils/platform';
 import { notFound } from 'next/navigation';
+import { isAddress } from 'viem';
 
 export const getProfileInfo = async (
   identity: string,
@@ -25,7 +26,7 @@ export const getProfileInfo = async (
       query: GetProfileInfoDocument,
       variables,
     }),
-    next: { revalidate: 86400 }, // Cache for 1 day
+    next: { revalidate: 86401 }, // Cache for 1 day
   });
 
   // Check if request was successful
@@ -70,9 +71,14 @@ export const getProfileInfo = async (
       return notFound();
     }
 
-    // Just in case, we remove the Farcaster address from the addresses array
+    // Just in case, we remove the Farcaster user address from the addresses array
     data.Wallet.addresses = data.Wallet.addresses.filter(
       (address) => address !== farcasterSocials[0].userAddress
+    );
+
+    // Also filter out all non-evm addresses
+    data.Wallet.addresses = data.Wallet.addresses.filter((address) =>
+      isAddress(address)
     );
 
     // Check if still more than address remove all except the last one

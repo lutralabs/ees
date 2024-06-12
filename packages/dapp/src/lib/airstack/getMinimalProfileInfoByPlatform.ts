@@ -7,6 +7,7 @@ import {
   type GetProfileFromFarcasterQuery,
 } from '@/__generated__/airstack/graphql';
 import { PlatformType } from '@/utils';
+import { isAddress } from 'viem';
 
 type GetMinimalProfileInfoByPlatformResult = {
   displayName: string | null;
@@ -59,7 +60,7 @@ export const getMinimalProfileInfoByPlatform = async (
               : identity,
         },
       }),
-      next: { revalidate: 86400 }, // Cache for 1 day
+      next: { revalidate: 86401 }, // Cache for 1 day
     });
 
     // Check if request was successful
@@ -117,12 +118,9 @@ export const getMinimalProfileInfoByPlatform = async (
       }
       case PlatformType.farcaster: {
         const data = jsonResponse.data as GetProfileFromFarcasterQuery;
+        const farcasterSocials = data.farcasterSocials?.Social;
 
-        if (
-          !data.farcasterSocials ||
-          !data.farcasterSocials.Social ||
-          data.farcasterSocials.Social.length === 0
-        ) {
+        if (!farcasterSocials || farcasterSocials.length === 0) {
           return {
             displayName: null,
             address: null,
@@ -132,8 +130,7 @@ export const getMinimalProfileInfoByPlatform = async (
           };
         }
 
-        const connectedAddresses =
-          data.farcasterSocials.Social[0].connectedAddresses;
+        let connectedAddresses = farcasterSocials[0].connectedAddresses;
 
         if (!connectedAddresses || connectedAddresses.length === 0) {
           return {
@@ -146,10 +143,18 @@ export const getMinimalProfileInfoByPlatform = async (
         }
 
         // Double check that connected address is not the same as the farcaster user address
-        if (
-          connectedAddresses[0].address ===
-          data.farcasterSocials.Social[0].userAddress
-        ) {
+        // Remove the Farcaster user address from the addresses array
+        connectedAddresses = connectedAddresses.filter(
+          (connectedAddress) =>
+            connectedAddress.address !== farcasterSocials[0].userAddress
+        );
+
+        // Also filter out all non-evm addresses
+        connectedAddresses = connectedAddresses.filter((connectedAddress) =>
+          isAddress(connectedAddress.address)
+        );
+
+        if (connectedAddresses.length === 0) {
           return {
             displayName: null,
             address: null,
@@ -160,13 +165,15 @@ export const getMinimalProfileInfoByPlatform = async (
           };
         }
 
+        const mainAddress =
+          connectedAddresses[connectedAddresses.length - 1].address;
+
         return {
           displayName: identity,
-          address: connectedAddresses[0].address,
-          description: data.farcasterSocials.Social[0].profileBio ?? null,
+          address: mainAddress,
+          description: farcasterSocials[0].profileBio ?? null,
           avatar:
-            data.farcasterSocials.Social[0].profileImageContentValue?.image
-              ?.small ?? null,
+            farcasterSocials[0].profileImageContentValue?.image?.small ?? null,
           error: null,
         };
       }
