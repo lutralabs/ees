@@ -25,7 +25,7 @@ export const getProfileInfo = async (
       query: GetProfileInfoDocument,
       variables,
     }),
-    next: { revalidate: 86400 }, // Cache for 1 day
+    next: { revalidate: 0 }, // Cache for 1 day
   });
 
   // Check if request was successful
@@ -74,6 +74,13 @@ export const getProfileInfo = async (
     data.Wallet.addresses = data.Wallet.addresses.filter(
       (address) => address !== farcasterSocials[0].userAddress
     );
+
+    // Check if still more than address remove all except the last one
+    if (data.Wallet.addresses.length > 1) {
+      data.Wallet.addresses = [
+        data.Wallet.addresses[data.Wallet.addresses.length - 1],
+      ];
+    }
   }
 
   return data;
