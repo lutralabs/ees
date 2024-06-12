@@ -19,9 +19,8 @@ export const metadata: Metadata = {
   title: 'endorse.fun - Ethereum Endorsement Service',
   description: 'The next upgrade for Web3 social layer.',
   robots: {
-    // FIXME: Update for production release
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
   openGraph: {
     description: 'The next upgrade for Web3 social layer.',
