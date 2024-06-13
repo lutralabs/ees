@@ -128,7 +128,7 @@ export const Searchbar = () => {
               {query}
             </Link>
           ) : (
-            <div className="w-full p-2 bg-white rounded-2xl">
+            <div className="w-full p-2 bg-white rounded-2xl overflow-auto">
               <div className="text-thin mb-2 text-gray-600 text-sm">
                 Results
               </div>

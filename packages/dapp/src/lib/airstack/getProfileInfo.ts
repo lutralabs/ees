@@ -84,22 +84,21 @@ export const getProfileInfo = async (
       return data;
     }
 
-    // Remove the Farcaster user address from the addresses array
-    data.Wallet.addresses = data.Wallet.addresses.filter(
-      (address) => address !== farcasterSocials[0].userAddress
-    );
+    // Filter out the Farcaster user address and all non-evm addresses from the `connectedAddresses` array
+    farcasterSocials[0].connectedAddresses =
+      farcasterSocials[0].connectedAddresses.filter(
+        (connectedAddress) =>
+          connectedAddress.address !== farcasterSocials[0].userAddress &&
+          isAddress(connectedAddress.address)
+      );
 
-    // Also filter out all non-evm addresses
-    data.Wallet.addresses = data.Wallet.addresses.filter((address) =>
-      isAddress(address)
-    );
-
-    // Check if still more than 1 address, then use the last one in the array
-    if (data.Wallet.addresses.length > 1) {
-      data.Wallet.addresses = [
-        data.Wallet.addresses[data.Wallet.addresses.length - 1],
-      ];
+    // If no addresses left after filtering, return not found
+    if (farcasterSocials[0].connectedAddresses.length === 0) {
+      return notFound();
     }
+
+    // Use the first address in the `connectedAddresses` array
+    data.Wallet.addresses = [farcasterSocials[0].connectedAddresses[0].address];
   }
 
   return data;

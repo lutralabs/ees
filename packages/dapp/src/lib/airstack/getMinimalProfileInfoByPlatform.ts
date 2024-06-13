@@ -142,16 +142,11 @@ export const getMinimalProfileInfoByPlatform = async (
           };
         }
 
-        // Double check that connected address is not the same as the farcaster user address
-        // Remove the Farcaster user address from the addresses array
+        // Filter out the Farcaster user address and all non-evm addresses from the `connectedAddresses` array
         connectedAddresses = connectedAddresses.filter(
           (connectedAddress) =>
-            connectedAddress.address !== farcasterSocials[0].userAddress
-        );
-
-        // Also filter out all non-evm addresses
-        connectedAddresses = connectedAddresses.filter((connectedAddress) =>
-          isAddress(connectedAddress.address)
+            connectedAddress.address !== farcasterSocials[0].userAddress &&
+            isAddress(connectedAddress.address)
         );
 
         if (connectedAddresses.length === 0) {
@@ -175,10 +170,9 @@ export const getMinimalProfileInfoByPlatform = async (
           }
         }
 
-        // If `mainAddress` is still null, use the last connected address
+        // If `mainAddress` is still null, use the first connected address
         if (!mainAddress) {
-          mainAddress =
-            connectedAddresses[connectedAddresses.length - 1].address;
+          mainAddress = connectedAddresses[0].address;
         }
 
         return {
