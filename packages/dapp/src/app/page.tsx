@@ -32,7 +32,7 @@ export default async function Page({
             <Link href="/">Launch App</Link>
           </Button>
         </div>
-        <Container className="max-sm:fixed md:pt-14 lg:pt-16 max-w-[1440px]">
+        <Container className="md:pt-14 lg:pt-16 max-w-[1440px]">
           <div className="sm:hover:mt-0 animated-transition md:w-[70%] lg:w-[50%] sm:mt-2 mx-auto relative">
             <EndorseForm
               endorsee={
@@ -59,7 +59,8 @@ export default async function Page({
   }
 
   if (!intro) {
-    return redirect(`${APP_URL}/?intro=true`);
+    return redirect('http://192.168.1.64:3000/?intro=true');
+    // return redirect(`${APP_URL}/?intro=true`);
   }
 
   const platform = validateOrGetDefaultPlatform(searchParams.platform);
