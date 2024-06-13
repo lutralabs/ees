@@ -135,6 +135,35 @@ export const PLATFORM_DATA: { [key in PlatformType]: SocialPlatform } = {
   },
 };
 
+export const SOCIALS: {
+  [key in PlatformType]?: Pick<
+    SocialPlatform,
+    'key' | 'color' | 'icon' | 'label' | 'urlPrefix'
+  >;
+} = {
+  [PlatformType.twitter]: {
+    key: PlatformType.twitter,
+    color: '#4A99E9',
+    icon: '/icons/icon-twitter.svg',
+    label: 'Twitter',
+    urlPrefix: 'https://twitter.com/endorsedotfun',
+  },
+  [PlatformType.discord]: {
+    key: PlatformType.discord,
+    color: '#5865f2',
+    icon: '/icons/icon-discord.svg',
+    label: 'Discord',
+    urlPrefix: 'https://discord.gg/M5xgNz7TTF',
+  },
+  [PlatformType.github]: {
+    key: PlatformType.github,
+    color: '#000000',
+    icon: '/icons/icon-github.svg',
+    label: 'GitHub',
+    urlPrefix: 'https://github.com/lutralabs/ees',
+  },
+};
+
 export const validateOrGetDefaultPlatform = (
   platform: string | undefined | null
 ): PlatformType => {
