@@ -5,7 +5,7 @@ import { ProfileAvatarSkeleton } from '@/components/ProfileAvatar';
 
 export const PageSkeleton = () => {
   return (
-    <Container className="md:pt-14 lg:pt-16 max-w-[1440px] overflow-auto">
+    <Container className="md:pt-14 lg:pt-16 xl:pt-24 max-w-[1440px] overflow-auto">
       <div className="flex max-lg:flex-col w-full gap-4">
         <div className="lg:w-[30%] min-w-[300px] w-full">
           <div className="flex flex-col gap-y-2 text-center items-center">

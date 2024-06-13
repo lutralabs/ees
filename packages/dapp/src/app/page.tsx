@@ -20,7 +20,7 @@ export default async function Page({
   if (searchParams.intro === 'true') {
     return (
       <div>
-        <div className="fixed z-10 w-full top-[50%] sm:top-[45%] md:top-[50%] lg:top-[45%] xl:top-[55%] text-center">
+        <div className="absolute z-10 w-full top-[50%] sm:top-[45%] md:top-[45%] lg:top-[50%] xl:top-[40%] text-center">
           <h1 className="text-4xl font-semibold tracking-tight text-center text-gray-900 sm:text-6xl">
             Build Web3 <span className="text-primary">Reputation</span>
             <br /> with <span className="text-primary">Endorsements</span>
@@ -32,8 +32,8 @@ export default async function Page({
             <Link href="/">Launch App</Link>
           </Button>
         </div>
-        <Container className="md:pt-14 lg:pt-16 max-w-[1440px]">
-          <div className="sm:hover:mt-0 animated-transition md:w-[70%] lg:w-[50%] sm:mt-2 mx-auto relative">
+        <Container className="md:pt-14 lg:pt-16 xl:pt-24 max-w-[1440px]">
+          <div className="sm:hover:mt-0 animated-transition md:w-[70%] lg:w-[50%] sm:mt-16 mx-auto relative">
             <EndorseForm
               endorsee={
                 <Suspense
@@ -59,14 +59,13 @@ export default async function Page({
   }
 
   if (!intro) {
-    return redirect('http://192.168.1.64:3000/?intro=true');
-    // return redirect(`${APP_URL}/?intro=true`);
+    return redirect(`${APP_URL}/?intro=true`);
   }
 
   const platform = validateOrGetDefaultPlatform(searchParams.platform);
 
   return (
-    <Container className="pt-6 sm:pt-10 md:pt-16 max-w-[1440px] h-full">
+    <Container className="md:pt-14 lg:pt-16 xl:pt-24 max-w-[1440px] h-full">
       <div className="md:w-[70%] lg:w-[60%] xl:w-[50%] mx-auto">
         <EndorseForm
           endorsee={
