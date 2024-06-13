@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <div className="w-full flex justify-between max-sm:flex-col max-sm:items-center items-end p-3 max-h-[4rem] max-sm:gap-y-4 max-sm:pt-12 max-sm:pb-24">
+    <div className="w-full flex justify-between max-sm:flex-col max-sm:items-center items-end pt-24 px-3 pb-3 max-h-[4rem] max-sm:gap-y-4 max-sm:pb-24">
       <div className="flex items-center h-full max-sm:justify-center gap-x-4 max-sm:gap-x-2">
         {Object.values(SOCIALS).map((social) => (
           <Link href={social.urlPrefix!} key={social.key} target="_blank">
