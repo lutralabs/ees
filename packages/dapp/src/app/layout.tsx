@@ -45,7 +45,7 @@ export default function RootLayout(props: { children: ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <body className={cn(inter.className, 'antialiased')}>
         <Providers initialState={initialState}>
-          <main className="bg-slate-50 flex flex-col min-h-screen">
+          <main className="bg-slate-50 flex flex-col min-h-[calc(100dvh)]">
             <Navbar />
             <div className="flex-1">{props.children}</div>
             <Footer />
