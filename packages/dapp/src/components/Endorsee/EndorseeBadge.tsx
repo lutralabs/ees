@@ -79,20 +79,19 @@ export const EndorseeBadge = ({
   );
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | undefined;
+    if (!intro) return;
 
-    if (intro) {
-      interval = setInterval(() => {
-        setIndex((prevIndex) => (prevIndex + 1) % introEndorsees.length);
-        setEndorsementTypeIndex(
-          (prevIndex) => (prevIndex + 1) % ENDORSEMENT_OPTIONS.length
-        );
-      }, 2000);
-    }
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % introEndorsees.length);
+      setEndorsementTypeIndex(
+        (prevIndex) => (prevIndex + 1) % ENDORSEMENT_OPTIONS.length
+      );
+    }, 2500);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
+    if (!intro) return;
     changeEndorsementType(ENDORSEMENT_OPTIONS[endorsementTypeIndex].value);
   }, [index]);
 
