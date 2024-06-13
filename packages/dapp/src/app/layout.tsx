@@ -11,6 +11,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { APP_URL } from '@/utils';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -43,15 +44,14 @@ export default function RootLayout(props: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(inter.className, 'antialiased')}>
-        <div className="h-full w-full overflow-hidden bg-slate-50">
-          <Providers initialState={initialState}>
+        <Providers initialState={initialState}>
+          <main className="bg-slate-50 flex flex-col min-h-screen">
             <Navbar />
-            <main className="h-full w-full overflow-auto pb-32">
-              {props.children}
-            </main>
-            <Toaster />
-          </Providers>
-        </div>
+            <div className="flex-1">{props.children}</div>
+            <Footer />
+          </main>
+          <Toaster />
+        </Providers>
         <SpeedInsights />
         <Analytics />
       </body>
