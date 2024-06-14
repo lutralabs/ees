@@ -47,7 +47,7 @@ const getRandomEndpoint = (endpoints: string[]) => {
   }
 
   // We won't have more than 2 endpoints
-  return endpoints[Math.random() <= 0.2 ? 0 : 1];
+  return endpoints[Math.random() <= 0.6 ? 0 : 1];
 };
 
 export const getGraphqlApiUrl = (chainId: number) => {
