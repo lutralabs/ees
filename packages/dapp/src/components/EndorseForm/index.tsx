@@ -47,6 +47,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
     donationValue,
     endorsementType,
     comment,
+    platform,
     partialClear,
   } = useEndorsementStore((state) => ({
     address: state.address,
@@ -54,6 +55,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
     donationValue: state.donationValue,
     endorsementType: state.endorsementType,
     comment: state.comment,
+    platform: state.platform,
     partialClear: state.partialClear,
   }));
 
@@ -172,12 +174,13 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
     }
 
     const _value = parseEther(donationValue ?? '0') + endorsementPrice;
+    const _displayValue = `${platform}:${displayValue}`;
 
     writeContractAsync({
       abi: EESCore,
       address: CONTRACT_ADDRESSES.ees[chainId],
       functionName: 'endorse',
-      args: [address, endorsementType, comment, displayValue],
+      args: [address, endorsementType, comment, _displayValue],
       value: _value,
     })
       .then((txHash) => {
