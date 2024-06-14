@@ -138,7 +138,7 @@ export const PLATFORM_DATA: { [key in PlatformType]: SocialPlatform } = {
 export const SOCIALS: {
   [key in PlatformType]?: Pick<
     SocialPlatform,
-    'key' | 'color' | 'icon' | 'label' | 'urlPrefix'
+    'key' | 'color' | 'icon' | 'label' | 'urlPrefix' | 'bgColor'
   >;
 } = {
   [PlatformType.twitter]: {
@@ -161,6 +161,22 @@ export const SOCIALS: {
     icon: '/icons/icon-github.svg',
     label: 'GitHub',
     urlPrefix: 'https://github.com/lutralabs/ees',
+  },
+  [PlatformType.lens]: {
+    key: PlatformType.lens,
+    color: '#6bc674',
+    bgColor: '#E2FFE5',
+    icon: '/icons/icon-hey.svg',
+    label: 'Lens',
+    urlPrefix: 'https://hey.xyz/u/endorsedotfun',
+  },
+  [PlatformType.farcaster]: {
+    key: PlatformType.farcaster,
+    color: '#8a63d2',
+    bgColor: '#F3E8FF',
+    icon: '/icons/icon-farcaster.svg',
+    label: 'Farcaster',
+    urlPrefix: 'https://warpcast.com/endorsedotfun',
   },
 };
 
