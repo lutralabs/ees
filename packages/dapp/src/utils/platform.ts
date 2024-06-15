@@ -148,20 +148,6 @@ export const SOCIALS: {
     label: 'Twitter',
     urlPrefix: 'https://twitter.com/endorsedotfun',
   },
-  [PlatformType.discord]: {
-    key: PlatformType.discord,
-    color: '#5865f2',
-    icon: '/icons/icon-discord.svg',
-    label: 'Discord',
-    urlPrefix: 'https://discord.gg/M5xgNz7TTF',
-  },
-  [PlatformType.github]: {
-    key: PlatformType.github,
-    color: '#000000',
-    icon: '/icons/icon-github.svg',
-    label: 'GitHub',
-    urlPrefix: 'https://github.com/lutralabs/ees',
-  },
   [PlatformType.lens]: {
     key: PlatformType.lens,
     color: '#6bc674',
@@ -177,6 +163,20 @@ export const SOCIALS: {
     icon: '/icons/icon-farcaster.svg',
     label: 'Farcaster',
     urlPrefix: 'https://warpcast.com/endorsedotfun',
+  },
+  [PlatformType.discord]: {
+    key: PlatformType.discord,
+    color: '#5865f2',
+    icon: '/icons/icon-discord.svg',
+    label: 'Discord',
+    urlPrefix: 'https://discord.gg/M5xgNz7TTF',
+  },
+  [PlatformType.github]: {
+    key: PlatformType.github,
+    color: '#000000',
+    icon: '/icons/icon-github.svg',
+    label: 'GitHub',
+    urlPrefix: 'https://github.com/lutralabs/ees',
   },
 };
 
