@@ -68,6 +68,7 @@ export async function GET(req: NextRequest) {
         status: 400,
       });
     }
+    console.log(avatar);
 
     return new ImageResponse(
       <div
@@ -97,44 +98,46 @@ export async function GET(req: NextRequest) {
         <img
           style={{
             position: 'absolute',
-            bottom: 0,
-            right: 16,
+            bottom: 16,
+            right: 32,
           }}
           alt="EES Logo"
-          width={384}
+          width={320}
           src={`${APP_URL}/endorse_white.png`}
         />
-        <div tw="flex justify-center w-full flex-col p-12 md:flex-row md:items-center">
-          <div tw="pl-8 flex flex-3 flex-col">
-            <img
-              tw="rounded-full"
-              alt="Profile avatar"
-              width={160}
-              src={avatar ?? blo(address, 160)}
-            />
-            <h2 tw="text-6xl text-white">
-              {displayName ?? formatAddress(address)}
-            </h2>
-            {description && (
-              <div
-                style={{ fontFamily: 'Inter', fontWeight: 400 }}
-                tw="flex text-white text-2xl"
-              >
-                {description}
-              </div>
-            )}{' '}
-            <h2
-              style={{
-                fontFamily: 'Inter',
-                fontWeight: 800,
-                marginTop: 64,
-                fontSize: '3rem',
-              }}
-              tw="text-white"
+        <div tw="flex flex-col w-full px-8">
+          {/* <div tw="flex" style={{ width: 160, height: 160 }}> */}
+          <img
+            style={{ objectFit: 'cover' }}
+            width={160}
+            height={160}
+            tw="rounded-full"
+            alt="Profile avatar"
+            src={avatar ?? blo(address, 160)}
+          />
+          {/* </div> */}
+          <h2 tw="text-6xl text-white">
+            {displayName ?? formatAddress(address)}
+          </h2>
+          {description && (
+            <div
+              style={{ fontFamily: 'Inter', fontWeight: 400 }}
+              tw="flex text-white text-2xl"
             >
-              Total Endorsements: {accountData.totalEndorsementsReceived ?? 0}
-            </h2>
-          </div>
+              {description}
+            </div>
+          )}{' '}
+          <h2
+            style={{
+              fontFamily: 'Inter',
+              fontWeight: 800,
+              marginTop: 64,
+              fontSize: '3rem',
+            }}
+            tw="text-white"
+          >
+            Total Endorsements: {accountData.totalEndorsementsReceived ?? 0}
+          </h2>
         </div>
       </div>,
       // ImageResponse options
