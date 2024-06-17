@@ -140,6 +140,7 @@ export async function GET(req: NextRequest) {
       }
     );
   } catch (error) {
+    console.log(error);
     return new Response('Failed to generate OG image', {
       status: 500,
     });
