@@ -10,18 +10,34 @@ import type { NextRequest } from 'next/server';
 import { blo } from 'blo';
 import { APP_URL } from '@/utils';
 import { getAggregatedAccountData } from '@/lib/ees';
+import { DEFAULT_CHAIN_ID } from '@/lib/contracts';
 
 export const runtime = 'edge';
 
 export async function GET(req: NextRequest) {
   const interRegular = fetch(
-    new URL('../../../../public/fonts/Inter-Regular.ttf', import.meta.url)
+    new URL('../../../../public/fonts/Inter-Regular.ttf', import.meta.url),
+    {
+      next: {
+        revalidate: 604800,
+      },
+    }
   ).then((res) => res.arrayBuffer());
   const interMedium = fetch(
-    new URL('../../../../public/fonts/Inter-Medium.otf', import.meta.url)
+    new URL('../../../../public/fonts/Inter-Medium.otf', import.meta.url),
+    {
+      next: {
+        revalidate: 604800,
+      },
+    }
   ).then((res) => res.arrayBuffer());
   const interBold = fetch(
-    new URL('../../../../public/fonts/Inter-Bold.otf', import.meta.url)
+    new URL('../../../../public/fonts/Inter-Bold.otf', import.meta.url),
+    {
+      next: {
+        revalidate: 604800,
+      },
+    }
   ).then((res) => res.arrayBuffer());
 
   try {
@@ -43,7 +59,7 @@ export async function GET(req: NextRequest) {
 
     const accountData = await getAggregatedAccountData({
       account: address as string,
-      chainId: 8453,
+      chainId: DEFAULT_CHAIN_ID,
     });
 
     // Return bad request if error

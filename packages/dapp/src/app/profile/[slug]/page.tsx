@@ -109,10 +109,6 @@ export async function generateMetadata({
   params: { slug },
   searchParams,
 }: PageProps): Promise<Metadata> {
-  console.log(
-    'slug',
-    `/api/og?account=${slug}&platform=${searchParams.platform}`
-  );
   return {
     title: `Profile | ${slug}`,
     description: `Check out ${slug} on endorse.fun!`,
