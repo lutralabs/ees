@@ -12,13 +12,28 @@ export const revalidate = 86400; // Cache for 1 day
 
 export default async function Image() {
   const interRegular = fetch(
-    new URL('../../public/fonts/Inter-Regular.ttf', import.meta.url)
+    new URL('../../public/fonts/Inter-Regular.ttf', import.meta.url),
+    {
+      next: {
+        revalidate: 604800,
+      },
+    }
   ).then((res) => res.arrayBuffer());
   const interMedium = fetch(
-    new URL('../../public/fonts/Inter-Medium.otf', import.meta.url)
+    new URL('../../public/fonts/Inter-Medium.otf', import.meta.url),
+    {
+      next: {
+        revalidate: 604800,
+      },
+    }
   ).then((res) => res.arrayBuffer());
   const interBold = fetch(
-    new URL('../../public/fonts/Inter-Bold.otf', import.meta.url)
+    new URL('../../public/fonts/Inter-Bold.otf', import.meta.url),
+    {
+      next: {
+        revalidate: 604800,
+      },
+    }
   ).then((res) => res.arrayBuffer());
 
   try {
