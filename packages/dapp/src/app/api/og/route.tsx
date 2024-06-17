@@ -12,14 +12,19 @@ import { APP_URL } from '@/utils';
 import { getAggregatedAccountData } from '@/lib/ees';
 import { DEFAULT_CHAIN_ID } from '@/lib/contracts';
 import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 
 export const runtime = 'nodejs';
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
-  const fontRegular = await readFile('public/fonts/Inter-Regular.ttf');
-  const fontMedium = await readFile('public/fonts/Inter-Medium.otf');
-  const fontBold = await readFile('public/fonts/Inter-Bold.otf');
+  const cwd = process.cwd();
+  const fontRegularPath = path.join(cwd, 'public/fonts/Inter-Regular.ttf');
+  const fontMediumPath = path.join(cwd, 'public/fonts/Inter-Medium.otf');
+  const fontBoldPath = path.join(cwd, 'public/fonts/Inter-Bold.otf');
+  const fontRegular = await readFile(fontRegularPath);
+  const fontMedium = await readFile(fontMediumPath);
+  const fontBold = await readFile(fontBoldPath);
 
   try {
     // Read search params
