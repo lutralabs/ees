@@ -12,7 +12,7 @@ import { APP_URL } from '@/utils';
 import { getAggregatedAccountData } from '@/lib/ees';
 import { DEFAULT_CHAIN_ID } from '@/lib/contracts';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {
   const interRegular = fetch(
