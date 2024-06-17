@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
-export const alt = 'Check out my profile on endorse.fun!';
+export const alt = 'Check out endorse.fun!';
 export const size = {
   width: 1200,
   height: 630,
