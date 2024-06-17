@@ -20,13 +20,13 @@ export default async function Page({
   if (searchParams.intro === 'true') {
     return (
       <div>
-        <div className="absolute z-10 w-full top-[50%] sm:top-[45%] md:top-[45%] lg:top-[50%] xl:top-[40%] text-center">
+        <div className="absolute z-10 w-full top-[60%] sm:top-[45%] md:top-[45%] lg:top-[50%] xl:top-[50%] text-center">
           <h1 className="text-4xl font-semibold tracking-tight text-center text-gray-900 sm:text-6xl">
             Build Web3 <span className="text-primary">Reputation</span>
             <br /> with <span className="text-primary">Endorsements</span>
           </h1>
           <h3 className="text-2xl mt-4 font-medium tracking-tight text-center text-gray-700">
-            Endorse any Ethereum address, ENS or social account.
+            Endorse the best people you know!
           </h3>
           <Button size="lg" className="mt-12 text-xl font-semibold p-6">
             <Link href="/">Launch App</Link>
