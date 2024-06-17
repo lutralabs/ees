@@ -68,7 +68,6 @@ export async function GET(req: NextRequest) {
         status: 400,
       });
     }
-    console.log(avatar);
 
     return new ImageResponse(
       <div
@@ -106,7 +105,6 @@ export async function GET(req: NextRequest) {
           src={`${APP_URL}/endorse_white.png`}
         />
         <div tw="flex flex-col w-full px-8">
-          {/* <div tw="flex" style={{ width: 160, height: 160 }}> */}
           <img
             style={{ objectFit: 'cover' }}
             width={160}
@@ -115,7 +113,6 @@ export async function GET(req: NextRequest) {
             alt="Profile avatar"
             src={avatar ?? blo(address, 160)}
           />
-          {/* </div> */}
           <h2 tw="text-6xl text-white">
             {displayName ?? formatAddress(address)}
           </h2>
