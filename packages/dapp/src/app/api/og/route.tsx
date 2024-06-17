@@ -14,12 +14,6 @@ import { DEFAULT_CHAIN_ID } from '@/lib/contracts';
 import { readFile } from 'node:fs/promises';
 
 export const runtime = 'nodejs';
-export const alt = 'Check out my profile on endorse.fun!';
-export const size = {
-  width: 1200,
-  height: 630,
-};
-export const contentType = 'image/png';
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
