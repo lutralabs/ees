@@ -33,9 +33,11 @@ export function middleware(request: NextRequest) {
     response.headers.set('Set-Cookie', 'intro=true');
   }
 
+  console.log(request.nextUrl.pathname);
+
   return response;
 }
 
 export const config = {
-  matcher: '/:path*',
+  matcher: '/((?!_next/static|_next/image|favicon.ico|icons).*)',
 };
