@@ -11,41 +11,18 @@ import { blo } from 'blo';
 import { APP_URL } from '@/utils';
 import { getAggregatedAccountData } from '@/lib/ees';
 import { DEFAULT_CHAIN_ID } from '@/lib/contracts';
+import { readFile } from 'node:fs/promises';
 
 export const runtime = 'nodejs';
 
 export async function GET(req: NextRequest) {
-  const interRegular = fetch(
-    new URL('../../../../public/fonts/Inter-Regular.ttf', import.meta.url),
-    {
-      next: {
-        revalidate: 604800,
-      },
-    }
-  ).then((res) => res.arrayBuffer());
-  const interMedium = fetch(
-    new URL('../../../../public/fonts/Inter-Medium.otf', import.meta.url),
-    {
-      next: {
-        revalidate: 604800,
-      },
-    }
-  ).then((res) => res.arrayBuffer());
-  const interBold = fetch(
-    new URL('../../../../public/fonts/Inter-Bold.otf', import.meta.url),
-    {
-      next: {
-        revalidate: 604800,
-      },
-    }
-  ).then((res) => res.arrayBuffer());
+  const fontRegular = await readFile('public/fonts/Inter-Regular.ttf');
+  const fontMedium = await readFile('public/fonts/Inter-Medium.otf');
+  const fontBold = await readFile('public/fonts/Inter-Bold.otf');
 
   try {
-    const fontRegular = await interRegular;
-    const fontMedium = await interMedium;
-    const fontBold = await interBold;
-
     // Read search params
+    console.log(req.url);
     const { searchParams } = new URL(req.url);
     const values = Object.fromEntries(searchParams);
     const { platform, account } = values;
@@ -85,7 +62,6 @@ export async function GET(req: NextRequest) {
         <img
           style={{
             position: 'absolute',
-            zIndex: -1,
             top: 0,
             right: 0,
             transform: 'rotate(180deg)',

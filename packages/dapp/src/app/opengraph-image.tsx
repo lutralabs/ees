@@ -1,4 +1,5 @@
 import { APP_URL } from '@/utils';
+import { readFile } from 'node:fs/promises';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
@@ -11,36 +12,11 @@ export const contentType = 'image/png';
 export const revalidate = 86400; // Cache for 1 day
 
 export default async function Image() {
-  const interRegular = fetch(
-    new URL('../../public/fonts/Inter-Regular.ttf', import.meta.url),
-    {
-      next: {
-        revalidate: 604800,
-      },
-    }
-  ).then((res) => res.arrayBuffer());
-  const interMedium = fetch(
-    new URL('../../public/fonts/Inter-Medium.otf', import.meta.url),
-    {
-      next: {
-        revalidate: 604800,
-      },
-    }
-  ).then((res) => res.arrayBuffer());
-  const interBold = fetch(
-    new URL('../../public/fonts/Inter-Bold.otf', import.meta.url),
-    {
-      next: {
-        revalidate: 604800,
-      },
-    }
-  ).then((res) => res.arrayBuffer());
+  const fontRegular = await readFile('public/fonts/Inter-Regular.ttf');
+  const fontMedium = await readFile('public/fonts/Inter-Medium.otf');
+  const fontBold = await readFile('public/fonts/Inter-Bold.otf');
 
   try {
-    const fontRegular = await interRegular;
-    const fontMedium = await interMedium;
-    const fontBold = await interBold;
-
     return new ImageResponse(
       <div
         style={{
@@ -56,7 +32,6 @@ export default async function Image() {
         <img
           style={{
             position: 'absolute',
-            zIndex: -1,
             top: -190,
             right: -60,
             opacity: 0.5,
