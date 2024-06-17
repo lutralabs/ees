@@ -12,6 +12,7 @@ import {
   Donation,
   Endorsement,
   FeeWithdrawal,
+  GlobalStatistics,
   Withdrawal,
 } from '../generated/schema';
 
@@ -50,6 +51,23 @@ const createOrLoadAggregatedInformation = (
   return aggregatedInformation;
 };
 
+const createOrLoadGlobalStatistics = (): GlobalStatistics => {
+  const id = Bytes.fromUTF8('GlobalStatistics');
+
+  let globalStatistics = GlobalStatistics.load(id);
+
+  if (globalStatistics == null) {
+    globalStatistics = new GlobalStatistics(id);
+    globalStatistics.totalEndorsements = BigInt.fromI32(0);
+    globalStatistics.totalDonations = BigInt.fromI32(0);
+    globalStatistics.totalDonationAmount = BigInt.fromI32(0);
+    globalStatistics.totalWithdrawnAmount = BigInt.fromI32(0);
+    globalStatistics.save();
+  }
+
+  return globalStatistics;
+};
+
 export function handleDonate(event: DonateEvent): void {
   // Create or load accounts
   const fromAccount = createOrLoadAccount(event.params.from);
@@ -63,6 +81,7 @@ export function handleDonate(event: DonateEvent): void {
   donation.from = fromAccount.id;
   donation.to = toAccount.id;
   donation.amount = event.params.amount;
+  donation.createdAtTimestamp = event.block.timestamp;
 
   donation.save();
 
@@ -70,12 +89,24 @@ export function handleDonate(event: DonateEvent): void {
   fromAccount.totalDonationsSent = fromAccount.totalDonationsSent.plus(
     donation.amount
   );
+
+  // Check if this is the first donation sent by this account
+  if (fromAccount.firstDonationSentTimestamp === null) {
+    fromAccount.firstDonationSentTimestamp = event.block.timestamp;
+  }
+
   fromAccount.save();
 
   // Update account donations received
   toAccount.totalDonationsReceived = toAccount.totalDonationsReceived.plus(
     donation.amount
   );
+
+  // Check if this is the first donation received by this account
+  if (toAccount.firstDonationReceivedTimestamp === null) {
+    toAccount.firstDonationReceivedTimestamp = event.block.timestamp;
+  }
+
   toAccount.save();
 
   // Update aggregated information
@@ -86,7 +117,19 @@ export function handleDonate(event: DonateEvent): void {
 
   aggregatedInformation.donationAmount =
     aggregatedInformation.donationAmount.plus(donation.amount);
+
   aggregatedInformation.save();
+
+  // Update global statistics
+  const globalStatistics = createOrLoadGlobalStatistics();
+
+  globalStatistics.totalDonations = globalStatistics.totalDonations.plus(
+    BigInt.fromI32(1)
+  );
+  globalStatistics.totalDonationAmount =
+    globalStatistics.totalDonationAmount.plus(donation.amount);
+
+  globalStatistics.save();
 }
 
 export function handleEndorse(event: EndorseEvent): void {
@@ -104,6 +147,7 @@ export function handleEndorse(event: EndorseEvent): void {
   endorsement.endorsementType = event.params.endorsementType;
   endorsement.easUid = event.params.uid;
   endorsement.donationAmount = event.params.donationAmount;
+  endorsement.createdAtTimestamp = event.block.timestamp;
 
   endorsement.save();
 
@@ -111,11 +155,23 @@ export function handleEndorse(event: EndorseEvent): void {
   fromAccount.totalEndorsementsSent = fromAccount.totalEndorsementsSent.plus(
     BigInt.fromI32(1)
   );
+
+  // Check if this is the first endorsement sent by this account
+  if (fromAccount.firstEndorsementSentTimestamp === null) {
+    fromAccount.firstEndorsementSentTimestamp = event.block.timestamp;
+  }
+
   fromAccount.save();
 
   // Update account endorsements received
   toAccount.totalEndorsementsReceived =
     toAccount.totalEndorsementsReceived.plus(BigInt.fromI32(1));
+
+  // Check if this is the first endorsement received by this account
+  if (toAccount.firstEndorsementReceivedTimestamp === null) {
+    toAccount.firstEndorsementReceivedTimestamp = event.block.timestamp;
+  }
+
   toAccount.save();
 
   // Update aggregated information
@@ -127,6 +183,15 @@ export function handleEndorse(event: EndorseEvent): void {
   aggregatedInformation.endorsementCount =
     aggregatedInformation.endorsementCount.plus(BigInt.fromI32(1));
   aggregatedInformation.save();
+
+  // Update global statistics
+  const globalStatistics = createOrLoadGlobalStatistics();
+
+  globalStatistics.totalEndorsements = globalStatistics.totalEndorsements.plus(
+    BigInt.fromI32(1)
+  );
+
+  globalStatistics.save();
 }
 
 export function handleWithdraw(event: WithdrawEvent): void {
@@ -140,8 +205,17 @@ export function handleWithdraw(event: WithdrawEvent): void {
 
   withdrawal.address = account.id;
   withdrawal.amount = event.params.amount;
+  withdrawal.createdAtTimestamp = event.block.timestamp;
 
   withdrawal.save();
+
+  // Update global statistics
+  const globalStatistics = createOrLoadGlobalStatistics();
+
+  globalStatistics.totalWithdrawnAmount =
+    globalStatistics.totalWithdrawnAmount.plus(withdrawal.amount);
+
+  globalStatistics.save();
 }
 
 export function handleWithdrawFees(event: WithdrawFeesEvent): void {

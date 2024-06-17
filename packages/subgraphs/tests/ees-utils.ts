@@ -13,7 +13,8 @@ export function createEndorseEvent(
   endorsementType: string,
   easUid: Bytes,
   logIndex: BigInt,
-  donationAmount: BigInt
+  donationAmount: BigInt,
+  timestamp: BigInt
 ): EndorseEvent {
   const mockEvent = newMockEvent();
   const event = new EndorseEvent(
@@ -26,6 +27,9 @@ export function createEndorseEvent(
     mockEvent.parameters,
     mockEvent.receipt
   );
+
+  // Set block timestamp
+  event.block.timestamp = timestamp;
 
   event.parameters = new Array();
 
@@ -62,6 +66,7 @@ export function createDonateEvent(
   from: Address,
   to: Address,
   amount: BigInt,
+  timestamp: BigInt,
   logIndex: BigInt = BigInt.fromI32(1)
 ): DonateEvent {
   const mockEvent = newMockEvent();
@@ -75,6 +80,9 @@ export function createDonateEvent(
     mockEvent.parameters,
     mockEvent.receipt
   );
+
+  // Set block timestamp
+  event.block.timestamp = timestamp;
 
   event.parameters = new Array();
 
@@ -95,7 +103,8 @@ export function createDonateEvent(
 
 export function createWithdrawEvent(
   from: Address,
-  amount: BigInt
+  amount: BigInt,
+  timestamp: BigInt
 ): WithdrawEvent {
   const mockEvent = newMockEvent();
   const event = new WithdrawEvent(
@@ -108,6 +117,9 @@ export function createWithdrawEvent(
     mockEvent.parameters,
     mockEvent.receipt
   );
+
+  // Set block timestamp
+  event.block.timestamp = timestamp;
 
   event.parameters = new Array();
 

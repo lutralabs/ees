@@ -4,6 +4,7 @@ type Donation @entity(immutable: true) {
   from: Account!
   to: Account!
   amount: BigInt!
+  createdAtTimestamp: BigInt!
 }
 
 type Endorsement @entity(immutable: true) {
@@ -13,12 +14,14 @@ type Endorsement @entity(immutable: true) {
   endorsementType: String!
   easUid: Bytes!
   donationAmount: BigInt!
+  createdAtTimestamp: BigInt!
 }
 
 type Withdrawal @entity(immutable: true) {
   id: Bytes!
   address: Account!
   amount: BigInt!
+  createdAtTimestamp: BigInt!
 }
 
 type FeeWithdrawal @entity(immutable: true) {
@@ -30,6 +33,7 @@ type FeeWithdrawal @entity(immutable: true) {
 }
 
 # Aggregated entities
+# Single account information
 type Account @entity(immutable: false) {
   id: Bytes! # address
 
@@ -45,12 +49,28 @@ type Account @entity(immutable: false) {
   totalEndorsementsReceived: BigInt!
   totalDonationsSent: BigInt!
   totalEndorsementsSent: BigInt!
+
+  # Other information
+  firstEndorsementReceivedTimestamp: BigInt
+  firstDonationReceivedTimestamp: BigInt
+  firstEndorsementSentTimestamp: BigInt
+  firstDonationSentTimestamp: BigInt
 }
 
+# User pair information (from - to)
 type AggregatedInformation @entity(immutable: false) {
   id: Bytes! # from - to
   from: Account!
   to: Account!
   donationAmount: BigInt!
   endorsementCount: BigInt!
+}
+
+# Global statistics
+type GlobalStatistics @entity(immutable: false) {
+  id: Bytes!
+  totalEndorsements: BigInt!
+  totalDonations: BigInt!
+  totalDonationAmount: BigInt!
+  totalWithdrawnAmount: BigInt!
 }
