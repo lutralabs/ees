@@ -9,7 +9,7 @@ export const size = {
   height: 630,
 };
 export const contentType = 'image/png';
-export const revalidate = 0; // Cache for 1 day
+export const revalidate = 86400; // Cache for 1 day
 
 export default async function Image() {
   const fontRegular = await readFile('public/fonts/Inter-Regular.ttf');
@@ -29,7 +29,7 @@ export default async function Image() {
           background: 'white',
         }}
       >
-        {/* <img
+        <img
           style={{
             position: 'absolute',
             top: -190,
@@ -45,7 +45,7 @@ export default async function Image() {
           alt="EES Logo with text"
           width={768}
           src={`${APP_URL}/endorse.png`}
-        /> */}
+        />
         <div
           style={{
             fontSize: '32px',
