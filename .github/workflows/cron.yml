@@ -1,4 +1,4 @@
-name: CRON Jobs
+name: CRON
 on:
   workflow_dispatch:
   schedule:
