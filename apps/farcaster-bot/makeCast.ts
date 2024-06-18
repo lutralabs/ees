@@ -23,6 +23,7 @@ const FID = 662535;
 
 const HUB_URL = process.env.HUB_URL || 'https://farcaster.xyz'; // URL + Port of the Hub
 const NETWORK = FarcasterNetwork.MAINNET; // Network of the Hub
+console.log(HUB_URL);
 
 const fetchUserByAddress = async (
   address: string
