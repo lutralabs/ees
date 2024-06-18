@@ -1,0 +1,6 @@
+query GetTopEndorsees($first: Int!, $skip: Int!) {
+ accounts(orderBy: totalEndorsementsReceived, orderDirection: desc, first: $first, skip: $skip) {
+    id  
+    totalEndorsementsReceived
+  }
+}

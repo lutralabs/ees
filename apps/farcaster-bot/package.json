@@ -1,0 +1,22 @@
+{
+  "name": "ees-bot",
+  "type": "module",
+  "scripts": {
+    "cast": "tsx makeCast.ts",
+    "compile": "graphql-codegen",
+    "cron": "pnpm cast"
+  },
+  "dependencies": {
+    "@farcaster/hub-nodejs": "^0.11.16",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@noble/curves": "^1.4.0",
+    "@noble/ed25519": "^2.1.0",
+    "@noble/hashes": "^1.4.0",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "viem": "^2.14.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.15.6"
+  }
+}
