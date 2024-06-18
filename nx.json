@@ -36,6 +36,9 @@
         "{projectRoot}/typechain-types"
       ]
     },
+    "cron": {
+      "cache": false
+    },
     "lint": {
       "cache": true
     },
