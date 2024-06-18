@@ -9,6 +9,7 @@
     "lint:fix": "biome check --config-path configs --apply . && pnpm nx run-many --target=lint:fix",
     "prepare": "husky install",
     "coverage": "pnpm nx run-many --target=coverage",
+    "cron": "pnpm nx run-many --target=cron",
     "test": "pnpm nx run-many --target=test",
     "test:ci": "pnpm nx run-many --target=test:ci",
     "test:cron": "cross-env CRON=true pnpm nx run-many --target=test:cron"
