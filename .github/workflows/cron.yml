@@ -2,7 +2,7 @@ name: CRON Jobs
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 16 * * 5'
 env:
   AIRSTACK_API_URL: ${{ secrets.AIRSTACK_API_URL }}
   AIRSTACK_API_KEY: ${{ secrets.AIRSTACK_API_KEY }}
