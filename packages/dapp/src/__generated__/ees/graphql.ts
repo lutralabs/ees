@@ -1139,6 +1139,15 @@ export type GetAggregatedAccountDataQueryVariables = Exact<{
 
 export type GetAggregatedAccountDataQuery = { __typename?: 'Query', account?: { __typename?: 'Account', id: any, totalEndorsementsReceived: any, totalEndorsementsSent: any, totalDonationsReceived: any, totalDonationsSent: any } | null };
 
+export type GetEndorsementsForAccountPaginatedQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+  first: Scalars['Int']['input'];
+  skip: Scalars['Int']['input'];
+}>;
+
+
+export type GetEndorsementsForAccountPaginatedQuery = { __typename?: 'Query', account?: { __typename?: 'Account', receivedEndorsements: Array<{ __typename?: 'Endorsement', id: any, createdAtTimestamp: any, endorsementType: string, donationAmount: any, easUid: any, from: { __typename?: 'Account', id: any } }> } | null };
+
 export type GetGlobalStatisticsQueryVariables = Exact<{
   id?: Scalars['ID']['input'];
 }>;
@@ -1179,6 +1188,27 @@ export const GetAggregatedAccountDataDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetAggregatedAccountDataQuery, GetAggregatedAccountDataQueryVariables>;
+export const GetEndorsementsForAccountPaginatedDocument = new TypedDocumentString(`
+    query GetEndorsementsForAccountPaginated($id: ID!, $first: Int!, $skip: Int!) {
+  account(id: $id) {
+    receivedEndorsements(
+      orderBy: createdAtTimestamp
+      orderDirection: desc
+      first: $first
+      skip: $skip
+    ) {
+      id
+      from {
+        id
+      }
+      createdAtTimestamp
+      endorsementType
+      donationAmount
+      easUid
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetEndorsementsForAccountPaginatedQuery, GetEndorsementsForAccountPaginatedQueryVariables>;
 export const GetGlobalStatisticsDocument = new TypedDocumentString(`
     query GetGlobalStatistics($id: ID! = "0x476c6f62616c53746174697374696373") {
   globalStatistics(id: $id) {
