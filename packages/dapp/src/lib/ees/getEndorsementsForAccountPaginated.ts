@@ -40,6 +40,8 @@ export const getEndorsementsForAccountPaginated = async ({
           skip: perPage * (page - 1),
         },
       }),
+      // Cache for 1 minute
+      next: { revalidate: 60 },
     });
 
     if (!response.ok) {
