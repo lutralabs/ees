@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
 
     if (!response.ok) {
       return Response.json(
-        { error: 'Failed to global statistics' },
+        { error: 'Failed to get global statistics' },
         { status: 500 }
       );
     }
@@ -48,7 +48,12 @@ export async function GET(request: NextRequest) {
     const jsonResponse = await response.json();
 
     if (!jsonResponse) {
-      return Response.json({ error: 'Failed to fetch price' }, { status: 500 });
+      return Response.json(
+        { error: 'Failed to get global statistics' },
+        {
+          status: 500,
+        }
+      );
     }
 
     const data = jsonResponse.data as GetGlobalStatisticsQuery;
@@ -66,7 +71,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error(error);
     return Response.json(
-      { error: 'Failed to global statistics' },
+      { error: 'Failed to get global statistics' },
       { status: 500 }
     );
   }
