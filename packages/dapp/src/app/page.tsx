@@ -1,6 +1,7 @@
 import { Container } from '@/components/Container';
 import { EndorseForm } from '@/components/EndorseForm';
 import { Endorsee, EndorseeSkeleton } from '@/components/Endorsee';
+import { TotalEndorsementsBadge } from '@/components/TotalEndorsementsBadge';
 import { Button } from '@/components/ui/button';
 import { APP_URL, PlatformType, validateOrGetDefaultPlatform } from '@/utils';
 import { cookies } from 'next/headers';
@@ -81,6 +82,7 @@ export default async function Page({
             </Suspense>
           }
         />
+        <TotalEndorsementsBadge />
       </div>
     </Container>
   );

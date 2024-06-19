@@ -33,8 +33,6 @@ export function middleware(request: NextRequest) {
     response.headers.set('Set-Cookie', 'intro=true');
   }
 
-  console.log(request.nextUrl.pathname);
-
   return response;
 }
 

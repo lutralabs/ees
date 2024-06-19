@@ -1,0 +1,9 @@
+query GetGlobalStatistics($id: ID! = "0x476c6f62616c53746174697374696373") {
+  globalStatistics(id: $id) {
+    id
+    totalEndorsements
+    totalDonations
+    totalDonationAmount
+    totalWithdrawnAmount
+  }
+}

@@ -20,7 +20,7 @@ export const getTopEndorsersAndDonators = async ({
   try {
     const graphqlUrl = getGraphqlApiUrl(chainId);
 
-    const result = await fetch(graphqlUrl, {
+    const response = await fetch(graphqlUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const getTopEndorsersAndDonators = async ({
     });
 
     // Check if request was successful
-    if (!result.ok) {
+    if (!response.ok) {
       return {
         topEndorsers: [],
         topDonators: [],
@@ -44,7 +44,7 @@ export const getTopEndorsersAndDonators = async ({
       };
     }
 
-    const jsonResponse = await result.json();
+    const jsonResponse = await response.json();
 
     // Check if we successfully decoded the response
     if (!jsonResponse) {

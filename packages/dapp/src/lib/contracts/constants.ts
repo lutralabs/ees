@@ -1,7 +1,8 @@
 import { APP_ENV } from '@/utils/appEnv';
 
 /**
- * Default chain ID
+ * Default chain ID (needs to be the first chain
+ * in the Wagmi config chain list)
  *
  * Used when user is not connected to a wallet
  */

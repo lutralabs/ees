@@ -28,7 +28,6 @@ export async function GET(req: NextRequest) {
 
   try {
     // Read search params
-    console.log(req.url);
     const { searchParams } = new URL(req.url);
     const values = Object.fromEntries(searchParams);
     const { platform, account } = values;

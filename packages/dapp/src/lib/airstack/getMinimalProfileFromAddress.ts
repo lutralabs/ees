@@ -25,7 +25,7 @@ export const getMinimalProfileFromAddress = async (
   }
 
   try {
-    const result = await fetch(process.env.AIRSTACK_API_URL!, {
+    const response = await fetch(process.env.AIRSTACK_API_URL!, {
       method: 'POST',
       headers: {
         Authorization: process.env.AIRSTACK_API_KEY!,
@@ -41,7 +41,7 @@ export const getMinimalProfileFromAddress = async (
     });
 
     // Check if request was successful
-    if (!result.ok) {
+    if (!response.ok) {
       return {
         displayName: null,
         address: address,
@@ -51,7 +51,7 @@ export const getMinimalProfileFromAddress = async (
       };
     }
 
-    const jsonResponse = await result.json();
+    const jsonResponse = await response.json();
 
     // Check if we successfully decoded the response
     if (!jsonResponse) {

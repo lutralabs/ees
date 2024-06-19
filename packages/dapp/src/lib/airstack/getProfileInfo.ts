@@ -16,7 +16,7 @@ export const getProfileInfo = async (
       platform === PlatformType.farcaster ? `fc_fname:${identity}` : identity,
   };
 
-  const result = await fetch(process.env.AIRSTACK_API_URL!, {
+  const response = await fetch(process.env.AIRSTACK_API_URL!, {
     method: 'POST',
     headers: {
       Authorization: process.env.AIRSTACK_API_KEY!,
@@ -30,11 +30,11 @@ export const getProfileInfo = async (
   });
 
   // Check if request was successful
-  if (!result.ok) {
+  if (!response.ok) {
     throw new Error('Failed to fetch profile');
   }
 
-  const jsonResponse = await result.json();
+  const jsonResponse = await response.json();
 
   // Check if we successfully decoded the response
   if (!jsonResponse) {

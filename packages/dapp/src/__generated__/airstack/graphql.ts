@@ -432,6 +432,7 @@ export type FarcasterChannelFilter = {
   moderatorId?: InputMaybe<String_Comparator_Exp>;
   moderatorIdentity?: InputMaybe<Identity_Comparator_Exp>;
   name?: InputMaybe<Regex_String_Comparator_Exp>;
+  url?: InputMaybe<String_Comparator_Exp>;
 };
 
 export type FarcasterChannelNestedInput = {

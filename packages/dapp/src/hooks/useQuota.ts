@@ -12,15 +12,15 @@ export const useQuota = ({
   return useQuery({
     queryKey: ['quota', fiat, crypto],
     queryFn: async () => {
-      const res = await fetch(`/api/quota?fiat=${fiat}&crypto=${crypto}`, {
+      const response = await fetch(`/api/quota?fiat=${fiat}&crypto=${crypto}`, {
         next: { revalidate: 60 }, // Cache for 1 minute
       });
 
-      if (!res.ok) {
+      if (!response.ok) {
         throw new Error('Failed to fetch price');
       }
 
-      const data = await res.json();
+      const data = await response.json();
 
       if (!data) {
         throw new Error('Failed to fetch price');

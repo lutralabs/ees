@@ -45,7 +45,7 @@ export const getMinimalProfileInfoByPlatform = async (
   }
 
   try {
-    const result: any = await fetch(process.env.AIRSTACK_API_URL!, {
+    const response = await fetch(process.env.AIRSTACK_API_URL!, {
       method: 'POST',
       headers: {
         Authorization: process.env.AIRSTACK_API_KEY!,
@@ -64,11 +64,11 @@ export const getMinimalProfileInfoByPlatform = async (
     });
 
     // Check if request was successful
-    if (!result.ok) {
+    if (!response.ok) {
       throw new Error('Failed to fetch profile');
     }
 
-    const jsonResponse = await result.json();
+    const jsonResponse = await response.json();
 
     // Check if we successfully decoded the response
     if (!jsonResponse) {

@@ -22,10 +22,19 @@ export type Scalars = {
    *
    */
   Int8: { input: any; output: any; }
+  /**
+   * A string representation of microseconds UNIX timestamp (16 digits)
+   *
+   */
+  Timestamp: { input: any; output: any; }
 };
 
 export type Account = {
   __typename?: 'Account';
+  firstDonationReceivedTimestamp?: Maybe<Scalars['BigInt']['output']>;
+  firstDonationSentTimestamp?: Maybe<Scalars['BigInt']['output']>;
+  firstEndorsementReceivedTimestamp?: Maybe<Scalars['BigInt']['output']>;
+  firstEndorsementSentTimestamp?: Maybe<Scalars['BigInt']['output']>;
   id: Scalars['Bytes']['output'];
   receivedDonations: Array<Donation>;
   receivedEndorsements: Array<Endorsement>;
@@ -87,6 +96,38 @@ export type Account_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<Account_Filter>>>;
+  firstDonationReceivedTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationReceivedTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationReceivedTimestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationReceivedTimestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  firstDonationReceivedTimestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationReceivedTimestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationReceivedTimestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationReceivedTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  firstDonationSentTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationSentTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationSentTimestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationSentTimestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  firstDonationSentTimestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationSentTimestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationSentTimestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  firstDonationSentTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  firstEndorsementReceivedTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementReceivedTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementReceivedTimestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementReceivedTimestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  firstEndorsementReceivedTimestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementReceivedTimestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementReceivedTimestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementReceivedTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  firstEndorsementSentTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementSentTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementSentTimestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementSentTimestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  firstEndorsementSentTimestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementSentTimestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementSentTimestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  firstEndorsementSentTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   id?: InputMaybe<Scalars['Bytes']['input']>;
   id_contains?: InputMaybe<Scalars['Bytes']['input']>;
   id_gt?: InputMaybe<Scalars['Bytes']['input']>;
@@ -138,6 +179,10 @@ export type Account_Filter = {
 };
 
 export enum Account_OrderBy {
+  FirstDonationReceivedTimestamp = 'firstDonationReceivedTimestamp',
+  FirstDonationSentTimestamp = 'firstDonationSentTimestamp',
+  FirstEndorsementReceivedTimestamp = 'firstEndorsementReceivedTimestamp',
+  FirstEndorsementSentTimestamp = 'firstEndorsementSentTimestamp',
   Id = 'id',
   ReceivedDonations = 'receivedDonations',
   ReceivedEndorsements = 'receivedEndorsements',
@@ -238,6 +283,10 @@ export enum AggregatedInformation_OrderBy {
   DonationAmount = 'donationAmount',
   EndorsementCount = 'endorsementCount',
   From = 'from',
+  FromFirstDonationReceivedTimestamp = 'from__firstDonationReceivedTimestamp',
+  FromFirstDonationSentTimestamp = 'from__firstDonationSentTimestamp',
+  FromFirstEndorsementReceivedTimestamp = 'from__firstEndorsementReceivedTimestamp',
+  FromFirstEndorsementSentTimestamp = 'from__firstEndorsementSentTimestamp',
   FromId = 'from__id',
   FromTotalDonationsReceived = 'from__totalDonationsReceived',
   FromTotalDonationsSent = 'from__totalDonationsSent',
@@ -245,11 +294,20 @@ export enum AggregatedInformation_OrderBy {
   FromTotalEndorsementsSent = 'from__totalEndorsementsSent',
   Id = 'id',
   To = 'to',
+  ToFirstDonationReceivedTimestamp = 'to__firstDonationReceivedTimestamp',
+  ToFirstDonationSentTimestamp = 'to__firstDonationSentTimestamp',
+  ToFirstEndorsementReceivedTimestamp = 'to__firstEndorsementReceivedTimestamp',
+  ToFirstEndorsementSentTimestamp = 'to__firstEndorsementSentTimestamp',
   ToId = 'to__id',
   ToTotalDonationsReceived = 'to__totalDonationsReceived',
   ToTotalDonationsSent = 'to__totalDonationsSent',
   ToTotalEndorsementsReceived = 'to__totalEndorsementsReceived',
   ToTotalEndorsementsSent = 'to__totalEndorsementsSent'
+}
+
+export enum Aggregation_Interval {
+  Day = 'day',
+  Hour = 'hour'
 }
 
 export type BlockChangedFilter = {
@@ -265,6 +323,7 @@ export type Block_Height = {
 export type Donation = {
   __typename?: 'Donation';
   amount: Scalars['BigInt']['output'];
+  createdAtTimestamp: Scalars['BigInt']['output'];
   from: Account;
   id: Scalars['Bytes']['output'];
   to: Account;
@@ -282,6 +341,14 @@ export type Donation_Filter = {
   amount_not?: InputMaybe<Scalars['BigInt']['input']>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   and?: InputMaybe<Array<InputMaybe<Donation_Filter>>>;
+  createdAtTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  createdAtTimestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   from?: InputMaybe<Scalars['String']['input']>;
   from_?: InputMaybe<Account_Filter>;
   from_contains?: InputMaybe<Scalars['String']['input']>;
@@ -339,7 +406,12 @@ export type Donation_Filter = {
 
 export enum Donation_OrderBy {
   Amount = 'amount',
+  CreatedAtTimestamp = 'createdAtTimestamp',
   From = 'from',
+  FromFirstDonationReceivedTimestamp = 'from__firstDonationReceivedTimestamp',
+  FromFirstDonationSentTimestamp = 'from__firstDonationSentTimestamp',
+  FromFirstEndorsementReceivedTimestamp = 'from__firstEndorsementReceivedTimestamp',
+  FromFirstEndorsementSentTimestamp = 'from__firstEndorsementSentTimestamp',
   FromId = 'from__id',
   FromTotalDonationsReceived = 'from__totalDonationsReceived',
   FromTotalDonationsSent = 'from__totalDonationsSent',
@@ -347,6 +419,10 @@ export enum Donation_OrderBy {
   FromTotalEndorsementsSent = 'from__totalEndorsementsSent',
   Id = 'id',
   To = 'to',
+  ToFirstDonationReceivedTimestamp = 'to__firstDonationReceivedTimestamp',
+  ToFirstDonationSentTimestamp = 'to__firstDonationSentTimestamp',
+  ToFirstEndorsementReceivedTimestamp = 'to__firstEndorsementReceivedTimestamp',
+  ToFirstEndorsementSentTimestamp = 'to__firstEndorsementSentTimestamp',
   ToId = 'to__id',
   ToTotalDonationsReceived = 'to__totalDonationsReceived',
   ToTotalDonationsSent = 'to__totalDonationsSent',
@@ -356,6 +432,7 @@ export enum Donation_OrderBy {
 
 export type Endorsement = {
   __typename?: 'Endorsement';
+  createdAtTimestamp: Scalars['BigInt']['output'];
   donationAmount: Scalars['BigInt']['output'];
   easUid: Scalars['Bytes']['output'];
   endorsementType: Scalars['String']['output'];
@@ -368,6 +445,14 @@ export type Endorsement_Filter = {
   /** Filter for the block changed event. */
   _change_block?: InputMaybe<BlockChangedFilter>;
   and?: InputMaybe<Array<InputMaybe<Endorsement_Filter>>>;
+  createdAtTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  createdAtTimestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   donationAmount?: InputMaybe<Scalars['BigInt']['input']>;
   donationAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
   donationAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
@@ -462,10 +547,15 @@ export type Endorsement_Filter = {
 };
 
 export enum Endorsement_OrderBy {
+  CreatedAtTimestamp = 'createdAtTimestamp',
   DonationAmount = 'donationAmount',
   EasUid = 'easUid',
   EndorsementType = 'endorsementType',
   From = 'from',
+  FromFirstDonationReceivedTimestamp = 'from__firstDonationReceivedTimestamp',
+  FromFirstDonationSentTimestamp = 'from__firstDonationSentTimestamp',
+  FromFirstEndorsementReceivedTimestamp = 'from__firstEndorsementReceivedTimestamp',
+  FromFirstEndorsementSentTimestamp = 'from__firstEndorsementSentTimestamp',
   FromId = 'from__id',
   FromTotalDonationsReceived = 'from__totalDonationsReceived',
   FromTotalDonationsSent = 'from__totalDonationsSent',
@@ -473,6 +563,10 @@ export enum Endorsement_OrderBy {
   FromTotalEndorsementsSent = 'from__totalEndorsementsSent',
   Id = 'id',
   To = 'to',
+  ToFirstDonationReceivedTimestamp = 'to__firstDonationReceivedTimestamp',
+  ToFirstDonationSentTimestamp = 'to__firstDonationSentTimestamp',
+  ToFirstEndorsementReceivedTimestamp = 'to__firstEndorsementReceivedTimestamp',
+  ToFirstEndorsementSentTimestamp = 'to__firstEndorsementSentTimestamp',
   ToId = 'to__id',
   ToTotalDonationsReceived = 'to__totalDonationsReceived',
   ToTotalDonationsSent = 'to__totalDonationsSent',
@@ -550,6 +644,72 @@ export enum FeeWithdrawal_OrderBy {
   WithdrawalType = 'withdrawalType'
 }
 
+export type GlobalStatistics = {
+  __typename?: 'GlobalStatistics';
+  id: Scalars['Bytes']['output'];
+  totalDonationAmount: Scalars['BigInt']['output'];
+  totalDonations: Scalars['BigInt']['output'];
+  totalEndorsements: Scalars['BigInt']['output'];
+  totalWithdrawnAmount: Scalars['BigInt']['output'];
+};
+
+export type GlobalStatistics_Filter = {
+  /** Filter for the block changed event. */
+  _change_block?: InputMaybe<BlockChangedFilter>;
+  and?: InputMaybe<Array<InputMaybe<GlobalStatistics_Filter>>>;
+  id?: InputMaybe<Scalars['Bytes']['input']>;
+  id_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  id_gt?: InputMaybe<Scalars['Bytes']['input']>;
+  id_gte?: InputMaybe<Scalars['Bytes']['input']>;
+  id_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  id_lt?: InputMaybe<Scalars['Bytes']['input']>;
+  id_lte?: InputMaybe<Scalars['Bytes']['input']>;
+  id_not?: InputMaybe<Scalars['Bytes']['input']>;
+  id_not_contains?: InputMaybe<Scalars['Bytes']['input']>;
+  id_not_in?: InputMaybe<Array<Scalars['Bytes']['input']>>;
+  or?: InputMaybe<Array<InputMaybe<GlobalStatistics_Filter>>>;
+  totalDonationAmount?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonationAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonationAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonationAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalDonationAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonationAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonationAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonationAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalDonations?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonations_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonations_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonations_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalDonations_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonations_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonations_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalDonations_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalEndorsements?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsements_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsements_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsements_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalEndorsements_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsements_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsements_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalEndorsements_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalWithdrawnAmount?: InputMaybe<Scalars['BigInt']['input']>;
+  totalWithdrawnAmount_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalWithdrawnAmount_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalWithdrawnAmount_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  totalWithdrawnAmount_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  totalWithdrawnAmount_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  totalWithdrawnAmount_not?: InputMaybe<Scalars['BigInt']['input']>;
+  totalWithdrawnAmount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+};
+
+export enum GlobalStatistics_OrderBy {
+  Id = 'id',
+  TotalDonationAmount = 'totalDonationAmount',
+  TotalDonations = 'totalDonations',
+  TotalEndorsements = 'totalEndorsements',
+  TotalWithdrawnAmount = 'totalWithdrawnAmount'
+}
+
 /** Defines the order direction, either ascending or descending */
 export enum OrderDirection {
   Asc = 'asc',
@@ -570,6 +730,8 @@ export type Query = {
   endorsements: Array<Endorsement>;
   feeWithdrawal?: Maybe<FeeWithdrawal>;
   feeWithdrawals: Array<FeeWithdrawal>;
+  globalStatistics?: Maybe<GlobalStatistics>;
+  globalStatistics_collection: Array<GlobalStatistics>;
   withdrawal?: Maybe<Withdrawal>;
   withdrawals: Array<Withdrawal>;
 };
@@ -670,6 +832,24 @@ export type QueryFeeWithdrawalsArgs = {
 };
 
 
+export type QueryGlobalStatisticsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type QueryGlobalStatistics_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<GlobalStatistics_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<GlobalStatistics_Filter>;
+};
+
+
 export type QueryWithdrawalArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -701,6 +881,8 @@ export type Subscription = {
   endorsements: Array<Endorsement>;
   feeWithdrawal?: Maybe<FeeWithdrawal>;
   feeWithdrawals: Array<FeeWithdrawal>;
+  globalStatistics?: Maybe<GlobalStatistics>;
+  globalStatistics_collection: Array<GlobalStatistics>;
   withdrawal?: Maybe<Withdrawal>;
   withdrawals: Array<Withdrawal>;
 };
@@ -801,6 +983,24 @@ export type SubscriptionFeeWithdrawalsArgs = {
 };
 
 
+export type SubscriptionGlobalStatisticsArgs = {
+  block?: InputMaybe<Block_Height>;
+  id: Scalars['ID']['input'];
+  subgraphError?: _SubgraphErrorPolicy_;
+};
+
+
+export type SubscriptionGlobalStatistics_CollectionArgs = {
+  block?: InputMaybe<Block_Height>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<GlobalStatistics_OrderBy>;
+  orderDirection?: InputMaybe<OrderDirection>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  subgraphError?: _SubgraphErrorPolicy_;
+  where?: InputMaybe<GlobalStatistics_Filter>;
+};
+
+
 export type SubscriptionWithdrawalArgs = {
   block?: InputMaybe<Block_Height>;
   id: Scalars['ID']['input'];
@@ -822,6 +1022,7 @@ export type Withdrawal = {
   __typename?: 'Withdrawal';
   address: Account;
   amount: Scalars['BigInt']['output'];
+  createdAtTimestamp: Scalars['BigInt']['output'];
   id: Scalars['Bytes']['output'];
 };
 
@@ -858,6 +1059,14 @@ export type Withdrawal_Filter = {
   amount_not?: InputMaybe<Scalars['BigInt']['input']>;
   amount_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   and?: InputMaybe<Array<InputMaybe<Withdrawal_Filter>>>;
+  createdAtTimestamp?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_gt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_gte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
+  createdAtTimestamp_lt?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_lte?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_not?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAtTimestamp_not_in?: InputMaybe<Array<Scalars['BigInt']['input']>>;
   id?: InputMaybe<Scalars['Bytes']['input']>;
   id_contains?: InputMaybe<Scalars['Bytes']['input']>;
   id_gt?: InputMaybe<Scalars['Bytes']['input']>;
@@ -873,12 +1082,17 @@ export type Withdrawal_Filter = {
 
 export enum Withdrawal_OrderBy {
   Address = 'address',
+  AddressFirstDonationReceivedTimestamp = 'address__firstDonationReceivedTimestamp',
+  AddressFirstDonationSentTimestamp = 'address__firstDonationSentTimestamp',
+  AddressFirstEndorsementReceivedTimestamp = 'address__firstEndorsementReceivedTimestamp',
+  AddressFirstEndorsementSentTimestamp = 'address__firstEndorsementSentTimestamp',
   AddressId = 'address__id',
   AddressTotalDonationsReceived = 'address__totalDonationsReceived',
   AddressTotalDonationsSent = 'address__totalDonationsSent',
   AddressTotalEndorsementsReceived = 'address__totalEndorsementsReceived',
   AddressTotalEndorsementsSent = 'address__totalEndorsementsSent',
   Amount = 'amount',
+  CreatedAtTimestamp = 'createdAtTimestamp',
   Id = 'id'
 }
 
@@ -888,6 +1102,8 @@ export type _Block_ = {
   hash?: Maybe<Scalars['Bytes']['output']>;
   /** The block number */
   number: Scalars['Int']['output'];
+  /** The hash of the parent block */
+  parentHash?: Maybe<Scalars['Bytes']['output']>;
   /** Integer representation of the timestamp stored in blocks for the chain */
   timestamp?: Maybe<Scalars['Int']['output']>;
 };
@@ -923,6 +1139,13 @@ export type GetAggregatedAccountDataQueryVariables = Exact<{
 
 export type GetAggregatedAccountDataQuery = { __typename?: 'Query', account?: { __typename?: 'Account', id: any, totalEndorsementsReceived: any, totalEndorsementsSent: any, totalDonationsReceived: any, totalDonationsSent: any } | null };
 
+export type GetGlobalStatisticsQueryVariables = Exact<{
+  id?: Scalars['ID']['input'];
+}>;
+
+
+export type GetGlobalStatisticsQuery = { __typename?: 'Query', globalStatistics?: { __typename?: 'GlobalStatistics', id: any, totalEndorsements: any, totalDonations: any, totalDonationAmount: any, totalWithdrawnAmount: any } | null };
+
 export type GetTopEndorsersAndDonatorsQueryVariables = Exact<{
   account: Scalars['String']['input'];
 }>;
@@ -956,6 +1179,17 @@ export const GetAggregatedAccountDataDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetAggregatedAccountDataQuery, GetAggregatedAccountDataQueryVariables>;
+export const GetGlobalStatisticsDocument = new TypedDocumentString(`
+    query GetGlobalStatistics($id: ID! = "0x476c6f62616c53746174697374696373") {
+  globalStatistics(id: $id) {
+    id
+    totalEndorsements
+    totalDonations
+    totalDonationAmount
+    totalWithdrawnAmount
+  }
+}
+    `) as unknown as TypedDocumentString<GetGlobalStatisticsQuery, GetGlobalStatisticsQueryVariables>;
 export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
     query GetTopEndorsersAndDonators($account: String!) {
   topEndorsers: aggregatedInformations(

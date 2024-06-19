@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
     } as any
   );
 
-  const res = await fetch(
+  const response = await fetch(
     `https://api.coinbase.com/api/v3/brokerage/market/products/${crypto}-${fiat}`,
     {
       method: 'GET',
@@ -79,11 +79,11 @@ export async function GET(request: NextRequest) {
     }
   );
 
-  if (!res.ok) {
+  if (!response.ok) {
     return Response.json({ error: 'Failed to fetch price' }, { status: 500 });
   }
 
-  const data = await res.json();
+  const data = await response.json();
 
   if (!data) {
     return Response.json({ error: 'Failed to fetch price' }, { status: 500 });
