@@ -19,18 +19,26 @@ import { Feed } from './Feed';
 import { getAggregatedAccountData } from '@/lib/ees';
 import { NetworkSelect } from './NetworkSelect';
 import { cn } from '@/lib/utils';
+import { validateOrGetDefaultPage } from '@/utils/validateOrGetDefaultPage';
 
 type PageProps = {
   params: { slug: string };
-  searchParams: { platform?: string; tab?: string; network?: string };
+  searchParams: {
+    platform?: string;
+    tab?: string;
+    network?: string;
+    page?: string;
+  };
 };
 
 export default async function Page({
   params: { slug },
-  searchParams: { platform, tab, network },
+  searchParams: { platform, tab, network, page },
 }: PageProps) {
   const _platform = validateOrGetDefaultPlatform(platform);
   const _network = validateOrGetDefaultNetwork(network);
+  const _page = validateOrGetDefaultPage(page);
+
   const data = await getProfileInfo(slug, _platform);
 
   const mainAddress = data.Wallet!.addresses![0] as `0x${string}`;
@@ -42,12 +50,21 @@ export default async function Page({
     chainId: _network,
   });
 
+  const totalEndorsementsReceived = Number.parseInt(
+    accountAggregatedData.totalEndorsementsReceived
+  );
+
   return (
-    <Container className="md:pt-14 lg:pt-16 xl:pt-24 max-w-[1440px] overflow-auto">
+    <Container className="px-0 md:pt-14 lg:pt-16 xl:pt-24 max-w-[1440px] overflow-auto">
       <div className="flex max-lg:flex-col w-full gap-4">
         <div className="lg:w-[30%] min-w-[300px] w-full">
           <div className="flex flex-col gap-y-2 text-center items-center">
-            <ProfileAvatar avatar={avatar} address={mainAddress} size="5xl" />
+            <ProfileAvatar
+              className="hover:animate-spin"
+              avatar={avatar}
+              address={mainAddress}
+              size="5xl"
+            />
             <div className="text-3xl font-bold">
               {basicProfileInfo.name ?? formatAddress(mainAddress)}
             </div>
@@ -80,67 +97,43 @@ export default async function Page({
             </Link>
           </div>
         </div>
-        <div
-          className={cn(
-            'relative w-full',
-            APP_ENV !== 'production' && 'max-lg:mt-12'
-          )}
-        >
-          {APP_ENV !== 'production' && (
-            <div className="absolute sm:right-8 -top-12 px-2 max-sm:w-full">
+        {APP_ENV !== 'production' && (
+          <div className="relative w-full lg:hidden">
+            <div className="absolute sm:right-8 px-2 max-sm:w-full">
               <div className="w-32 max-sm:w-full">
                 <NetworkSelect network={_network} />
               </div>
             </div>
+          </div>
+        )}
+        <div
+          className={cn(
+            'relative w-full overflow-auto',
+            APP_ENV !== 'production' && 'max-lg:mt-12'
           )}
+        >
           <Feed
             account={mainAddress}
-            platform={_platform}
             tab={tab}
             network={_network}
+            currentPage={_page}
+            totalEndorsementsReceived={
+              Number.isNaN(totalEndorsementsReceived)
+                ? 0
+                : totalEndorsementsReceived
+            }
           />
         </div>
+        {APP_ENV !== 'production' && (
+          <div className="relative w-0 max-lg:hidden">
+            <div className="absolute -top-12 right-12 px-2">
+              <div className="w-32">
+                <NetworkSelect network={_network} />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </Container>
   );
-}
-
-export async function generateMetadata({
-  params: { slug },
-  searchParams,
-}: PageProps): Promise<Metadata> {
-  return {
-    title: `Profile | ${slug}`,
-    description: `Check out ${slug} on endorse.fun!`,
-    openGraph: {
-      siteName: 'endorse.fun',
-      description: 'The next upgrade for Web3 social layer.',
-      images: [
-        {
-          url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
-          width: 1200,
-          height: 630,
-          alt: 'Profile Page Image',
-        },
-      ],
-      title: `Check out ${slug} on endorse.fun!`,
-      type: 'article',
-      url: `/profile/${slug}?platform=${searchParams.platform}`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `Check out ${slug} on endorse.fun!`,
-      description: 'Profile Page',
-      images: [
-        {
-          url: `/api/og?account=${slug}${
-            searchParams.platform ? `&platform=${searchParams.platform}` : ''
-          }`,
-          width: 1200,
-          height: 630,
-          alt: 'Profile Page Image',
-        },
-      ],
-    },
-  };
 }
