@@ -32,6 +32,7 @@
     "blo": "^1.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cmdk": "^1.0.0",
     "dayjs": "^1.11.11",
     "framer-motion": "^11.2.10",
     "jsonwebtoken": "^9.0.2",
