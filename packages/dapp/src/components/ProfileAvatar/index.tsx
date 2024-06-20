@@ -18,7 +18,7 @@ type AvatarSize =
   | '5xl'
   | '6xl';
 
-type ProfileAvatarProps = {
+type ProfileAvatarProps = React.HTMLAttributes<HTMLDivElement> & {
   avatar: string | null;
   address: `0x${string}`;
   size?: AvatarSize;
@@ -38,6 +38,7 @@ const AVATAR_SIZES = {
 };
 
 export const ProfileAvatar = ({
+  className,
   avatar,
   address,
   size = 'md',
@@ -57,7 +58,8 @@ export const ProfileAvatar = ({
         size === '3xl' && 'w-[96px] h-[96px]',
         size === '4xl' && 'w-[128px] h-[128px]',
         size === '5xl' && 'w-[160px] h-[160px]',
-        size === '6xl' && 'w-[192px] h-[192px]'
+        size === '6xl' && 'w-[192px] h-[192px]',
+        className
       )}
     >
       <MemoizedImage
@@ -87,9 +89,14 @@ export const ProfileAvatar = ({
   );
 };
 
+type ProfileAvatarSkeletonProps = {
+  size?: AvatarSize;
+} & React.HTMLAttributes<HTMLDivElement>;
+
 export const ProfileAvatarSkeleton = ({
+  className,
   size = 'md',
-}: { size?: AvatarSize }) => {
+}: ProfileAvatarSkeletonProps) => {
   return (
     <div
       className={cn(
@@ -118,7 +125,8 @@ export const ProfileAvatarSkeleton = ({
           size === '3xl' && 'w-[96px] h-[96px]',
           size === '4xl' && 'w-[128px] h-[128px]',
           size === '5xl' && 'w-[160px] h-[160px]',
-          size === '6xl' && 'w-[192px] h-[192px]'
+          size === '6xl' && 'w-[192px] h-[192px]',
+          className
         )}
       />
     </div>

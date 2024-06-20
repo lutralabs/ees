@@ -1,0 +1,19 @@
+query GetEndorsementsForAccountPaginated($id: ID!, $first: Int!, $skip: Int!) {
+  account(id: $id) {
+    receivedEndorsements(
+      orderBy: createdAtTimestamp
+      orderDirection: desc
+      first: $first
+      skip: $skip
+    ) {
+      id
+      from {
+        id
+      }
+      createdAtTimestamp
+      endorsementType
+      donationAmount
+      easUid
+    }
+  }
+}

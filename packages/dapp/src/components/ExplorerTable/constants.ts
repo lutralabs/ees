@@ -1,0 +1,1 @@
+export const EXPLORER_TABLE_ITEMS_PER_PAGE = 2.0;

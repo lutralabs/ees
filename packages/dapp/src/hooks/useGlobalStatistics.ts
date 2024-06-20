@@ -13,13 +13,13 @@ export const useGlobalStatistics = (chainId?: number) => {
       const response = await fetch(`/api/globalStatistics?network=${network}`);
 
       if (!response.ok) {
-        throw new Error('Failed to global statistics');
+        throw new Error('Failed to get global statistics');
       }
 
       const data = await response.json();
 
       if (!data) {
-        throw new Error('Failed to fetch global statistics');
+        throw new Error('Failed to get global statistics');
       }
 
       return (data as GetGlobalStatisticsQuery['globalStatistics'])!;
