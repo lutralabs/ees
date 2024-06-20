@@ -200,7 +200,7 @@ export const Searchbar = () => {
         <MagnifyingGlassIcon className="h-4 w-4" />
       </Button>
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
-        <DialogContent className="lg:hidden w-full overflow-hidden">
+        <DialogContent className="lg:hidden w-full overflow-hidden max-md:top-44">
           <div>
             <div className="relative flex items-center">
               <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
