@@ -34,7 +34,7 @@ export const ExplorerTableFooter = ({
           next: 'rounded-sm bg-gray-100 shadow-sm hover:bg-gray-200 data-[disabled]:text-gray-200 data-[disabled]:bg-gray-50',
         }}
         total={totalPages}
-        page={currentPage}
+        page={Math.min(currentPage, totalPages)}
         initialPage={1}
         onChange={handlePageChange}
         showControls

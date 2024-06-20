@@ -32,7 +32,7 @@ export const FeedNavigation = ({ tab }: FeedNavigationProps) => {
           scroll={false}
           prefetch={false}
         >
-          Endorsement Explorer 🚧
+          Endorsement Explorer
         </Link>
         <Link
           href={`${pathname}?${params.toString()}&tab=graph`}

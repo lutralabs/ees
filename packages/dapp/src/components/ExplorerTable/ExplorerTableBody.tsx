@@ -74,7 +74,7 @@ export const ExplorerTableBody = async ({
   );
 };
 
-const SKELETON_ROWS = 2;
+const SKELETON_ROWS = 10;
 
 export const ExplorerTableBodySkeleton = () => {
   return (
