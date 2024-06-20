@@ -21,7 +21,6 @@ export enum PlatformType {
   ethereum = 'ethereum',
   twitter = 'twitter',
   github = 'github',
-  unstoppableDomains = 'unstoppabledomains',
   farcaster = 'farcaster',
   discord = 'discord',
   linkedin = 'linkedin',
@@ -95,14 +94,6 @@ export const PLATFORM_DATA: { [key in PlatformType]: SocialPlatform } = {
     label: 'Lens',
     urlPrefix: 'https://www.lensfrens.xyz/',
     system: PlatformSystem.web2,
-  },
-  [PlatformType.unstoppableDomains]: {
-    key: PlatformType.unstoppableDomains,
-    color: '#2E65F5',
-    icon: '/icons/icon-unstoppabledomains.svg',
-    label: 'Unstoppable Domains',
-    urlPrefix: 'https://ud.me/',
-    system: PlatformSystem.web3,
   },
   [PlatformType.discord]: {
     key: PlatformType.discord,
@@ -193,4 +184,16 @@ export const validateOrGetDefaultPlatform = (
 
   // If the platform is not valid, return the default platform
   return PlatformType.ens;
+};
+
+export const SocialPlatformMapping = (platform: PlatformType) => {
+  return (
+    PLATFORM_DATA[platform] ?? {
+      key: platform,
+      color: '#000000',
+      icon: '',
+      label: platform,
+      ensText: [],
+    }
+  );
 };
