@@ -48,9 +48,9 @@ export const ExplorerTableBody = async ({
         <tr key={endorsement.id} className="w-full">
           <Suspense
             fallback={
-              <td className="flex px-6 py-4 max-sm:px-2 gap-x-2 items-center">
+              <td className="flex px-6 py-4 max-sm:px-2 items-center">
                 <ProfileAvatarSkeleton size="lg" className="bg-gray-200" />
-                <Skeleton className="w-28 h-5 bg-gray-200 rounded-sm" />
+                <Skeleton className="ml-2 w-28 h-5 bg-gray-200 rounded-sm" />
               </td>
             }
           >
@@ -81,9 +81,9 @@ export const ExplorerTableBodySkeleton = () => {
     <tbody className="w-full divide-y divide-gray-200 dark:divide-neutral-700">
       {Array.from({ length: SKELETON_ROWS }).map((_, index) => (
         <tr key={`skeleton-${index}`} className="w-full">
-          <td className="flex px-6 py-4 max-sm:px-2 gap-x-4 items-center">
+          <td className="flex px-6 max-sm:px-2 py-4 items-center">
             <ProfileAvatarSkeleton size="lg" className="bg-gray-200" />
-            <Skeleton className="max-sm:ml-2 w-full h-5 bg-gray-200 rounded-sm" />
+            <Skeleton className="ml-6 w-full h-5 bg-gray-200 rounded-sm" />
           </td>
           <td className="px-6 py-4 max-sm:px-2">
             <Skeleton className="w-full h-5 bg-gray-200 rounded-sm" />

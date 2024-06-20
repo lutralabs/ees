@@ -12,7 +12,7 @@ export const Navbar = () => {
   return (
     <header className="h-20 sticky bg-slate-50 z-20 top-0">
       <nav className="w-full py-5 px-3 flex">
-        <Link className="max-lg:flex-1 z-10" href="/">
+        <Link className="max-lg:flex-1 z-10" href="/" prefetch={false}>
           <div className="flex gap-x-1 items-center min-w-12">
             <MemoizedImage
               src="/EES_logo.svg"

@@ -12,10 +12,10 @@ export const ExplorerAvatar = async ({
     <Link
       href={`/profile/${address}?platform=ethereum`}
       prefetch={false}
-      className="flex items-center space-x-2 overflow-hidden cursor-pointer"
+      className="flex items-center overflow-hidden cursor-pointer"
     >
       <ProfileAvatar avatar={data.avatar} address={address} size="lg" />
-      <div className="max-w-32">
+      <div className="ml-2 max-w-32">
         <div className="font-medium text-md text-primary-500 truncate hover:underline hover:text-primary-600">
           {data.displayName ?? formatAddress(address)}
         </div>

@@ -9,6 +9,7 @@ import { CopyIcon } from '@/components/CopyIcon';
 import { useEffect, useMemo, useState } from 'react';
 import { useEndorsementStore } from '@/stores';
 import { ENDORSEMENT_OPTIONS } from '../EndorseForm/EndorseeCard';
+import Link from 'next/link';
 
 type EndorseeBadgeProps = {
   type: PlatformType;
@@ -103,11 +104,16 @@ export const EndorseeBadge = ({
       return (
         <>
           <div className="relative sm:mt-3">
-            <ProfileAvatar
-              avatar={user.avatar}
-              address={user.address}
-              size="2xl"
-            />
+            <Link
+              prefetch={false}
+              href={`/profile/${handle}?platform=${user.type}`}
+            >
+              <ProfileAvatar
+                avatar={user.avatar}
+                address={user.address}
+                size="2xl"
+              />
+            </Link>
             <div className={'absolute -bottom-2 -right-2'}>
               <MemoizedSVG
                 fill={PLATFORM_DATA[user.type].color as string}
