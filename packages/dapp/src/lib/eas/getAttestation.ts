@@ -23,8 +23,8 @@ export const getAttestation = async ({
         },
       },
     }),
-    // Cache for 1 minute
-    next: { revalidate: 60 },
+    // Cache for 1 day
+    next: { revalidate: 86400 },
   });
 
   // Check if request was successful
