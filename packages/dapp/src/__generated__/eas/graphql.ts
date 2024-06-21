@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -2850,10 +2850,39 @@ export type TimestampWhereUniqueInput = {
   id?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ExampleQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAttestationQueryVariables = Exact<{
+  where: AttestationWhereUniqueInput;
+}>;
 
 
-export type ExampleQuery = { __typename?: 'Query', ensNames: Array<{ __typename?: 'EnsName', id: string }> };
+export type GetAttestationQuery = { __typename?: 'Query', attestation?: { __typename?: 'Attestation', id: string, attester: string, recipient: string, decodedDataJson: string, timeCreated: number, revoked: boolean, revocationTime: number, txid: string } | null };
 
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
 
-export const ExampleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Example"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ensNames"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ExampleQuery, ExampleQueryVariables>;
+  constructor(private value: string, public __meta__?: Record<string, any>) {
+    super(value);
+  }
+
+  toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+
+export const GetAttestationDocument = new TypedDocumentString(`
+    query GetAttestation($where: AttestationWhereUniqueInput!) {
+  attestation(where: $where) {
+    id
+    attester
+    recipient
+    decodedDataJson
+    timeCreated
+    revoked
+    revocationTime
+    txid
+  }
+}
+    `) as unknown as TypedDocumentString<GetAttestationQuery, GetAttestationQueryVariables>;

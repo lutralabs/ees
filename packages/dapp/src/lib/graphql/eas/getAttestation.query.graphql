@@ -1,0 +1,12 @@
+query GetAttestation($where: AttestationWhereUniqueInput!) {
+  attestation(where: $where) {
+    id
+    attester
+    recipient
+    decodedDataJson
+    timeCreated
+    revoked
+    revocationTime
+    txid
+  }
+}

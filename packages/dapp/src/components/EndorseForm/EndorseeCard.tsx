@@ -68,8 +68,9 @@ export const EndorseeCard = ({ endorsee }: EndorseeCardProps) => {
         )}
       </div>
       <div className="flex max-lg:flex-col max-lg:pt-4 max-lg:gap-y-4 justify-between items-center">
-        {endorsee}
-
+        <div className="flex w-full max-sm:flex-col max-sm:gap-y-4 justify-start items-center">
+          {endorsee}
+        </div>
         <Select
           defaultValue="Based energy 🔵"
           value={endorsementType}

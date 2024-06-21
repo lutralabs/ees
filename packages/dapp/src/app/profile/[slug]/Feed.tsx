@@ -1,5 +1,3 @@
-import Link from 'next/link';
-import type { PlatformType } from '@/utils';
 import { Summary } from './Summary';
 import { Explorer } from './Explorer';
 import { SocialGraph } from './SocialGraph';
@@ -33,6 +31,7 @@ type FeedProps = {
   tab?: string;
   network: number;
   currentPage: number;
+  endorsementId?: string;
   totalEndorsementsReceived: number;
 };
 
@@ -41,6 +40,7 @@ export const Feed = ({
   tab,
   network,
   currentPage,
+  endorsementId,
   totalEndorsementsReceived,
 }: FeedProps) => {
   const _tab = validateOrGetDefaultTab(tab);
@@ -50,6 +50,7 @@ export const Feed = ({
       <FeedNavigation tab={_tab} />
       <div className="mt-4 w-full">
         <Suspense
+          key={_tab}
           fallback={
             <div className="mt-4 w-full">
               <Skeleton className="w-full h-48 bg-gray-200 rounded-sm" />
@@ -64,6 +65,7 @@ export const Feed = ({
               chainId={network}
               account={account}
               currentPage={currentPage}
+              endorsementId={endorsementId}
               totalEndorsementsReceived={totalEndorsementsReceived}
             />
           )}

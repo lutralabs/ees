@@ -1,12 +1,13 @@
-import { getEndorsementsForAccountPaginated } from '@/lib/ees/getEndorsementsForAccountPaginated';
+import { getEndorsementsForAccountPaginated } from '@/lib/ees';
 import { EXPLORER_TABLE_ITEMS_PER_PAGE } from './constants';
 import { EASLink } from './EASLink';
 import { ExplorerAvatar } from './ExplorerAvatar';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Skeleton } from '../ui/skeleton';
-import { ProfileAvatarSkeleton } from '../ProfileAvatar';
+import { Skeleton } from '@/components/ui/skeleton';
+import { ProfileAvatarSkeleton } from '@/components/ProfileAvatar';
 import { Suspense } from 'react';
+import { ViewMoreIcon } from './ViewMoreIcon';
 
 dayjs.extend(relativeTime);
 
@@ -54,19 +55,22 @@ export const ExplorerTableBody = async ({
               </td>
             }
           >
-            <td className="px-6 max-sm:px-2 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+            <td className="px-6 max-sm:px-2 py-4 whitespace-nowrap text-sm text-gray-800">
               <ExplorerAvatar address={endorsement.from?.id} />
             </td>
           </Suspense>
-          <td className="px-6 py-4 max-sm:px-2 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+          <td className="px-6 py-4 max-sm:px-2 whitespace-nowrap text-sm text-gray-800">
             {endorsement.endorsementType}
           </td>
-          <td className="px-6 py-4 max-sm:px-2 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+          <td className="px-6 py-4 max-sm:px-2 whitespace-nowrap text-sm font-medium text-gray-800">
             <EASLink value={endorsement.easUid} />
           </td>
 
-          <td className="px-6 max-sm:px-0 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+          <td className="px-6 max-sm:px-2 py-4 whitespace-nowrap text-sm text-gray-800">
             {dayjs.unix(endorsement.createdAtTimestamp).fromNow()}
+          </td>
+          <td className="px-2">
+            <ViewMoreIcon id={endorsement.easUid} />
           </td>
         </tr>
       ))}
