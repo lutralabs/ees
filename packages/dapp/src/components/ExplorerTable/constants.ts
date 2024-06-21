@@ -1,1 +1,1 @@
-export const EXPLORER_TABLE_ITEMS_PER_PAGE = 2.0;
+export const EXPLORER_TABLE_ITEMS_PER_PAGE = 10.0;

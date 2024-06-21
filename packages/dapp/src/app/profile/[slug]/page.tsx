@@ -28,12 +28,13 @@ type PageProps = {
     tab?: string;
     network?: string;
     page?: string;
+    endorsementId?: string;
   };
 };
 
 export default async function Page({
   params: { slug },
-  searchParams: { platform, tab, network, page },
+  searchParams: { platform, tab, network, page, endorsementId },
 }: PageProps) {
   const _platform = validateOrGetDefaultPlatform(platform);
   const _network = validateOrGetDefaultNetwork(network);
@@ -117,6 +118,7 @@ export default async function Page({
             tab={tab}
             network={_network}
             currentPage={_page}
+            endorsementId={endorsementId}
             totalEndorsementsReceived={
               Number.isNaN(totalEndorsementsReceived)
                 ? 0

@@ -10,13 +10,19 @@ import { FeeDisplay } from './FeeDisplay';
 import { DonationButton } from './DonationButton';
 import { CommentButton } from './CommentButton';
 import { CommentCard } from './CommentCard';
-import { useAccount, useEstimateFeesPerGas, useWriteContract } from 'wagmi';
+import {
+  useAccount,
+  useEstimateFeesPerGas,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from 'wagmi';
 import { CONTRACT_ADDRESSES, DEFAULT_CHAIN_ID, EESCore } from '@/lib/contracts';
 import { config } from '@/lib/wagmi/config';
 import {
   type WriteContractErrorType,
   parseEther,
   encodeFunctionData,
+  parseEventLogs,
 } from 'viem';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { useEndorsementStore } from '@/stores';
@@ -31,6 +37,7 @@ import {
 } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { ConnectButtonCustom } from '@/components/ConnectButtonCustom';
+import { EndorsementModal } from './EndorsementModal';
 
 type EndorseeProps = {
   endorsee: React.ReactNode;
@@ -62,6 +69,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
   // Local state
   const [donationOpen, setDonationOpen] = useState(false);
   const [commentOpen, setCommentOpen] = useState(false);
+  const [endorsementModalOpen, setEndorsementModalOpen] = useState(false);
   const [encodedFunctionData, setEncodedFunctionData] = useState<
     `0x${string}` | undefined
   >();
@@ -90,9 +98,32 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
     [displayValue, comment, endorsementType, address]
   );
 
-  const { writeContractAsync, isPending } = useWriteContract({
+  const {
+    writeContractAsync,
+    isPending,
+    data: transactionHash,
+  } = useWriteContract({
     config: config,
   });
+
+  const { data: txReceipt, isLoading: isReceiptLoading } =
+    useWaitForTransactionReceipt({
+      hash: transactionHash,
+    });
+
+  const endorsementData = useMemo(() => {
+    if (!txReceipt) return null;
+
+    const parsedLogs = parseEventLogs({
+      abi: EESCore,
+      logs: txReceipt.logs,
+      eventName: 'Endorse',
+    });
+
+    if (parsedLogs.length === 0) return null;
+
+    return parsedLogs[0].args;
+  }, [txReceipt]);
 
   const {
     data: endorsementPrice,
@@ -249,46 +280,61 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
       });
   };
 
+  useEffect(() => {
+    if (isReceiptLoading) setEndorsementModalOpen(true);
+  }, [isReceiptLoading]);
+
   return (
-    <Card className="p-4 flex flex-col gap-y-4 overflow-hidden shadow-lg">
-      <EndorseeCard endorsee={endorsee} />
-      {(donationOpen || intro) && (
-        <DonationCard close={() => setDonationOpen(false)} />
-      )}
-      {commentOpen && <CommentCard close={() => setCommentOpen(false)} />}
-      <div className="flex max-sm:flex-col max-sm:gap-y-4 sm:gap-x-2">
-        {!commentOpen && (
-          <CommentButton onMouseDown={() => setCommentOpen(true)} />
+    <>
+      <Card className="p-4 flex flex-col gap-y-4 overflow-hidden shadow-lg">
+        <EndorseeCard endorsee={endorsee} />
+        {(donationOpen || intro) && (
+          <DonationCard close={() => setDonationOpen(false)} />
         )}
-        {!(donationOpen || intro) && (
-          <DonationButton onMouseDown={() => setDonationOpen(true)} />
+        {commentOpen && <CommentCard close={() => setCommentOpen(false)} />}
+        <div className="flex max-sm:flex-col max-sm:gap-y-4 sm:gap-x-2">
+          {!commentOpen && (
+            <CommentButton onMouseDown={() => setCommentOpen(true)} />
+          )}
+          {!(donationOpen || intro) && (
+            <DonationButton onMouseDown={() => setDonationOpen(true)} />
+          )}
+        </div>
+        {!connectedAccount && (
+          <ConnectButtonCustom
+            size="lg"
+            className={cn('w-full text-xl py-6')}
+          />
         )}
-      </div>
-      {!connectedAccount && (
-        <ConnectButtonCustom size="lg" className={cn('w-full text-xl py-6')} />
-      )}
-      {connectedAccount && (
-        <Button
-          size="lg"
-          className={cn('w-full text-xl py-6', 'disabled:bg-gray-300')}
-          onMouseDown={handleEnorsment}
-          disabled={
-            !intro &&
-            (areRequestsPending ||
-              isError ||
-              !address ||
-              !connectedAccount ||
-              isGasEstimateFetching)
-          }
-        >
-          {isPending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-          {previousErrorInsufficientFunds ? 'Insufficient funds' : 'Endorse'}
-        </Button>
-      )}
-      <FeeDisplay
-        donationValue={donationValue.toString()}
-        encodedFunctionData={encodedFunctionData}
+        {connectedAccount && (
+          <Button
+            size="lg"
+            className={cn('w-full text-xl py-6', 'disabled:bg-gray-300')}
+            onMouseDown={handleEnorsment}
+            disabled={
+              !intro &&
+              (areRequestsPending ||
+                isError ||
+                !address ||
+                !connectedAccount ||
+                isGasEstimateFetching)
+            }
+          >
+            {isPending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+            {previousErrorInsufficientFunds ? 'Insufficient funds' : 'Endorse'}
+          </Button>
+        )}
+        <FeeDisplay
+          donationValue={donationValue.toString()}
+          encodedFunctionData={encodedFunctionData}
+        />
+      </Card>
+      <EndorsementModal
+        open={endorsementModalOpen}
+        setOpen={setEndorsementModalOpen}
+        endorsementId={endorsementData?.uid ?? null}
+        endorsee={endorsee}
       />
-    </Card>
+    </>
   );
 };

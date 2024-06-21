@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as types from './graphql';
-import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+
+
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,33 +14,15 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'query Example {\n  ensNames {\n    id\n  }\n}': types.ExampleDocument,
+    "query GetAttestation($where: AttestationWhereUniqueInput!) {\n  attestation(where: $where) {\n    id\n    attester\n    recipient\n    decodedDataJson\n    timeCreated\n    revoked\n    revocationTime\n    txid\n  }\n}": types.GetAttestationDocument,
 };
 
 /**
  * The gqlEAS function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- *
- *
- * @example
- * ```ts
- * const query = gqlEAS(`query GetUser($id: ID!) { user(id: $id) { name } }`);
- * ```
- *
- * The query argument is unknown!
- * Please regenerate the types.
  */
-export function gqlEAS(source: string): unknown;
+export function gqlEAS(source: "query GetAttestation($where: AttestationWhereUniqueInput!) {\n  attestation(where: $where) {\n    id\n    attester\n    recipient\n    decodedDataJson\n    timeCreated\n    revoked\n    revocationTime\n    txid\n  }\n}"): typeof import('./graphql').GetAttestationDocument;
 
-/**
- * The gqlEAS function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gqlEAS(
-  source: 'query Example {\n  ensNames {\n    id\n  }\n}'
-): (typeof documents)['query Example {\n  ensNames {\n    id\n  }\n}'];
 
 export function gqlEAS(source: string) {
   return (documents as any)[source] ?? {};
 }
-
-export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
-  TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;

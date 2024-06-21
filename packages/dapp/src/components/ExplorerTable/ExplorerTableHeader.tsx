@@ -26,6 +26,7 @@ export const ExplorerTableHeader = () => {
         >
           Age
         </th>
+        <th scope="col" />
       </tr>
     </thead>
   );
