@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "infisical run --env=dev --path=/dapp -- next dev",
-    "build": "infisical run --env=dev --path=/dapp -- rimraf .next && next build",
+    "build": "rimraf .next && next build",
     "start": "next start",
     "lint": "biome check .",
     "compile": "graphql-codegen",
