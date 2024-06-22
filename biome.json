@@ -29,8 +29,9 @@
       "**/cache/**",
       "**/cache_forge/**",
       "**/artifacts/**",
-      "packages/contracts/lib/**",
-      "**/__generated__/**"
+      "**/contracts/lib/**",
+      "**/__generated__/**",
+      "**/ignition/deployments/**"
     ]
   },
   "organizeImports": {
