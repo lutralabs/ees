@@ -38,6 +38,7 @@ import {
 import { cn } from '@/lib/utils';
 import { ConnectButtonCustom } from '@/components/ConnectButtonCustom';
 import { EndorsementModal } from './EndorsementModal';
+import { APP_URL } from '@/utils';
 
 type EndorseeProps = {
   endorsee: React.ReactNode;
@@ -332,7 +333,11 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
       <EndorsementModal
         open={endorsementModalOpen}
         setOpen={setEndorsementModalOpen}
-        endorsementId={endorsementData?.uid ?? null}
+        shareLink={
+          displayValue && platform && endorsementData?.uid
+            ? `${APP_URL}/profile/${displayValue}?platform=${platform}&tab=explorer&endorsementId=${endorsementData?.uid}`
+            : null
+        }
         endorsee={endorsee}
       />
     </>

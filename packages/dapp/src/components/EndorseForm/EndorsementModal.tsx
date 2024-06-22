@@ -11,8 +11,7 @@ import { MemoizedImage } from '@/components/MemoizedImage';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { APP_URL, PlatformType, formatHandle, startsWithVowel } from '@/utils';
-import { ProfileAvatarSkeleton } from '../ProfileAvatar';
+import { PlatformType, formatHandle, startsWithVowel } from '@/utils';
 import { Skeleton } from '../ui/skeleton';
 import { EndorseeSkeleton } from '../Endorsee';
 import { useEndorsementStore } from '@/stores';
@@ -20,18 +19,18 @@ import { useEndorsementStore } from '@/stores';
 type EndorsementModalProps = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  endorsementId: string | null;
+  shareLink: string | null;
   endorsee: React.ReactNode;
 };
 
 export const EndorsementModal = ({
   open,
   setOpen,
-  endorsementId,
+  shareLink,
   endorsee,
 }: EndorsementModalProps) => {
   // TODO[Martin]: Add network name, so we can support multiple networks
-  const shareLink = `${APP_URL}/endorsement/${endorsementId}`;
+  // const shareLink = `${APP_URL}/endorsement/${endorsementId}`;
   const { displayValue, endorsementType, platform } = useEndorsementStore(
     (state) => ({
       displayValue: state.displayValue,
@@ -42,7 +41,7 @@ export const EndorsementModal = ({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[625px] p-4">
-        {endorsementId && (
+        {shareLink && (
           <>
             <DialogHeader>
               <DialogTitle>Endorsement</DialogTitle>
@@ -111,7 +110,7 @@ export const EndorsementModal = ({
                 <Button
                   size="lg"
                   variant="outline"
-                  onClick={() => navigator.clipboard.writeText('')}
+                  onClick={() => navigator.clipboard.writeText(shareLink)}
                 >
                   Copy Link
                 </Button>
@@ -119,7 +118,7 @@ export const EndorsementModal = ({
             </div>
           </>
         )}
-        {!endorsementId && <EndorsementModalSkeleton />}
+        {!shareLink && <EndorsementModalSkeleton />}
       </DialogContent>
     </Dialog>
   );
