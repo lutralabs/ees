@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "pnpm nx run-many --target=build",
-    "lint": "biome check --config-path configs . && pnpm nx run-many --target=lint",
-    "lint:fix": "biome check --config-path configs --apply . && pnpm nx run-many --target=lint:fix",
+    "lint": "biome check . && forge fmt --root packages/contracts --check",
+    "lint:fix": "biome check --apply . && forge fmt --root packages/contracts",
     "prepare": "husky install",
     "coverage": "pnpm nx run-many --target=coverage",
     "cron": "pnpm nx run-many --target=cron",

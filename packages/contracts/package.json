@@ -16,8 +16,8 @@
     "test:forge": "forge test --evm-version cancun --fork-url $SEPOLIA_RPC_URL --fork-block-number 6037898",
     "coverage": "pnpm coverage:hardhat",
     "coverage:hardhat": "hardhat coverage --sources Core",
-    "lint": "forge fmt --check && biome check .",
-    "lint:fix": "forge fmt && biome check --apply .",
+    "lint": "forge fmt --check",
+    "lint:fix": "forge fmt",
 
     "deploy:local": "npx hardhat run scripts/deployCore.ts --network local",
     "upgrade:local": "npx hardhat run scripts/upgradeCore.ts --network local",

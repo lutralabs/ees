@@ -6,8 +6,6 @@
     "build": "pnpm codegen && graph build",
     "setup": "pnpm codegen && pnpm create-local && pnpm deploy-local",
     "test": "graph test",
-    "lint": "biome check .",
-    "lint:fix": "biome check --apply .",
     "clean": "rimraf ./generated ./build ./data ./tests/.bin ./tests/.latest.json ./tests/.docker",
     "create-local": "graph create ees --node http://localhost:8020/",
     "remove-local": "graph remove ees --node http://localhost:8020/",
