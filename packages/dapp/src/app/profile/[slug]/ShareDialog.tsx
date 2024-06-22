@@ -16,6 +16,7 @@ import { TwitterIcon, TwitterShareButton } from 'react-share';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { Card } from '@/components/ui/card';
 import { MemoizedImage } from '@/components/MemoizedImage';
+import { useAccount } from 'wagmi';
 
 type ShareDialogProps = {
   avatar: string | null;
@@ -30,6 +31,7 @@ export function ShareDialog({
   shareLink,
   displayName,
 }: ShareDialogProps) {
+  const account = useAccount();
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -44,9 +46,15 @@ export function ShareDialog({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[625px] p-4">
         <DialogHeader>
-          <DialogTitle>Share this profile</DialogTitle>
+          <DialogTitle>
+            {account.address === address
+              ? 'Share your profile'
+              : 'Share this profile'}
+          </DialogTitle>
           <DialogDescription>
-            Share the profile with others to get more endorsements!
+            {account.address === address
+              ? 'Share your profile with others to get more endorsements!'
+              : 'Share this profile with others to get them more endorsements!'}
           </DialogDescription>
         </DialogHeader>
 
@@ -60,7 +68,9 @@ export function ShareDialog({
             <div>Share on</div>
             <TwitterShareButton
               url={shareLink}
-              title={'Check out my profile on @endorsedotfun!'}
+              title={`Check out ${
+                account.address === address ? 'my' : 'this'
+              } profile on @endorsedotfun!`}
               hashtags={['endorse', 'reputation']}
               className="flex items-center justify-center gap-x-2"
             >
@@ -69,7 +79,9 @@ export function ShareDialog({
             <Link
               prefetch={false}
               href={`https://hey.xyz/?text=${encodeURIComponent(
-                `Check out my profile on @endorsedotfun!\n ${shareLink}\n`
+                `Check out ${
+                  account.address === address ? 'my' : 'this'
+                } profile on @endorsedotfun!\n ${shareLink}\n`
               )}&hashtags=${encodeURIComponent('reputation,endorse')}`}
               target="_blank"
             >
@@ -83,7 +95,9 @@ export function ShareDialog({
             <Link
               prefetch={false}
               href={`https://warpcast.com/~/compose?text=${encodeURIComponent(
-                'Check out my profile on endorse.fun!'
+                `Check out ${
+                  account.address === address ? 'my' : 'this'
+                } profile on endorse.fun!`
               )}&embeds[]=${shareLink}`}
               target="_blank"
             >
