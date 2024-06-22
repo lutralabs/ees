@@ -9,6 +9,20 @@ export const formatAddress = (address: string) => {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 };
 
+export const startsWithVowel = (word: string) => {
+  return /^[aeiou]/i.test(word);
+};
+
+export const formatHandle = (handle: string, platform: PlatformType) => {
+  if (platform === PlatformType.lens) {
+    return `@${handle.substring(0, handle.indexOf('.'))}`;
+  }
+  if (platform === PlatformType.farcaster) {
+    return `@${handle}`;
+  }
+  return handle;
+};
+
 export type SearchListItemType = {
   key: PlatformType;
   label: string;

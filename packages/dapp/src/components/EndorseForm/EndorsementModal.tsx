@@ -11,10 +11,11 @@ import { MemoizedImage } from '@/components/MemoizedImage';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { APP_URL } from '@/utils';
+import { APP_URL, PlatformType, formatHandle, startsWithVowel } from '@/utils';
 import { ProfileAvatarSkeleton } from '../ProfileAvatar';
 import { Skeleton } from '../ui/skeleton';
 import { EndorseeSkeleton } from '../Endorsee';
+import { useEndorsementStore } from '@/stores';
 
 type EndorsementModalProps = {
   open: boolean;
@@ -31,6 +32,13 @@ export const EndorsementModal = ({
 }: EndorsementModalProps) => {
   // TODO[Martin]: Add network name, so we can support multiple networks
   const shareLink = `${APP_URL}/endorsement/${endorsementId}`;
+  const { displayValue, endorsementType, platform } = useEndorsementStore(
+    (state) => ({
+      displayValue: state.displayValue,
+      endorsementType: state.endorsementType,
+      platform: state.platform,
+    })
+  );
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[625px] p-4">
@@ -49,7 +57,11 @@ export const EndorsementModal = ({
                 <div className="flex items-center gap-x-2 max-sm:pt-2">
                   <TwitterShareButton
                     url={shareLink}
-                    title={'Check out my profile on @endorsedotfun!'}
+                    title={`I endorsed ${displayValue} as ${
+                      startsWithVowel(endorsementType.toLowerCase())
+                        ? 'an'
+                        : 'a'
+                    } ${endorsementType} on @endorsedotfun!`}
                     hashtags={['endorse', 'reputation']}
                     className="flex items-center justify-center gap-x-2"
                   >
@@ -58,7 +70,11 @@ export const EndorsementModal = ({
                   <Link
                     prefetch={false}
                     href={`https://hey.xyz/?text=${encodeURIComponent(
-                      `Check out my profile on @endorsedotfun!\n ${shareLink}\n`
+                      `I endorsed ${
+                        platform === PlatformType.lens
+                          ? formatHandle(displayValue!, platform!)
+                          : displayValue
+                      } as a ${endorsementType} on @endorsedotfun!\n ${shareLink}\n`
                     )}&hashtags=${encodeURIComponent('reputation,endorse')}`}
                     target="_blank"
                   >
@@ -72,7 +88,11 @@ export const EndorsementModal = ({
                   <Link
                     prefetch={false}
                     href={`https://warpcast.com/~/compose?text=${encodeURIComponent(
-                      'Check out my profile on endorse.fun!'
+                      `I endorsed ${
+                        platform === PlatformType.farcaster
+                          ? formatHandle(displayValue!, platform!)
+                          : displayValue
+                      } as a ${endorsementType} on @endorsedotfun!`
                     )}&embeds[]=${shareLink}`}
                     target="_blank"
                   >
