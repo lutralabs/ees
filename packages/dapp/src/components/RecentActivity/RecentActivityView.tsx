@@ -3,9 +3,12 @@
 import { getRecentEndorsementsAndDonationsClient } from '@/lib/ees';
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { RecentEndorsement } from './RecentEndorsement';
+import {
+  RecentEndorsement,
+  RecentEndorsementSkeleton,
+} from './RecentEndorsement';
 import type React from 'react';
-import { RecentDonation } from './RecentDonation';
+import { RecentDonation, RecentDonationSkeleton } from './RecentDonation';
 import { motion, AnimatePresence, usePresence } from 'framer-motion';
 
 type RecentActivityViewProps = {
@@ -79,6 +82,31 @@ export const RecentActivityView = ({ network }: RecentActivityViewProps) => {
               </ListItem>
             ))}
           </AnimatePresence>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export const RecentActivityViewSkeleton = () => {
+  return (
+    <div className="flex max-lg:flex-col gap-x-8 mt-8 gap-y-8 md:max-w-[70%] lg:max-w-full mx-auto">
+      <Card className="flex-1 overflow-hidden px-0">
+        <CardHeader className="font-bold text-xl">
+          Recent endorsements
+        </CardHeader>
+        <CardContent className="relative">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <RecentEndorsementSkeleton key={i} />
+          ))}
+        </CardContent>
+      </Card>
+      <Card className="flex-1 overflow-hidden px-0">
+        <CardHeader className="font-bold text-xl">Recent donations</CardHeader>
+        <CardContent className="relative">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <RecentDonationSkeleton key={i} />
+          ))}
         </CardContent>
       </Card>
     </div>

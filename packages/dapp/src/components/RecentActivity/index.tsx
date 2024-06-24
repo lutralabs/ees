@@ -4,7 +4,10 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query';
-import { RecentActivityView } from './RecentActivityView';
+import {
+  RecentActivityView,
+  RecentActivityViewSkeleton,
+} from './RecentActivityView';
 
 type RecentActivityProps = {
   network: number;
@@ -27,5 +30,5 @@ export const RecentActivity = async ({ network }: RecentActivityProps) => {
 };
 
 export const RecentActivitySkeleton = () => {
-  return <div>Loading...</div>;
+  return <RecentActivityViewSkeleton />;
 };
