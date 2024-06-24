@@ -48,13 +48,10 @@ export const Searchbar = () => {
     }
     // escape
     if (e.keyCode === 27) {
-      if (activeIndex === -1) {
-        setSuggestions(SUGGESTED_ACCOUNTS);
-        setQuery('');
-      } else {
-        setActiveIndex(-1);
-        setQuery('');
-      }
+      setSuggestions(SUGGESTED_ACCOUNTS);
+      setQuery('');
+      setShowDropdown(false);
+      inputRef?.current?.blur();
     }
     // up
     if (e.keyCode === 38 || (e.shiftKey && e.keyCode === 9)) {
