@@ -54,7 +54,7 @@ export const RecentActivityView = ({ network }: RecentActivityViewProps) => {
         <CardHeader className="font-bold text-xl">
           Recent endorsements
         </CardHeader>
-        <CardContent className="relative">
+        <CardContent className="relative px-0">
           <AnimatePresence>
             {data?.endorsements?.map((endorsement, i) => (
               <ListItem key={endorsement.id}>
@@ -70,7 +70,7 @@ export const RecentActivityView = ({ network }: RecentActivityViewProps) => {
       </Card>
       <Card className="flex-1 overflow-hidden px-0">
         <CardHeader className="font-bold text-xl">Recent donations</CardHeader>
-        <CardContent className="relative">
+        <CardContent className="relative px-0">
           <AnimatePresence>
             {data?.donations?.map((donation, i) => (
               <ListItem key={donation.id}>
@@ -95,7 +95,7 @@ export const RecentActivityViewSkeleton = () => {
         <CardHeader className="font-bold text-xl">
           Recent endorsements
         </CardHeader>
-        <CardContent className="relative">
+        <CardContent className="relative px-0">
           {Array.from({ length: 5 }).map((_, i) => (
             <RecentEndorsementSkeleton key={i} />
           ))}
@@ -103,7 +103,7 @@ export const RecentActivityViewSkeleton = () => {
       </Card>
       <Card className="flex-1 overflow-hidden px-0">
         <CardHeader className="font-bold text-xl">Recent donations</CardHeader>
-        <CardContent className="relative">
+        <CardContent className="relative px-0">
           {Array.from({ length: 5 }).map((_, i) => (
             <RecentDonationSkeleton key={i} />
           ))}
