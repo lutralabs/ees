@@ -46,11 +46,9 @@ export function EndorseeDialog() {
     }
     // escape
     if (e.keyCode === 27) {
-      if (activeIndex === -1) {
-        setSuggestions([]);
-      } else {
-        setActiveIndex(-1);
-      }
+      setActiveIndex(-1);
+      setSuggestions(SUGGESTED_ACCOUNTS);
+      setQuery('');
     }
     // up
     if (e.keyCode === 38 || (e.shiftKey && e.keyCode === 9)) {
