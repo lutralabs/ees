@@ -2,9 +2,7 @@
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*"
-    ],
+    "default": ["{projectRoot}/**/*"],
     "production": [
       "default",
       "!{projectRoot}/**/*.spec.ts",
@@ -23,13 +21,8 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ],
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"],
       "outputs": [
         "{projectRoot}/dist",
         "{projectRoot}/.next",
@@ -51,9 +44,7 @@
     },
     "coverage": {
       "cache": true,
-      "outputs": [
-        "{projectRoot}/packages/contracts/coverage"
-      ]
+      "outputs": ["{projectRoot}/packages/contracts/coverage"]
     },
     "test": {
       "cache": true
@@ -65,6 +56,6 @@
       "cache": true
     }
   },
-  "nxCloudAccessToken": "MmIxYWI0MjctZGJlYi00YjgwLThmYzktY2JiOWI3OTc0OTIxfHJlYWQtd3JpdGU=",
+  "nxCloudAccessToken": "MzgxYTJiOTEtNzE0ZC00MTAyLWEzYzItZmVjYTYxY2NhMDNifHJlYWQ=",
   "defaultBase": "develop"
 }
