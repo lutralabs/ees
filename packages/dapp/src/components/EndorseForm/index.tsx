@@ -303,7 +303,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
                 className="p-0 pl-1 text-xs h-4"
                 onClick={() =>
                   window.open(
-                    `${EXPLORERS[chainId]}/tx/${transactionHash}`,
+                    `${EXPLORERS[chainId!]}/tx/${transactionHash}`,
                     '_blank'
                   )
                 }
@@ -368,7 +368,10 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
                 isGasEstimateFetching)
             }
           >
-            {previousErrorInsufficientFunds ? 'Insufficient funds' : 'Endorse'}
+            {!isReceiptLoading &&
+              (previousErrorInsufficientFunds
+                ? 'Insufficient funds'
+                : 'Endorse')}
             {isReceiptLoading && (
               <div role="status">
                 <svg
