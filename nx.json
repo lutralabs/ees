@@ -47,6 +47,7 @@
       "outputs": ["{projectRoot}/packages/contracts/coverage"]
     },
     "test": {
+      "inputs": ["default"],
       "cache": true
     },
     "test:hardhat": {
