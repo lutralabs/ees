@@ -58,4 +58,4 @@ jobs:
       - name: Lint
         run: pnpm lint
       - name: Build and test affected
-        run: npx nx affected -t build test
+        run: pnpm nx run-many --target=build,test
