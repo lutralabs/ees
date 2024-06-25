@@ -31,7 +31,8 @@
       "**/artifacts/**",
       "**/contracts/lib/**",
       "**/__generated__/**",
-      "**/ignition/deployments/**"
+      "**/ignition/deployments/**",
+      "**/subgraphs/tests/.latest.json"
     ]
   },
   "organizeImports": {
