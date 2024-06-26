@@ -99,6 +99,16 @@
           }
         }
       }
+    },
+    {
+      "include": ["**/frame/app/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useJsxKeyInIterable": "off"
+          }
+        }
+      }
     }
   ]
 }
