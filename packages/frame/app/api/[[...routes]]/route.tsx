@@ -88,12 +88,11 @@ app.frame('/', (c) => {
   return c.res({
     image: `${process.env.NEXT_PUBLIC_SITE_URL}/intro.png`,
     intents: [
-      <Button action="/main">Begin</Button>,
-      // <Button action="/info">Tutorial</Button>,
+      <Button action="/main">Start</Button>,
+      <Button action="/info">Legend</Button>,
       <Button.Redirect location="https://endorse.fun">
         endorse.fun
       </Button.Redirect>,
-      <Button action="/finish">Test</Button>,
     ],
   });
 });
@@ -124,7 +123,7 @@ app.frame('/main', (c) => {
   return c.res({
     image: `${process.env.NEXT_PUBLIC_SITE_URL}/endorse_frame.png`,
     intents: [
-      <TextInput placeholder="Search by ens, farcaster, lens" />,
+      <TextInput placeholder="Search by farcaster, ens, lens" />,
       <Button value="search" action="/search">
         Search🔎
       </Button>,
@@ -138,9 +137,9 @@ app.frame('/main', (c) => {
 
 app.frame('/info', (c) => {
   return c.res({
-    image: `${process.env.NEXT_PUBLIC_SITE_URL}/info_frame.png`,
+    image: `${process.env.NEXT_PUBLIC_SITE_URL}/legend_frame.png`,
     intents: [
-      <Button action="/main">Begin</Button>,
+      <Button action="/main">Start</Button>,
       <Button.Reset>Back ↩️</Button.Reset>,
       <Button.Redirect location="https://endorse.fun">
         endorse.fun
@@ -159,7 +158,7 @@ app.frame('/search', async (c) => {
     return c.res({
       image: `${process.env.NEXT_PUBLIC_SITE_URL}/endorse_frame.png`,
       intents: [
-        <TextInput placeholder="Search by ens, farcaster, lens" />,
+        <TextInput placeholder="Search by farcaster, ens, lens" />,
         <Button value="search" action="/search">
           Search🔎
         </Button>,
@@ -204,7 +203,7 @@ app.frame('/search', async (c) => {
         </Box>
       ),
       intents: [
-        <TextInput placeholder="Search by ens, farcaster, lens" />,
+        <TextInput placeholder="Search by farcaster, ens, lens" />,
         <Button value="search" action="/search">
           Search🔎
         </Button>,
@@ -240,7 +239,7 @@ app.frame('/search', async (c) => {
         </Box>
       ),
       intents: [
-        <TextInput placeholder="Search by ens, farcaster, lens" />,
+        <TextInput placeholder="Search by farcaster, ens, lens" />,
         <Button value="search" action="/search">
           Search🔎
         </Button>,
@@ -299,7 +298,7 @@ app.frame('/search', async (c) => {
       </Box>
     ),
     intents: [
-      <TextInput placeholder="Search by ens, farcaster, lens" />,
+      <TextInput placeholder="Search by farcaster, ens, lens" />,
       <Button action="/type-selection">✅</Button>,
       <Button value="search">Search🔎</Button>,
       <Button.Reset>🔄</Button.Reset>,
@@ -403,7 +402,6 @@ app.frame('/form', (c) => {
       previousState.tip = tip;
     }
     if (buttonValue === 'confirm-comment' && inputText) {
-      console.log('previousState', previousState);
       previousState.comment = inputText;
     }
   });
