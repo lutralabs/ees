@@ -33,6 +33,8 @@ type FeedProps = {
   currentPage: number;
   endorsementId?: string;
   totalEndorsementsReceived: number;
+  avatar: string;
+  accountName: string;
 };
 
 export const Feed = ({
@@ -42,6 +44,8 @@ export const Feed = ({
   currentPage,
   endorsementId,
   totalEndorsementsReceived,
+  avatar,
+  accountName,
 }: FeedProps) => {
   const _tab = validateOrGetDefaultTab(tab);
 
@@ -67,6 +71,8 @@ export const Feed = ({
               currentPage={currentPage}
               endorsementId={endorsementId}
               totalEndorsementsReceived={totalEndorsementsReceived}
+              avatar={avatar}
+              accountName={accountName}
             />
           )}
           {_tab === 'graph' && <SocialGraph />}
