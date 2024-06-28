@@ -1,0 +1,20 @@
+query GetTopEndorsersForAccount($account: String!, $first: Int!) {
+  topEndorsers: aggregatedInformations(
+    where: {to: $account}
+    orderBy: from__totalEndorsementsReceived
+    orderDirection: desc,
+    first: $first
+  ) {
+    id
+   from {
+      id
+      totalEndorsementsReceived
+      sentEndorsements(where: {
+        to: $account,
+      }) {
+        endorsementType,
+        easUid
+      }
+    }
+  }
+}
