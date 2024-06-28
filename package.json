@@ -28,5 +28,10 @@
   "packageManager": "pnpm@9.1.1",
   "engines": {
     "node": ">=20.12.2"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "next@14.2.4": "patches/next@14.2.4.patch"
+    }
   }
 }
