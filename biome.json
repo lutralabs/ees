@@ -101,7 +101,7 @@
       }
     },
     {
-      "include": ["**/frame/app/**"],
+      "include": ["**/dapp/src/app/api/frame/**", "**/frame/app/**"],
       "linter": {
         "rules": {
           "correctness": {

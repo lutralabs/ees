@@ -6,6 +6,8 @@ import {
 } from '@/lib/airstack';
 import { validateOrGetDefaultPlatform } from '@/utils';
 
+// TODO - remove this API route if frame in the dapp is kept
+
 export async function GET(request: NextRequest) {
   try {
     // Get url parameters
