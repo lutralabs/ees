@@ -118,6 +118,8 @@ export default async function Page({
             tab={tab}
             network={_network}
             currentPage={_page}
+            avatar={avatar ?? ''}
+            accountName={basicProfileInfo.name ?? formatAddress(mainAddress)}
             endorsementId={endorsementId}
             totalEndorsementsReceived={
               Number.isNaN(totalEndorsementsReceived)

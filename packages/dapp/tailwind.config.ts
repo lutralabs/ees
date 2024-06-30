@@ -22,6 +22,7 @@ const config = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'share-bg': "url('/images/endorsement_card_bg.png')",
       },
       colors: {
         border: 'hsl(var(--border))',

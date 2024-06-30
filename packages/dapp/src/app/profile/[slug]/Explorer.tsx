@@ -10,6 +10,8 @@ type ExplorerProps = {
   currentPage: number;
   endorsementId?: string;
   totalEndorsementsReceived: number;
+  avatar: string;
+  accountName: string;
 };
 
 export const Explorer = ({
@@ -18,6 +20,8 @@ export const Explorer = ({
   currentPage,
   endorsementId,
   totalEndorsementsReceived,
+  avatar,
+  accountName,
 }: ExplorerProps) => {
   return (
     <div className="flex flex-col gap-y-4 overflow-auto px-2 pb-2">
@@ -45,7 +49,12 @@ export const Explorer = ({
               key={`${chainId}-${endorsementId}`}
               fallback={<div>loading...</div>}
             >
-              <EndorsementView chainId={chainId} id={endorsementId} />
+              <EndorsementView
+                chainId={chainId}
+                id={endorsementId}
+                avatar={avatar}
+                accountName={accountName}
+              />
             </Suspense>
           )}
         </CardContent>
