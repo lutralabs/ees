@@ -1155,6 +1155,11 @@ export type GetGlobalStatisticsQueryVariables = Exact<{
 
 export type GetGlobalStatisticsQuery = { __typename?: 'Query', globalStatistics?: { __typename?: 'GlobalStatistics', id: any, totalEndorsements: any, totalDonations: any, totalDonationAmount: any, totalWithdrawnAmount: any } | null };
 
+export type GetRecentEndorsementsAndDonationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecentEndorsementsAndDonationsQuery = { __typename?: 'Query', donations: Array<{ __typename?: 'Donation', id: any, createdAtTimestamp: any, amount: any, from: { __typename?: 'Account', id: any }, to: { __typename?: 'Account', id: any } }>, endorsements: Array<{ __typename?: 'Endorsement', id: any, createdAtTimestamp: any, endorsementType: string, easUid: any, from: { __typename?: 'Account', id: any }, to: { __typename?: 'Account', id: any } }> };
+
 export type GetTopEndorsersAndDonatorsQueryVariables = Exact<{
   account: Scalars['String']['input'];
 }>;
@@ -1228,6 +1233,33 @@ export const GetGlobalStatisticsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetGlobalStatisticsQuery, GetGlobalStatisticsQueryVariables>;
+export const GetRecentEndorsementsAndDonationsDocument = new TypedDocumentString(`
+    query GetRecentEndorsementsAndDonations {
+  donations(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {
+    id
+    createdAtTimestamp
+    from {
+      id
+    }
+    to {
+      id
+    }
+    amount
+  }
+  endorsements(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {
+    id
+    createdAtTimestamp
+    from {
+      id
+    }
+    to {
+      id
+    }
+    endorsementType
+    easUid
+  }
+}
+    `) as unknown as TypedDocumentString<GetRecentEndorsementsAndDonationsQuery, GetRecentEndorsementsAndDonationsQueryVariables>;
 export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
     query GetTopEndorsersAndDonators($account: String!) {
   topEndorsers: aggregatedInformations(

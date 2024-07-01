@@ -91,7 +91,7 @@ export async function GET(req: NextRequest) {
             width={160}
             height={160}
             tw="rounded-full"
-            alt="Profile avatar"
+            alt="Avatar"
             src={avatar ?? blo(address, 160)}
           />
           <h2 tw="text-6xl text-white">
