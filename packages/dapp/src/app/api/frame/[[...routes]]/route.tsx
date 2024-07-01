@@ -20,12 +20,17 @@ import { serveStatic } from 'frog/serve-static';
 import { createPublicClient, http } from 'viem';
 import { base } from 'viem/chains';
 import { EESCore } from '@/lib/contracts/abis';
-import { APP_URL, PlatformType } from '@/utils';
-import { getMinimalProfileInfoByPlatform } from '@/lib/airstack';
+import { APP_URL, PlatformType, formatAddress } from '@/utils';
+import {
+  getAvatarForPlatform,
+  getBasicPlatformProfileInfo,
+  getProfileInfo,
+} from '@/lib/airstack';
 import { regexEns, regexEth, regexLens } from '@/utils/regex';
 import { EXPLORERS } from '@/lib/contracts/explorers';
 import { CONTRACT_ADDRESSES } from '@/lib/contracts';
 import { ENDORSEMENT_OPTIONS } from '@/utils/endorsementOptions';
+import { Space } from 'lucide-react';
 
 const options_length = ENDORSEMENT_OPTIONS.length;
 
@@ -59,6 +64,7 @@ type State = {
     username: string;
     avatar: string;
     address: string;
+    platform: PlatformType;
   };
   type: number;
   tip?: number;
@@ -79,6 +85,7 @@ const app = new Frog<{ State: State }>({
       username: '',
       avatar: '',
       address: '',
+      platform: PlatformType.farcaster,
     },
     type: 0,
     tip: undefined,
@@ -165,21 +172,21 @@ app.frame('/search', async (c) => {
 
   let platform;
   if (regexEns.test(inputText)) {
-    platform = 'ens';
+    platform = PlatformType.ens;
   } else if (regexLens.test(inputText)) {
-    platform = 'lens';
+    platform = PlatformType.lens;
   } else if (regexEth.test(inputText)) {
-    platform = 'ethereum';
+    platform = PlatformType.ethereum;
   } else {
-    platform = 'farcaster';
+    platform = PlatformType.farcaster;
   }
 
-  const userData = await getMinimalProfileInfoByPlatform(
-    PlatformType[platform as keyof typeof PlatformType],
-    inputText
-  );
+  const profileInfo = await getProfileInfo(inputText, platform);
+  const userData = getBasicPlatformProfileInfo(profileInfo, platform);
+  const address = profileInfo.Wallet?.addresses?.[0];
+  let avatar = getAvatarForPlatform(profileInfo, platform);
 
-  if (!userData.address) {
+  if (!address) {
     return c.res({
       image: (
         <Box
@@ -203,16 +210,15 @@ app.frame('/search', async (c) => {
   }
 
   // If no avatar is available use address to generate one
-  if (!userData.avatar && userData.address) {
-    userData.avatar = blo(userData.address, 128);
+  if (!avatar) {
+    avatar = blo(address, 128);
   }
 
   const state = deriveState((previousState) => {
-    if (userData.displayName) {
-      previousState.user.username = userData.displayName;
-    }
-    if (userData.avatar) previousState.user.avatar = userData.avatar;
-    if (userData.address) previousState.user.address = userData.address;
+    previousState.user.username = userData.handle ?? '';
+    previousState.user.avatar = avatar;
+    previousState.user.address = address;
+    previousState.user.platform = platform;
   });
 
   return c.res({
@@ -222,7 +228,7 @@ app.frame('/search', async (c) => {
         backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
         height="100%"
       >
-        <HStack>
+        <HStack grow height="100%">
           <Box marginLeft="32" marginTop="32" height="100%" width="128">
             <Image
               width="128"
@@ -232,15 +238,17 @@ app.frame('/search', async (c) => {
               src={state.user.avatar}
             />
           </Box>
-          <Box padding="32">
+          <Box grow padding="32">
             <VStack maxWidth="767">
               <Text color="secondary" size="32">
                 Endorsing
               </Text>
               <Text color="primary" size="32">
-                {state.user.username.length > 18
-                  ? `${state.user.username.slice(0, 16)}...`
-                  : state.user.username}
+                {state.user.username &&
+                  (state.user.username.length > 18
+                    ? `${state.user.username.slice(0, 16)}...`
+                    : state.user.username)}
+                {!state.user.username && formatAddress(state.user.address)}
               </Text>
               <Text color="secondary" size="28">
                 Confirm User
@@ -286,38 +294,39 @@ app.frame('/type-selection', (c) => {
         backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
         height="100%"
       >
-        <HStack grow>
+        <HStack grow height="100%">
           <Box marginLeft="32" marginTop="32" height="100%" width="128">
             <Image
               width="128"
               height="128"
               borderRadius="64"
+              objectFit="cover"
               src={state.user.avatar}
             />
           </Box>
-          <Box grow alignVertical="top" margin="32" height="100%">
+          <Box grow padding="32">
             <VStack maxWidth="767">
               <Text color="secondary" size="32">
                 Endorsing
               </Text>
               <Text color="primary" size="32">
-                {state.user.username.length > 18
-                  ? `${state.user.username.slice(0, 16)}...`
-                  : state.user.username}
+                {state.user.username &&
+                  (state.user.username.length > 18
+                    ? `${state.user.username.slice(0, 16)}...`
+                    : state.user.username)}
+                {!state.user.username && formatAddress(state.user.address)}
               </Text>
               <Text color="secondary" size="28">
-                {ENDORSEMENT_OPTIONS[state.type].value === 'Based energy'
-                  ? 'for'
-                  : 'as a'}
+                {state.type === 0 ? 'for' : 'as a'}
               </Text>
               <Text color="primary" size="32">
                 {ENDORSEMENT_OPTIONS[state.type].label}
               </Text>
               <Spacer size="20" />
-              <Text color="secondary" size="16" wrap>
+              <Text color="secondary" size="16">
                 Select endorsement types
               </Text>
-              <Text color="secondary" size="16" wrap>
+              <Text color="secondary" size="16">
                 {'by pressing < and > arrows'}
               </Text>
             </VStack>
@@ -370,24 +379,28 @@ app.frame('/form', (c) => {
                 backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
                 height="100%"
               >
-                <HStack grow>
+                <HStack grow height="100%">
                   <Box marginLeft="32" marginTop="32" height="100%" width="128">
                     <Image
                       width="128"
                       height="128"
                       borderRadius="64"
+                      objectFit="cover"
                       src={state.user.avatar}
                     />
                   </Box>
-                  <Box grow alignVertical="top" margin="32" height="100%">
+                  <Box grow alignVertical="top" padding="32">
                     <VStack maxWidth="767">
                       <Text color="secondary" size="32">
                         Endorsing
                       </Text>
                       <Text color="primary" size="32">
-                        {state.user.username.length > 18
-                          ? `${state.user.username.slice(0, 16)}...`
-                          : state.user.username}
+                        {state.user.username &&
+                          (state.user.username.length > 18
+                            ? `${state.user.username.slice(0, 16)}...`
+                            : state.user.username)}
+                        {!state.user.username &&
+                          formatAddress(state.user.address)}
                       </Text>
                       <Text color="secondary" size="28">
                         Add a tip to the endorsement
@@ -415,24 +428,28 @@ app.frame('/form', (c) => {
               backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
               height="100%"
             >
-              <HStack grow>
+              <HStack grow height="100%">
                 <Box marginLeft="32" marginTop="32" height="100%" width="128">
                   <Image
                     width="128"
                     height="128"
                     borderRadius="64"
+                    objectFit="cover"
                     src={state.user.avatar}
                   />
                 </Box>
-                <Box grow alignVertical="top" margin="32" height="100%">
+                <Box grow alignVertical="top" padding="32">
                   <VStack maxWidth="767">
                     <Text color="secondary" size="32">
                       Endorsing
                     </Text>
                     <Text color="primary" size="32">
-                      {state.user.username.length > 18
-                        ? `${state.user.username.slice(0, 16)}...`
-                        : state.user.username}
+                      {state.user.username &&
+                        (state.user.username.length > 18
+                          ? `${state.user.username.slice(0, 16)}...`
+                          : state.user.username)}
+                      {!state.user.username &&
+                        formatAddress(state.user.address)}
                     </Text>
                     <Spacer size="4" />
                     <Text color="secondary" size="32">
@@ -462,24 +479,27 @@ app.frame('/form', (c) => {
         backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
         height="100%"
       >
-        <HStack grow>
+        <HStack grow height="100%">
           <Box marginLeft="32" marginTop="32" height="100%" width="128">
             <Image
               width="128"
               height="128"
               borderRadius="64"
+              objectFit="cover"
               src={state.user.avatar}
             />
           </Box>
-          <Box grow alignVertical="top" margin="32" height="100%">
+          <Box grow padding="32">
             <VStack maxWidth="767">
               <Text color="secondary" size="32">
                 Endorsing
               </Text>
               <Text color="primary" size="32">
-                {state.user.username.length > 18
-                  ? `${state.user.username.slice(0, 16)}...`
-                  : state.user.username}
+                {state.user.username &&
+                  (state.user.username.length > 18
+                    ? `${state.user.username.slice(0, 16)}...`
+                    : state.user.username)}
+                {!state.user.username && formatAddress(state.user.address)}
               </Text>
               <Text color="secondary" size="28">
                 {/* Keep 'for' when 'Based Energy' is selected */}
@@ -493,13 +513,14 @@ app.frame('/form', (c) => {
               )}
               {state.comment && (
                 <Text color="primary" size="20">
-                  Comment: {state.comment}
+                  Comment:{' '}
+                  {state.comment.length > 16
+                    ? `${state.comment.slice(0, 16)}...`
+                    : state.comment}
                 </Text>
               )}
               <Spacer size="20" />
-              <Text color="secondary" size="28" wrap>
-                Confirm Endorsement
-              </Text>
+              <Text>Cofirm Endorsement</Text>
             </VStack>
           </Box>
         </HStack>
@@ -572,9 +593,12 @@ app.frame('/finish', async (c) => {
                 Successfully endorsed
               </Text>
               <Text color="primary" size="48">
-                {previousState.user.username.length > 18
-                  ? `${previousState.user.username.slice(0, 16)}...`
-                  : previousState.user.username}
+                {previousState.user.username &&
+                  (previousState.user.username.length > 18
+                    ? `${previousState.user.username.slice(0, 16)}...`
+                    : previousState.user.username)}
+                {!previousState.user.username &&
+                  formatAddress(previousState.user.address)}
               </Text>
               <Text color="secondary" size="32">
                 View transaction on BaseScan
@@ -630,7 +654,9 @@ app.transaction('/endorsement', async (c) => {
       previousState.user.address as `0x${string}`,
       ENDORSEMENT_OPTIONS[previousState.type ?? 0].label,
       previousState.comment ?? '',
-      previousState.user.username ?? '', // FIXME: Need address here if no username found
+      `${previousState.user.platform}:${
+        previousState.user.username ?? previousState.user.address
+      }`,
     ],
     to: CONTRACT_ADDRESS as `0x${string}`,
     // If tip is available, add it to the transaction, otherwise just pay the endorsement fee

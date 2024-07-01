@@ -1,9 +1,9 @@
 export const ENDORSEMENT_OPTIONS = [
+  { value: 'Based energy 🔵', label: 'Based energy 🔵' },
   { value: 'Developer', label: 'Developer' },
   { value: 'Hacker', label: 'Hacker' },
   { value: 'Buidler', label: 'Buidler' },
   { value: 'Memer', label: 'Memer' },
-  { value: 'Based energy 🔵', label: 'Based energy 🔵' },
   { value: 'Crypto OG', label: 'Crypto OG' },
   { value: 'Web3 explorer', label: 'Web3 explorer' },
   { value: 'Friend', label: 'Friend' },

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "infisical run --env=dev --path=/dapp -- next dev",
+    "dev": "next dev",
     "build": "rimraf .next && next build",
     "start": "next start",
     "lint": "biome check .",
