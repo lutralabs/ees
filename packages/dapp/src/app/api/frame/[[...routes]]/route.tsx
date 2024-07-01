@@ -47,6 +47,10 @@ const CHAIN_ID =
 
 const CONTRACT_ADDRESS = CONTRACT_ADDRESSES.ees[CHAIN_ID];
 const EXPLORER_URL = EXPLORERS[CHAIN_ID];
+const VERIFICATION_REQUIRED = !(
+  process.env.NEXT_PUBLIC_APP_ENV === 'development' ||
+  process.env.NEXT_PUBLIC_APP_ENV === 'staging'
+);
 
 const endorsement_fee = '0.00042';
 
@@ -125,7 +129,7 @@ const SEARCH_INTENTS = [
 app.frame('/main', (c) => {
   const { verified } = c;
 
-  if (!verified) return c.res(verifyLogin());
+  if (VERIFICATION_REQUIRED && !verified) return c.res(verifyLogin());
 
   return c.res({
     image: `${APP_URL}/frame/endorse_frame.png`,
@@ -150,7 +154,7 @@ app.frame('/search', async (c) => {
   const { frameData, verified, deriveState } = c;
   const { inputText } = frameData || {};
 
-  if (!verified) return c.res(verifyLogin());
+  if (VERIFICATION_REQUIRED && !verified) return c.res(verifyLogin());
 
   if (!inputText) {
     return c.res({
@@ -224,6 +228,7 @@ app.frame('/search', async (c) => {
               width="128"
               height="128"
               borderRadius="64"
+              objectFit="cover"
               src={state.user.avatar}
             />
           </Box>
@@ -260,7 +265,7 @@ app.frame('/search', async (c) => {
 app.frame('/type-selection', (c) => {
   const { buttonValue, verified, deriveState } = c;
 
-  if (!verified) return c.res(verifyLogin());
+  if (VERIFICATION_REQUIRED && !verified) return c.res(verifyLogin());
 
   const state = deriveState((previousState) => {
     if (buttonValue === 'inc') {
@@ -335,7 +340,7 @@ app.frame('/form', (c) => {
   const { buttonValue, verified, frameData, deriveState } = c;
   const { inputText } = frameData || {};
 
-  if (!verified) return c.res(verifyLogin());
+  if (VERIFICATION_REQUIRED && !verified) return c.res(verifyLogin());
 
   let tip = undefined;
 
@@ -514,12 +519,18 @@ app.frame('/form', (c) => {
 app.frame('/finish', async (c) => {
   const { transactionId, previousState, verified } = c;
 
-  if (!verified) return c.res(verifyLogin());
+  if (VERIFICATION_REQUIRED && !verified) return c.res(verifyLogin());
+  if (!transactionId) {
+    return c.res({
+      image: <></>,
+      browserLocation: '/',
+    });
+  }
 
   let receipt = undefined;
   try {
     receipt = await client.getTransactionReceipt({
-      hash: transactionId!,
+      hash: transactionId,
     });
   } catch (error) {
     // Transaction is not yet complete, reload frame
@@ -629,7 +640,10 @@ app.transaction('/endorsement', async (c) => {
   });
 });
 
-if (process.env.NEXT_PUBLIC_APP_ENV === 'development') {
+if (
+  process.env.NEXT_PUBLIC_APP_ENV === 'development' ||
+  process.env.NEXT_PUBLIC_APP_ENV === 'staging'
+) {
   devtools(app, { serveStatic });
 }
 
