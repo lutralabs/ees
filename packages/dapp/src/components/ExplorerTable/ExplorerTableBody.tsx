@@ -8,6 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ProfileAvatarSkeleton } from '@/components/ProfileAvatar';
 import { Suspense } from 'react';
 import { ViewMoreIcon } from './ViewMoreIcon';
+import { GiftIconWithHover } from './GiftIconWithHover';
 
 dayjs.extend(relativeTime);
 
@@ -55,12 +56,15 @@ export const ExplorerTableBody = async ({
               </td>
             }
           >
-            <td className="px-6 max-sm:px-2 py-4 whitespace-nowrap text-sm text-gray-800">
+            <td className="px-6 max-sm:px-2 py-2 whitespace-nowrap text-sm text-gray-800">
               <ExplorerAvatar address={endorsement.from?.id} />
             </td>
           </Suspense>
           <td className="px-6 py-4 max-sm:px-2 whitespace-nowrap text-sm text-gray-800">
-            {endorsement.endorsementType}
+            <div className="flex gap-x-1 items-center">
+              {Number(endorsement.donationAmount) > 0 && <GiftIconWithHover />}
+              {endorsement.endorsementType}
+            </div>
           </td>
           <td className="px-6 py-4 max-sm:px-2 whitespace-nowrap text-sm font-medium text-gray-800">
             <EASLink value={endorsement.easUid} />
