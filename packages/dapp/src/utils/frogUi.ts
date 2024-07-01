@@ -1,4 +1,4 @@
-import { createSystem } from 'frog/ui';
+import { createSystem, units } from 'frog/ui';
 
 export const {
   Box,
@@ -42,5 +42,9 @@ export const {
     '56': 56,
     '60': 60,
     '64': 64,
+  },
+  units: {
+    ...units,
+    '767': 767,
   },
 });

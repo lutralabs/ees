@@ -1,13 +1,7 @@
 /** @jsxImportSource frog/jsx */
 
 import { blo } from 'blo';
-import {
-  Button,
-  Frog,
-  TextInput,
-  type TransactionParameters,
-  parseEther,
-} from 'frog';
+import { Button, Frog, TextInput, parseEther } from 'frog';
 import {
   Box,
   Heading,
@@ -26,29 +20,33 @@ import { serveStatic } from 'frog/serve-static';
 import { createPublicClient, http } from 'viem';
 import { base } from 'viem/chains';
 import { EESCore } from '@/lib/contracts/abis';
-import { validateOrGetDefaultPlatform, APP_URL } from '@/utils';
+import { APP_URL, PlatformType } from '@/utils';
 import { getMinimalProfileInfoByPlatform } from '@/lib/airstack';
-
-const ENDORSEMENT_OPTIONS = [
-  { value: 'Based energy', label: 'Based energy 🔵' },
-  { value: 'Developer', label: 'Developer' },
-  { value: 'Hacker', label: 'Hacker' },
-  { value: 'Buidler', label: 'Buidler' },
-  { value: 'Memer', label: 'Memer' },
-  { value: 'Degen', label: 'Degen' },
-  { value: 'Web3 explorer', label: 'Web3 explorer' },
-  { value: 'Friend', label: 'Friend' },
-  { value: 'Artist', label: 'Artist' },
-  { value: 'Blogger', label: 'Blogger' },
-  { value: 'Trader', label: 'Trader' },
-];
+import { ENDORSEMENT_OPTIONS } from '@/components/EndorseForm/EndorseeCard';
+import { regexEns, regexEth, regexLens } from '@/utils/regex';
+import { EXPLORERS } from '@/lib/contracts/explorers';
+import { CONTRACT_ADDRESSES } from '@/lib/contracts';
 
 const options_length = ENDORSEMENT_OPTIONS.length;
 
 const client = createPublicClient({
   chain: base,
-  transport: http(process.env.RPC_PROVIDER_URL!), // Curently Sepolia
+  transport: http(
+    process.env.NEXT_PUBLIC_APP_ENV === 'development' ||
+      process.env.NEXT_PUBLIC_APP_ENV === 'staging'
+      ? process.env.NEXT_PUBLIC_SEPOLIA_ENDPOINT!
+      : process.env.NEXT_PUBLIC_BASE_ENDPOINT!
+  ),
 });
+
+const CHAIN_ID =
+  process.env.NEXT_PUBLIC_APP_ENV === 'development' ||
+  process.env.NEXT_PUBLIC_APP_ENV === 'staging'
+    ? 11155111
+    : 8453;
+
+const CONTRACT_ADDRESS = CONTRACT_ADDRESSES.ees[CHAIN_ID];
+const EXPLORER_URL = EXPLORERS[CHAIN_ID];
 
 const endorsement_fee = '0.00042';
 
@@ -84,9 +82,6 @@ const app = new Frog<{ State: State }>({
   },
 });
 
-// Uncomment to use Edge Runtime
-// export const runtime = 'edge';
-
 app.frame('/', (c) => {
   return c.res({
     image: `${APP_URL}/frame/intro.png`,
@@ -118,6 +113,15 @@ const verifyLogin = () => {
   };
 };
 
+const SEARCH_INTENTS = [
+  <TextInput placeholder="Search by farcaster, ens, lens" />,
+  <Button value="search" action="/search">
+    Search🔎
+  </Button>,
+  <Button.Reset>Reset🔄</Button.Reset>,
+  <Button.Redirect location="https://endorse.fun">endorse.fun</Button.Redirect>,
+];
+
 app.frame('/main', (c) => {
   const { verified } = c;
 
@@ -125,16 +129,7 @@ app.frame('/main', (c) => {
 
   return c.res({
     image: `${APP_URL}/frame/endorse_frame.png`,
-    intents: [
-      <TextInput placeholder="Search by farcaster, ens, lens" />,
-      <Button value="search" action="/search">
-        Search🔎
-      </Button>,
-      <Button.Reset>Reset🔄</Button.Reset>,
-      <Button.Redirect location="https://endorse.fun">
-        endorse.fun
-      </Button.Redirect>,
-    ],
+    intents: [...SEARCH_INTENTS],
   });
 });
 
@@ -160,31 +155,25 @@ app.frame('/search', async (c) => {
   if (!inputText) {
     return c.res({
       image: `${APP_URL}/frame/endorse_frame.png`,
-      intents: [
-        <TextInput placeholder="Search by farcaster, ens, lens" />,
-        <Button value="search" action="/search">
-          Search🔎
-        </Button>,
-        <Button.Reset>Reset🔄</Button.Reset>,
-        <Button.Redirect location="https://endorse.fun">
-          endorse.fun
-        </Button.Redirect>,
-      ],
+      intents: [...SEARCH_INTENTS],
     });
   }
 
   let platform;
-  if (inputText.endsWith('.eth')) {
+  if (regexEns.test(inputText)) {
     platform = 'ens';
-  } else if (inputText.endsWith('.lens')) {
+  } else if (regexLens.test(inputText)) {
     platform = 'lens';
+  } else if (regexEth.test(inputText)) {
+    platform = 'ethereum';
   } else {
     platform = 'farcaster';
   }
 
-  const _platform = validateOrGetDefaultPlatform(platform);
-
-  const userData = await getMinimalProfileInfoByPlatform(_platform, inputText);
+  const userData = await getMinimalProfileInfoByPlatform(
+    PlatformType[platform as keyof typeof PlatformType],
+    inputText
+  );
 
   if (!userData.address) {
     return c.res({
@@ -195,7 +184,6 @@ app.frame('/search', async (c) => {
           height="100%"
           padding="32"
         >
-          {/* @ts-ignore */}
           <VStack maxWidth="767">
             <Text color="secondary" size="32">
               User {inputText} not found
@@ -206,16 +194,7 @@ app.frame('/search', async (c) => {
           </VStack>
         </Box>
       ),
-      intents: [
-        <TextInput placeholder="Search by farcaster, ens, lens" />,
-        <Button value="search" action="/search">
-          Search🔎
-        </Button>,
-        <Button.Reset>Reset🔄</Button.Reset>,
-        <Button.Redirect location="https://endorse.fun">
-          endorse.fun
-        </Button.Redirect>,
-      ],
+      intents: [...SEARCH_INTENTS],
     });
   }
 
@@ -225,8 +204,9 @@ app.frame('/search', async (c) => {
   }
 
   const state = deriveState((previousState) => {
-    if (userData.displayName)
+    if (userData.displayName) {
       previousState.user.username = userData.displayName;
+    }
     if (userData.avatar) previousState.user.avatar = userData.avatar;
     if (userData.address) previousState.user.address = userData.address;
   });
@@ -248,7 +228,6 @@ app.frame('/search', async (c) => {
             />
           </Box>
           <Box padding="32">
-            {/* @ts-ignore */}
             <VStack maxWidth="767">
               <Text color="secondary" size="32">
                 Endorsing
@@ -312,7 +291,6 @@ app.frame('/type-selection', (c) => {
             />
           </Box>
           <Box grow alignVertical="top" margin="32" height="100%">
-            {/* @ts-ignore */}
             <VStack maxWidth="767">
               <Text color="secondary" size="32">
                 Endorsing
@@ -363,7 +341,7 @@ app.frame('/form', (c) => {
 
   if (buttonValue === 'confirm-tip' && inputText) {
     tip = Number.parseFloat(inputText);
-    Number.isNaN(tip) ? undefined : tip;
+    tip = Number.isNaN(tip) ? undefined : tip;
   }
 
   const state = deriveState((previousState) => {
@@ -397,7 +375,6 @@ app.frame('/form', (c) => {
                     />
                   </Box>
                   <Box grow alignVertical="top" margin="32" height="100%">
-                    {/* @ts-ignore */}
                     <VStack maxWidth="767">
                       <Text color="secondary" size="32">
                         Endorsing
@@ -443,7 +420,6 @@ app.frame('/form', (c) => {
                   />
                 </Box>
                 <Box grow alignVertical="top" margin="32" height="100%">
-                  {/* @ts-ignore */}
                   <VStack maxWidth="767">
                     <Text color="secondary" size="32">
                       Endorsing
@@ -491,7 +467,6 @@ app.frame('/form', (c) => {
             />
           </Box>
           <Box grow alignVertical="top" margin="32" height="100%">
-            {/* @ts-ignore */}
             <VStack maxWidth="767">
               <Text color="secondary" size="32">
                 Endorsing
@@ -571,7 +546,7 @@ app.frame('/finish', async (c) => {
   }
 
   switch (receipt.status) {
-    // Transaction succeeded, show confirmation and basescan url
+    // Transaction succeeded, show confirmation on basescan
     case 'success':
       return c.res({
         image: (
@@ -597,9 +572,7 @@ app.frame('/finish', async (c) => {
           </Box>
         ),
         intents: [
-          <Button.Redirect
-            location={`${process.env.BASESCAN_URL}${transactionId}`}
-          >
+          <Button.Redirect location={`${EXPLORER_URL}/tx/${transactionId}`}>
             View on BaseScan
           </Button.Redirect>,
         ],
@@ -625,9 +598,7 @@ app.frame('/finish', async (c) => {
           </Box>
         ),
         intents: [
-          <Button.Redirect
-            location={`${process.env.BASESCAN_URL}${transactionId}`}
-          >
+          <Button.Redirect location={`${EXPLORER_URL}/tx/${transactionId}`}>
             View on BaseScan
           </Button.Redirect>,
           <Button action="/form">Try Again</Button>,
@@ -642,15 +613,15 @@ app.transaction('/endorsement', async (c) => {
 
   return c.contract({
     abi: EESCore,
-    chainId: process.env.CHAIN_ID! as TransactionParameters['chainId'],
+    chainId: `eip155:${CHAIN_ID}`,
     functionName: 'endorse',
     args: [
       previousState.user.address as `0x${string}`,
       ENDORSEMENT_OPTIONS[previousState.type ?? 0].label,
       previousState.comment ?? '',
-      previousState.user.username ?? '',
+      previousState.user.username ?? '', // FIXME: Need address here if no username found
     ],
-    to: process.env.EES_CONTRACT_ADDRESS as `0x${string}`,
+    to: CONTRACT_ADDRESS as `0x${string}`,
     // If tip is available, add it to the transaction, otherwise just pay the endorsement fee
     value: previousState.tip
       ? parseEther(previousState.tip.toString()) + parseEther(endorsement_fee)
@@ -658,8 +629,9 @@ app.transaction('/endorsement', async (c) => {
   });
 });
 
-if (process.env.NEXT_PUBLIC_APP_ENV === 'development')
+if (process.env.NEXT_PUBLIC_APP_ENV === 'development') {
   devtools(app, { serveStatic });
+}
 
 export const GET = handle(app);
 export const POST = handle(app);
