@@ -19,6 +19,7 @@ const documents = {
     "query GetGlobalStatistics($id: ID! = \"0x476c6f62616c53746174697374696373\") {\n  globalStatistics(id: $id) {\n    id\n    totalEndorsements\n    totalDonations\n    totalDonationAmount\n    totalWithdrawnAmount\n  }\n}": types.GetGlobalStatisticsDocument,
     "query GetRecentEndorsementsAndDonations {\n  donations(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {\n    id\n    createdAtTimestamp\n    from {\n      id\n    }\n    to {\n      id\n    }\n    amount\n  }\n  endorsements(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {\n    id\n    createdAtTimestamp\n    from {\n      id\n    }\n    to {\n      id\n    }\n    endorsementType\n    easUid\n  }\n}": types.GetRecentEndorsementsAndDonationsDocument,
     "query GetTopEndorsersAndDonators($account: String!) {\n  topEndorsers: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n    }\n  }\n  topDonators: aggregatedInformations(\n    where: {to: $account, donationAmount_gt: 0}\n    orderBy: donationAmount\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n    }\n    donationAmount\n  }\n}": types.GetTopEndorsersAndDonatorsDocument,
+    "query GetTopEndorsersForAccount($account: String!, $first: Int!) {\n  topEndorsers: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: $first\n  ) {\n    id\n    from {\n      id\n      totalEndorsementsReceived\n      sentEndorsements(where: {to: $account}) {\n        endorsementType\n        easUid\n      }\n    }\n  }\n}": types.GetTopEndorsersForAccountDocument,
 };
 
 /**
@@ -41,6 +42,10 @@ export function gqlEES(source: "query GetRecentEndorsementsAndDonations {\n  don
  * The gqlEES function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gqlEES(source: "query GetTopEndorsersAndDonators($account: String!) {\n  topEndorsers: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n    }\n  }\n  topDonators: aggregatedInformations(\n    where: {to: $account, donationAmount_gt: 0}\n    orderBy: donationAmount\n    orderDirection: desc\n    first: 6\n  ) {\n    id\n    from {\n      id\n    }\n    donationAmount\n  }\n}"): typeof import('./graphql').GetTopEndorsersAndDonatorsDocument;
+/**
+ * The gqlEES function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gqlEES(source: "query GetTopEndorsersForAccount($account: String!, $first: Int!) {\n  topEndorsers: aggregatedInformations(\n    where: {to: $account}\n    orderBy: from__totalEndorsementsReceived\n    orderDirection: desc\n    first: $first\n  ) {\n    id\n    from {\n      id\n      totalEndorsementsReceived\n      sentEndorsements(where: {to: $account}) {\n        endorsementType\n        easUid\n      }\n    }\n  }\n}"): typeof import('./graphql').GetTopEndorsersForAccountDocument;
 
 
 export function gqlEES(source: string) {

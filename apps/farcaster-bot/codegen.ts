@@ -7,7 +7,7 @@ const config: CodegenConfig = {
       config: {
         documentMode: 'string',
       },
-      schema: 'https://api.studio.thegraph.com/query/77003/ees-base/v0.0.3',
+      schema: 'https://api.studio.thegraph.com/query/77003/ees-base/v0.0.4',
       preset: 'client',
       plugins: [],
       presetConfig: {
