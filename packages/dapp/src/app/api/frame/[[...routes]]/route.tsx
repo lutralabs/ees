@@ -224,8 +224,6 @@ app.frame('/search', async (c) => {
     userData.avatar = blo(userData.address, 128);
   }
 
-  // // TODO if no avatar and no address
-
   const state = deriveState((previousState) => {
     if (userData.displayName)
       previousState.user.username = userData.displayName;
@@ -543,11 +541,6 @@ app.frame('/finish', async (c) => {
 
   if (!verified) return c.res(verifyLogin());
 
-  // Call provider to get transaction status.
-  // show success or failure message.
-  // add etherscan link
-  // refresh button to check status again
-
   let receipt = undefined;
   try {
     receipt = await client.getTransactionReceipt({
@@ -612,7 +605,6 @@ app.frame('/finish', async (c) => {
         ],
       });
     // Transaction reverted, show error and frame reset button
-    // TODO test reverted status to see if it would make sense to show some logs or just open on basescan
     case 'reverted':
       return c.res({
         image: (
@@ -629,7 +621,6 @@ app.frame('/finish', async (c) => {
               <Text color="secondary" size="32">
                 View transaction on BaseScan or reset the frame
               </Text>
-              {/* <Text>Error: {`${receipt.logs[0]}`}</Text> */}
             </VStack>
           </Box>
         ),
@@ -655,7 +646,7 @@ app.transaction('/endorsement', async (c) => {
     functionName: 'endorse',
     args: [
       previousState.user.address as `0x${string}`,
-      ENDORSEMENT_OPTIONS[previousState.type ?? 0].value,
+      ENDORSEMENT_OPTIONS[previousState.type ?? 0].label,
       previousState.comment ?? '',
       previousState.user.username ?? '',
     ],
@@ -667,7 +658,8 @@ app.transaction('/endorsement', async (c) => {
   });
 });
 
-if (process.env.NODE_ENV === 'development') devtools(app, { serveStatic });
+if (process.env.NEXT_PUBLIC_APP_ENV === 'development')
+  devtools(app, { serveStatic });
 
 export const GET = handle(app);
 export const POST = handle(app);
