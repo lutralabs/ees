@@ -57,5 +57,5 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Lint
         run: pnpm lint
-      - name: Build and test affected
+      - name: Build and test
         run: pnpm nx run-many --target=build,test
