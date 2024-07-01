@@ -15,7 +15,7 @@ const InteractiveSocialGraph = dynamic(
 const fetchGraphData = async ({
   chainId,
   account,
-  depth = 6,
+  depth = 1,
 }: { chainId: number; account: `0x${string}`; depth?: number }) => {
   const accountData = new Map<`0x${string}`, Endorser[]>();
 
