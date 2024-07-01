@@ -22,10 +22,10 @@ import { base } from 'viem/chains';
 import { EESCore } from '@/lib/contracts/abis';
 import { APP_URL, PlatformType } from '@/utils';
 import { getMinimalProfileInfoByPlatform } from '@/lib/airstack';
-import { ENDORSEMENT_OPTIONS } from '@/components/EndorseForm/EndorseeCard';
 import { regexEns, regexEth, regexLens } from '@/utils/regex';
 import { EXPLORERS } from '@/lib/contracts/explorers';
 import { CONTRACT_ADDRESSES } from '@/lib/contracts';
+import { ENDORSEMENT_OPTIONS } from '@/utils/endorsementOptions';
 
 const options_length = ENDORSEMENT_OPTIONS.length;
 
