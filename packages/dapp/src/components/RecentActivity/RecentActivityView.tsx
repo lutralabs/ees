@@ -23,9 +23,6 @@ function ListItem({ children }: { children: React.ReactNode }) {
   const animations = {
     layout: true,
     initial: 'out',
-    style: {
-      position: isPresent ? 'static' : 'absolute',
-    },
     animate: isPresent ? 'in' : 'out',
     variants: {
       in: { scaleY: 1, opacity: 1 },
