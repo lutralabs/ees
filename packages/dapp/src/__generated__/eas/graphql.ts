@@ -2857,6 +2857,13 @@ export type GetAttestationQueryVariables = Exact<{
 
 export type GetAttestationQuery = { __typename?: 'Query', attestation?: { __typename?: 'Attestation', id: string, attester: string, recipient: string, decodedDataJson: string, timeCreated: number, revoked: boolean, revocationTime: number, txid: string } | null };
 
+export type GetAttestationDecodedDataQueryVariables = Exact<{
+  where: AttestationWhereUniqueInput;
+}>;
+
+
+export type GetAttestationDecodedDataQuery = { __typename?: 'Query', attestation?: { __typename?: 'Attestation', id: string, decodedDataJson: string } | null };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -2886,3 +2893,11 @@ export const GetAttestationDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetAttestationQuery, GetAttestationQueryVariables>;
+export const GetAttestationDecodedDataDocument = new TypedDocumentString(`
+    query GetAttestationDecodedData($where: AttestationWhereUniqueInput!) {
+  attestation(where: $where) {
+    id
+    decodedDataJson
+  }
+}
+    `) as unknown as TypedDocumentString<GetAttestationDecodedDataQuery, GetAttestationDecodedDataQueryVariables>;

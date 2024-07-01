@@ -1,0 +1,6 @@
+query GetAttestationDecodedData($where: AttestationWhereUniqueInput!) {
+  attestation(where: $where) {
+    id
+    decodedDataJson
+  }
+}

@@ -8,10 +8,11 @@ import { PlatformType } from '@/utils';
 import { Features } from './Features';
 
 type LandingPageProps = {
-  searchParams: { platform?: string; account?: string; intro?: string };
+  account?: string;
+  platform?: string;
 };
 
-export const LandingPage = ({ searchParams }: LandingPageProps) => {
+export const LandingPage = ({ account, platform }: LandingPageProps) => {
   return (
     <div>
       <div className="h-[86vh]">
@@ -32,7 +33,7 @@ export const LandingPage = ({ searchParams }: LandingPageProps) => {
             <EndorseForm
               endorsee={
                 <Suspense
-                  key={JSON.stringify(searchParams)}
+                  key={`${account}-${platform}`}
                   fallback={<EndorseeSkeleton />}
                 >
                   <Endorsee
