@@ -41,7 +41,7 @@ export const FeedNavigation = ({ tab }: FeedNavigationProps) => {
           scroll={false}
           prefetch={false}
         >
-          Social Graph 🚧
+          Social Graph
         </Link>
       </div>
     </div>

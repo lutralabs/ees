@@ -1,0 +1,32 @@
+diff --git a/dist/client/components/router-reducer/create-initial-router-state.js b/dist/client/components/router-reducer/create-initial-router-state.js
+index fd7097a4f10428ee31f871ee14f52a184f3bb34e..15cf677a5dc5aefe1b8c49d59f40ba6fe3b6eec6 100644
+--- a/dist/client/components/router-reducer/create-initial-router-state.js
++++ b/dist/client/components/router-reducer/create-initial-router-state.js
+@@ -65,7 +65,10 @@ function createInitialRouterState(param) {
+         // Seed the prefetch cache with this page's data.
+         // This is to prevent needlessly re-prefetching a page that is already reusable,
+         // and will avoid triggering a loading state/data fetch stall when navigating back to the page.
+-        const url = new URL(location.pathname, location.origin);
++        const url = new URL(
++            `${location.pathname}${location.search}`,
++            location.origin
++        );
+         const initialFlightData = [
+             [
+                 "",
+diff --git a/dist/esm/client/components/router-reducer/create-initial-router-state.js b/dist/esm/client/components/router-reducer/create-initial-router-state.js
+index 856d9b96a45c324ce8289ec3826d52c49b870f20..bf84a9d8ef82ae7c903ed64d2abd9d5700a63cec 100644
+--- a/dist/esm/client/components/router-reducer/create-initial-router-state.js
++++ b/dist/esm/client/components/router-reducer/create-initial-router-state.js
+@@ -55,7 +55,10 @@ export function createInitialRouterState(param) {
+         // Seed the prefetch cache with this page's data.
+         // This is to prevent needlessly re-prefetching a page that is already reusable,
+         // and will avoid triggering a loading state/data fetch stall when navigating back to the page.
+-        const url = new URL(location.pathname, location.origin);
++        const url = new URL(
++            `${location.pathname}${location.search}`,
++            location.origin
++        );
+         const initialFlightData = [
+             [
+                 "",

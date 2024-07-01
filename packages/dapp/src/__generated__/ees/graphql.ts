@@ -1162,6 +1162,14 @@ export type GetTopEndorsersAndDonatorsQueryVariables = Exact<{
 
 export type GetTopEndorsersAndDonatorsQuery = { __typename?: 'Query', topEndorsers: Array<{ __typename?: 'AggregatedInformation', id: any, from: { __typename?: 'Account', id: any } }>, topDonators: Array<{ __typename?: 'AggregatedInformation', id: any, donationAmount: any, from: { __typename?: 'Account', id: any } }> };
 
+export type GetTopEndorsersForAccountQueryVariables = Exact<{
+  account: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type GetTopEndorsersForAccountQuery = { __typename?: 'Query', topEndorsers: Array<{ __typename?: 'AggregatedInformation', id: any, from: { __typename?: 'Account', id: any, totalEndorsementsReceived: any, sentEndorsements: Array<{ __typename?: 'Endorsement', endorsementType: string, easUid: any }> } }> };
+
 export class TypedDocumentString<TResult, TVariables>
   extends String
   implements DocumentTypeDecoration<TResult, TVariables>
@@ -1247,3 +1255,23 @@ export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetTopEndorsersAndDonatorsQuery, GetTopEndorsersAndDonatorsQueryVariables>;
+export const GetTopEndorsersForAccountDocument = new TypedDocumentString(`
+    query GetTopEndorsersForAccount($account: String!, $first: Int!) {
+  topEndorsers: aggregatedInformations(
+    where: {to: $account}
+    orderBy: from__totalEndorsementsReceived
+    orderDirection: desc
+    first: $first
+  ) {
+    id
+    from {
+      id
+      totalEndorsementsReceived
+      sentEndorsements(where: {to: $account}) {
+        endorsementType
+        easUid
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetTopEndorsersForAccountQuery, GetTopEndorsersForAccountQueryVariables>;
