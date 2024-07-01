@@ -26,7 +26,7 @@ import { serveStatic } from 'frog/serve-static';
 import { createPublicClient, http } from 'viem';
 import { base } from 'viem/chains';
 import { EESCore } from '@/lib/contracts/abis';
-import { validateOrGetDefaultPlatform } from '@/utils';
+import { validateOrGetDefaultPlatform, APP_URL } from '@/utils';
 import { getMinimalProfileInfoByPlatform } from '@/lib/airstack';
 
 const ENDORSEMENT_OPTIONS = [
@@ -89,7 +89,7 @@ const app = new Frog<{ State: State }>({
 
 app.frame('/', (c) => {
   return c.res({
-    image: `${process.env.NEXT_PUBLIC_SITE_URL}/frame/intro.png`,
+    image: `${APP_URL}/frame/intro.png`,
     intents: [
       <Button action="/main">Start</Button>,
       <Button action="/info">Legend</Button>,
@@ -124,7 +124,7 @@ app.frame('/main', (c) => {
   if (!verified) return c.res(verifyLogin());
 
   return c.res({
-    image: `${process.env.NEXT_PUBLIC_SITE_URL}/frame/endorse_frame.png`,
+    image: `${APP_URL}/frame/endorse_frame.png`,
     intents: [
       <TextInput placeholder="Search by farcaster, ens, lens" />,
       <Button value="search" action="/search">
@@ -140,7 +140,7 @@ app.frame('/main', (c) => {
 
 app.frame('/info', (c) => {
   return c.res({
-    image: `${process.env.NEXT_PUBLIC_SITE_URL}/frame/legend_frame.png`,
+    image: `${APP_URL}/frame/legend_frame.png`,
     intents: [
       <Button action="/main">Start</Button>,
       <Button.Reset>Back ↩️</Button.Reset>,
@@ -159,7 +159,7 @@ app.frame('/search', async (c) => {
 
   if (!inputText) {
     return c.res({
-      image: `${process.env.NEXT_PUBLIC_SITE_URL}/frame/endorse_frame.png`,
+      image: `${APP_URL}/frame/endorse_frame.png`,
       intents: [
         <TextInput placeholder="Search by farcaster, ens, lens" />,
         <Button value="search" action="/search">
@@ -191,7 +191,7 @@ app.frame('/search', async (c) => {
       image: (
         <Box
           grow
-          backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg1.png")`}
+          backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
           height="100%"
           padding="32"
         >
@@ -237,7 +237,7 @@ app.frame('/search', async (c) => {
     image: (
       <Box
         grow
-        backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg1.png")`}
+        backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
         height="100%"
       >
         <HStack>
@@ -301,7 +301,7 @@ app.frame('/type-selection', (c) => {
     image: (
       <Box
         grow
-        backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg1.png")`}
+        backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
         height="100%"
       >
         <HStack grow>
@@ -386,7 +386,7 @@ app.frame('/form', (c) => {
             image: (
               <Box
                 grow
-                backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg1.png")`}
+                backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
                 height="100%"
               >
                 <HStack grow>
@@ -432,7 +432,7 @@ app.frame('/form', (c) => {
           image: (
             <Box
               grow
-              backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg1.png")`}
+              backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
               height="100%"
             >
               <HStack grow>
@@ -480,7 +480,7 @@ app.frame('/form', (c) => {
     image: (
       <Box
         grow
-        backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg1.png")`}
+        backgroundImage={`url("${APP_URL}/frame/frame_bg1.png")`}
         height="100%"
       >
         <HStack grow>
@@ -560,7 +560,7 @@ app.frame('/finish', async (c) => {
         <Box
           grow
           padding="32"
-          backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg2.png")`}
+          backgroundImage={`url("${APP_URL}/frame/frame_bg2.png")`}
           height="100%"
         >
           <VStack gap="4" width="100%">
@@ -585,7 +585,7 @@ app.frame('/finish', async (c) => {
           <Box
             grow
             padding="32"
-            backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg2.png")`}
+            backgroundImage={`url("${APP_URL}/frame/frame_bg2.png")`}
             height="100%"
           >
             <VStack gap="4" width="100%">
@@ -619,7 +619,7 @@ app.frame('/finish', async (c) => {
           <Box
             grow
             padding="32"
-            backgroundImage={`url("${process.env.NEXT_PUBLIC_SITE_URL}/frame/frame_bg2.png")`}
+            backgroundImage={`url("${APP_URL}/frame/frame_bg2.png")`}
             height="100%"
           >
             <VStack gap="4" width="100%">
