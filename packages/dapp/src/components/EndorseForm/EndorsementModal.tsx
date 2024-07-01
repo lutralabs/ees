@@ -2,6 +2,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -15,6 +16,7 @@ import { PlatformType, formatHandle, startsWithVowel } from '@/utils';
 import { Skeleton } from '../ui/skeleton';
 import { EndorseeSkeleton } from '../Endorsee';
 import { useEndorsementStore } from '@/stores';
+import Image from 'next/image';
 
 type EndorsementModalProps = {
   open: boolean;
@@ -44,14 +46,27 @@ export const EndorsementModal = ({
         {shareLink && (
           <>
             <DialogHeader>
-              <DialogTitle>Endorsement</DialogTitle>
-              <DialogDescription>Thank you for endorsing</DialogDescription>
+              <DialogTitle>Success</DialogTitle>
+              <DialogDescription>
+                Thank you for endorsing {displayValue}!
+              </DialogDescription>
             </DialogHeader>
-            <Card className="p-4 flex max-sm:flex-col max-sm:pt-4 max-sm:gap-y-4 justify-center items-center">
-              {endorsee}
-            </Card>
+
+            <div className="p-4 bg-contain bg-no-repeat gap-y-2 md:w-[600px] md:h-[316px] bg-share-bg flex justify-start items-center">
+              <div className="flex flex-col gap-y-4 ml-4">
+                <div className="flex items-center justify-center">
+                  {endorsee}
+                </div>
+                <div className="md:text-xl font-medium">
+                  {endorsementType === 'Based energy 🔵' ? 'for' : 'as a'}
+                </div>
+                <div className="md:text-3xl text-md font-semibold text-primary-500">
+                  {endorsementType}
+                </div>
+              </div>
+            </div>
             <div className="mt-4">
-              <div className="flex max-sm:flex-col gap-x-2 items-center">
+              <div className="flex max-sm:flex-col gap-x-2 font-medium items-center">
                 <div>Share this moment on</div>
                 <div className="flex items-center gap-x-2 max-sm:pt-2">
                   <TwitterShareButton
@@ -103,52 +118,25 @@ export const EndorsementModal = ({
                       height={32}
                     />
                   </Link>
+                  <div>
+                    or{' '}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => navigator.clipboard.writeText(shareLink)}
+                    >
+                      Copy Link
+                    </Button>
+                  </div>
                 </div>
-              </div>
-              <div className="mt-4 flex items-center gap-x-2">
-                <Input value={shareLink} />
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={() => navigator.clipboard.writeText(shareLink)}
-                >
-                  Copy Link
-                </Button>
               </div>
             </div>
           </>
         )}
-        {!shareLink && <EndorsementModalSkeleton />}
+        <DialogFooter>
+          <Button onClick={() => setOpen(false)}>Continue Endorsing</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
-};
-
-export const EndorsementModalSkeleton = () => {
-  return (
-    <>
-      <DialogHeader>
-        <DialogTitle>Endorsement</DialogTitle>
-        <DialogDescription>Thank you for endorsing</DialogDescription>
-      </DialogHeader>
-      <Card className="p-4 flex max-sm:flex-col max-sm:pt-4 max-sm:gap-y-4 justify-center items-center">
-        <EndorseeSkeleton />
-      </Card>
-      <div className="mt-4">
-        <div className="flex max-sm:flex-col gap-x-2 items-center">
-          <Skeleton className="h-6 w-[165px]" />
-          <div className="flex items-center gap-x-2 max-sm:pt-2">
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-8 w-8 rounded-full" />
-          </div>
-        </div>
-
-        <div className="mt-4 flex items-center gap-x-2">
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-10 w-[132px]" />
-        </div>
-      </div>
-    </>
   );
 };

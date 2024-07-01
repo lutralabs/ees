@@ -41,10 +41,11 @@ export const Searchbar = () => {
   }) => {
     // enter
     if (e.keyCode === 13) {
-      const _value = suggestions[activeIndex]
-        ? suggestions[activeIndex].label
+      const index = activeIndex === -1 ? 0 : activeIndex;
+      const _value = suggestions[index]
+        ? suggestions[index].label
         : query.replaceAll('。', '.');
-      selectUser(suggestions[activeIndex].key, _value);
+      selectUser(suggestions[index].key, _value);
     }
     // escape
     if (e.keyCode === 27) {
