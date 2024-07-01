@@ -42,8 +42,8 @@ export const RecentActivityView = ({ network }: RecentActivityViewProps) => {
   const { data } = useQuery({
     queryKey: ['recentEndorsementsAndDonations', network],
     queryFn: async () => getRecentEndorsementsAndDonationsClient(network),
-    staleTime: 30 * 1000,
-    refetchInterval: 30 * 1000,
+    staleTime: 15 * 1000,
+    refetchInterval: 15 * 1000,
     refetchOnMount: false,
     refetchOnWindowFocus: true,
   });

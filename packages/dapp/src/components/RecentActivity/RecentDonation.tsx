@@ -46,7 +46,7 @@ export const RecentDonation = ({
         </Link>
       </div>
       <div className="py-4 px-4 col-span-4 flex flex-col gap-y-0.5 justify-center items-center text-center w-full overflow-hidden">
-        <div className="text-sm font-semibold truncate text-primary-500 hover:underline">
+        <div className="text-sm font-semibold truncate text-primary-500">
           {formatEther(BigInt(Number(amount)) ?? BigInt(0))} ETH
         </div>
         <div className="text-xs text-muted-foreground">

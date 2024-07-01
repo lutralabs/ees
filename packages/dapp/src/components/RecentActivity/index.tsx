@@ -19,7 +19,7 @@ export const RecentActivity = async ({ network }: RecentActivityProps) => {
   await queryClient.prefetchQuery({
     queryKey: ['recentEndorsementsAndDonations', network],
     queryFn: () => getEndorsementsAndDonationsServer(network),
-    staleTime: 30 * 1000,
+    staleTime: 15 * 1000,
   });
 
   return (

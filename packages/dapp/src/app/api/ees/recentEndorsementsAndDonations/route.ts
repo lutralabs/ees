@@ -2,7 +2,7 @@ import type { NextRequest } from 'next/server';
 import { validateOrGetDefaultNetwork } from '@/utils';
 import { getEndorsementsAndDonationsServer } from '@/lib/ees';
 
-export const revalidate = 30; // revalidate at most every 30 seconds
+export const revalidate = 15; // revalidate at most every 15 seconds
 
 export async function GET(request: NextRequest) {
   try {

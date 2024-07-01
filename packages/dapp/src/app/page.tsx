@@ -7,13 +7,11 @@ import {
   RecentActivitySkeleton,
 } from '@/components/RecentActivity';
 import { TotalEndorsementsBadge } from '@/components/TotalEndorsementsBadge';
-import { getEndorsementsAndDonationsServer } from '@/lib/ees';
 import {
   APP_URL,
   validateOrGetDefaultNetwork,
   validateOrGetDefaultPlatform,
 } from '@/utils';
-import { QueryClient } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
