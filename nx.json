@@ -47,6 +47,7 @@
       "outputs": ["{projectRoot}/packages/contracts/coverage"]
     },
     "test": {
+      "inputs": ["default"],
       "cache": true
     },
     "test:hardhat": {
@@ -56,6 +57,6 @@
       "cache": true
     }
   },
-  "nxCloudAccessToken": "",
+  "nxCloudAccessToken": "MzgxYTJiOTEtNzE0ZC00MTAyLWEzYzItZmVjYTYxY2NhMDNifHJlYWQ=",
   "defaultBase": "develop"
 }
