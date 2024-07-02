@@ -110,7 +110,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
 
   const {
     data: txReceipt,
-    isSuccess: isReceiptLoaded,
+    isSuccess: isReceiptSuccess,
     isLoading: isReceiptLoading,
   } = useWaitForTransactionReceipt({
     hash: transactionHash,
@@ -212,7 +212,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
     const _value = parseEther(donationValue ?? '0') + endorsementPrice;
     const _displayValue = `${platform}:${displayValue}`;
 
-    await writeContractAsync({
+    writeContractAsync({
       abi: EESCore,
       address: CONTRACT_ADDRESSES.ees[chainId],
       functionName: 'endorse',
@@ -258,8 +258,8 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
   };
 
   useEffect(() => {
-    if (isReceiptLoaded) setEndorsementModalOpen(true);
-  }, [isReceiptLoaded]);
+    if (isReceiptSuccess) setEndorsementModalOpen(true);
+  }, [isReceiptSuccess]);
 
   useEffect(() => {
     if (transactionHash === undefined) return;
