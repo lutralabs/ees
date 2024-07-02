@@ -29,21 +29,14 @@ type PageProps = {
     network?: string;
     page?: string;
     endorsementId?: string;
+    endorsementTab?: string;
   };
 };
 
 export default async function Page({
   params: { slug },
-  searchParams: { platform, tab, network, page, endorsementId },
+  searchParams: { platform, tab, endorsementTab, network, page, endorsementId },
 }: PageProps) {
-  console.log('PAGE PROPS', {
-    slug,
-    platform,
-    tab,
-    network,
-    page,
-    endorsementId,
-  });
   const _platform = validateOrGetDefaultPlatform(platform);
   const _network = validateOrGetDefaultNetwork(network);
   const _page = validateOrGetDefaultPage(page);
@@ -125,6 +118,7 @@ export default async function Page({
             account={mainAddress}
             displayName={basicProfileInfo.name}
             tab={tab}
+            endorsementTab={endorsementTab}
             network={_network}
             currentPage={_page}
             avatar={avatar ?? ''}

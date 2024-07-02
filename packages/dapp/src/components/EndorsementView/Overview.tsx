@@ -1,6 +1,5 @@
 'use client';
-import React, { use, useEffect, useState } from 'react';
-import { EndorsementViewAvatar } from './EndorsementViewAvatar';
+import React, { useEffect, useState } from 'react';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
 import { startsWithVowel } from '@/utils';
@@ -16,19 +15,19 @@ type OverviewProps = {
   endorseeAvatar: string;
   comment: string;
   uid: string;
+  endorserAvatar: any;
 };
 
-type Address = `0x${string}`;
-
 export const Overview = ({
-  endorser,
   endorsementType,
   endorsee,
   endorseeAvatar,
   comment,
+  endorserAvatar,
   uid,
 }: OverviewProps) => {
   const [pathname, setPathname] = useState<string>('');
+
   useEffect(() => {
     setPathname(window.location.href);
   }, [uid]);
@@ -40,7 +39,7 @@ export const Overview = ({
           <div className="font-medium text-xs sm:text-md md:text-lg">
             Endorsed by
           </div>
-          <EndorsementViewAvatar address={endorser as Address} size="sm" />
+          {endorserAvatar}
         </div>
         <div className="flex flex-col gap-y-2">
           <div className="flex items-center gap-x-2">

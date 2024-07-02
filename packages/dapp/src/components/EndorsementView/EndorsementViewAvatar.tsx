@@ -19,7 +19,7 @@ export const EndorsementViewAvatar = async ({
     >
       <ProfileAvatar avatar={avatar} address={address} size={size} />
       <div className="ml-2 max-w-32">
-        <div className="font-medium sm:text-md md:text-lg text-xs text-primary-500 truncate hover:underline hover:text-primary-600">
+        <div className="font-medium sm:text-md md:text-lg text-xs text-primary-500 animated-transition max-md:truncate hover:underline hover:text-primary-600">
           {displayName}
         </div>
       </div>

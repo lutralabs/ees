@@ -12,6 +12,7 @@ type ExplorerProps = {
   totalEndorsementsReceived: number;
   avatar: string;
   accountName: string;
+  endorsementTab?: string;
 };
 
 export const Explorer = ({
@@ -22,6 +23,7 @@ export const Explorer = ({
   totalEndorsementsReceived,
   avatar,
   accountName,
+  endorsementTab,
 }: ExplorerProps) => {
   return (
     <div className="flex flex-col gap-y-4 overflow-auto px-2 pb-2">
@@ -54,6 +56,7 @@ export const Explorer = ({
                 id={endorsementId}
                 avatar={avatar}
                 accountName={accountName}
+                endorsementTab={endorsementTab}
               />
             </Suspense>
           )}
