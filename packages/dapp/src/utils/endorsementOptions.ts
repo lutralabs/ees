@@ -1,0 +1,15 @@
+export const ENDORSEMENT_OPTIONS = [
+  { value: 'Based energy 🔵', label: 'Based energy 🔵' },
+  { value: 'Developer', label: 'Developer' },
+  { value: 'Hacker', label: 'Hacker' },
+  { value: 'Buidler', label: 'Buidler' },
+  { value: 'Memer', label: 'Memer' },
+  { value: 'Crypto OG', label: 'Crypto OG' },
+  { value: 'Web3 explorer', label: 'Web3 explorer' },
+  { value: 'Friend', label: 'Friend' },
+  { value: 'Artist', label: 'Artist' },
+  { value: 'Blogger', label: 'Blogger' },
+  { value: 'Trader', label: 'Trader' },
+  { value: 'Degen', label: 'Degen' },
+  { value: 'Scammer', label: 'Scammer' },
+];

@@ -115,6 +115,8 @@ export default async function Page({
         >
           <Feed
             account={mainAddress}
+            avatar={avatar}
+            displayName={basicProfileInfo.name}
             tab={tab}
             network={_network}
             currentPage={_page}

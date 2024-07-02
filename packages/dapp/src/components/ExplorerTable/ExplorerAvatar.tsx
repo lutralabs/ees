@@ -12,7 +12,7 @@ export const ExplorerAvatar = async ({
     <Link
       href={`/profile/${address}?platform=ethereum`}
       prefetch={false}
-      className="flex items-center overflow-hidden cursor-pointer"
+      className="flex items-center overflow-hidden cursor-pointer py-2"
     >
       <ProfileAvatar avatar={data.avatar} address={address} size="lg" />
       <div className="ml-2 max-w-32">

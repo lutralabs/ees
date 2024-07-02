@@ -10,22 +10,7 @@ import {
 import { useEndorsementStore } from '@/stores';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-
-export const ENDORSEMENT_OPTIONS = [
-  { value: 'Developer', label: 'Developer' },
-  { value: 'Hacker', label: 'Hacker' },
-  { value: 'Buidler', label: 'Buidler' },
-  { value: 'Memer', label: 'Memer' },
-  { value: 'Based energy 🔵', label: 'Based energy 🔵' },
-  { value: 'Crypto OG', label: 'Crypto OG' },
-  { value: 'Web3 explorer', label: 'Web3 explorer' },
-  { value: 'Friend', label: 'Friend' },
-  { value: 'Artist', label: 'Artist' },
-  { value: 'Blogger', label: 'Blogger' },
-  { value: 'Trader', label: 'Trader' },
-  { value: 'Degen', label: 'Degen' },
-  { value: 'Scammer', label: 'Scammer' },
-];
+import { ENDORSEMENT_OPTIONS } from '@/utils/endorsementOptions';
 
 type EndorseeCardProps = {
   endorsee: React.ReactNode;

@@ -10,7 +10,9 @@ export const useGlobalStatistics = (chainId?: number) => {
   return useQuery({
     queryKey: ['globalStatistics', network],
     queryFn: async () => {
-      const response = await fetch(`/api/globalStatistics?network=${network}`);
+      const response = await fetch(
+        `/api/ees/globalStatistics?network=${network}`
+      );
 
       if (!response.ok) {
         throw new Error('Failed to get global statistics');

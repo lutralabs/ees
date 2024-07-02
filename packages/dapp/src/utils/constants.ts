@@ -70,16 +70,4 @@ export const defaultSearchSuffix = [
     optional: 'eth',
     system: PlatformSystem.web3,
   },
-  // {
-  //   key: PlatformType.twitter,
-  //   system: PlatformSystem.web2,
-  // },
-  // {
-  //   key: PlatformType.github,
-  //   system: PlatformSystem.web2,
-  // },
-  // {
-  //   key: PlatformType.linkedin,
-  //   system: PlatformSystem.web2,
-  // },
 ];

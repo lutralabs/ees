@@ -28,6 +28,8 @@ const validateOrGetDefaultTab = (tab: string | undefined) => {
 
 type FeedProps = {
   account: `0x${string}`;
+  avatar: string | null;
+  displayName: string | null;
   tab?: string;
   network: number;
   currentPage: number;
@@ -39,6 +41,8 @@ type FeedProps = {
 
 export const Feed = ({
   account,
+  avatar,
+  displayName,
   tab,
   network,
   currentPage,
@@ -75,7 +79,15 @@ export const Feed = ({
               accountName={accountName}
             />
           )}
-          {_tab === 'graph' && <SocialGraph />}
+          {_tab === 'graph' && (
+            <SocialGraph
+              chainId={network}
+              account={account}
+              avatar={avatar}
+              displayName={displayName}
+              totalEndorsementsReceived={totalEndorsementsReceived}
+            />
+          )}
         </Suspense>
       </div>
     </div>

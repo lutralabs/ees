@@ -3,18 +3,13 @@ import { Suspense } from 'react';
 import { EndorsementViewAvatar } from './EndorsementViewAvatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Overview } from './Overview';
+import { getPropertyValue } from '@/utils/getPropertyValue';
 
 type EndorsementViewProps = {
   chainId: number;
   id: string;
   avatar: string;
   accountName: string;
-};
-
-const getPropertyValue = (data: any, name: string) => {
-  const property = data.find((item: any) => item.name === name);
-  if (!property) return null;
-  return property.value.value as string;
 };
 
 export const EndorsementView = async ({
