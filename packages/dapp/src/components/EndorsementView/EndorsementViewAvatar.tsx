@@ -8,6 +8,8 @@ export const EndorsementViewAvatar = async ({
   size,
 }: { address: `0x${string}`; size: 'sm' | 'md' | 'lg' }) => {
   const data = await getMinimalProfileFromAddress(address);
+  const displayName = data.displayName ?? formatAddress(address);
+  const avatar = data.avatar;
 
   return (
     <Link
@@ -15,10 +17,10 @@ export const EndorsementViewAvatar = async ({
       prefetch={false}
       className="flex items-center overflow-hidden cursor-pointer"
     >
-      <ProfileAvatar avatar={data.avatar} address={address} size={size} />
+      <ProfileAvatar avatar={avatar} address={address} size={size} />
       <div className="ml-2 max-w-32">
         <div className="font-medium sm:text-md md:text-lg text-xs text-primary-500 truncate hover:underline hover:text-primary-600">
-          {data.displayName ?? formatAddress(address)}
+          {displayName}
         </div>
       </div>
     </Link>

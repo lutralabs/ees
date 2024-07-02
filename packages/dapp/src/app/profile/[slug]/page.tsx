@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { Metadata } from 'next';
 import { Address } from '@/components/Address';
 import { Container } from '@/components/Container';
 import {
@@ -20,6 +19,7 @@ import { getAggregatedAccountData } from '@/lib/ees';
 import { NetworkSelect } from './NetworkSelect';
 import { cn } from '@/lib/utils';
 import { validateOrGetDefaultPage } from '@/utils/validateOrGetDefaultPage';
+import type { Metadata } from 'next';
 
 type PageProps = {
   params: { slug: string };
@@ -36,6 +36,14 @@ export default async function Page({
   params: { slug },
   searchParams: { platform, tab, network, page, endorsementId },
 }: PageProps) {
+  console.log('PAGE PROPS', {
+    slug,
+    platform,
+    tab,
+    network,
+    page,
+    endorsementId,
+  });
   const _platform = validateOrGetDefaultPlatform(platform);
   const _network = validateOrGetDefaultNetwork(network);
   const _page = validateOrGetDefaultPage(page);
@@ -115,7 +123,6 @@ export default async function Page({
         >
           <Feed
             account={mainAddress}
-            avatar={avatar}
             displayName={basicProfileInfo.name}
             tab={tab}
             network={_network}
@@ -142,4 +149,44 @@ export default async function Page({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params: { slug },
+  searchParams,
+}: PageProps): Promise<Metadata> {
+  return {
+    title: `Profile | ${slug}`,
+    description: `Check out ${slug} on endorse.fun!`,
+    openGraph: {
+      siteName: 'endorse.fun',
+      description: 'The next upgrade for Web3 social layer.',
+      images: [
+        {
+          url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
+          width: 1200,
+          height: 630,
+          alt: 'Profile Page Image',
+        },
+      ],
+      title: `Check out ${slug} on endorse.fun!`,
+      type: 'article',
+      url: `/profile/${slug}?platform=${searchParams.platform}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Check out ${slug} on endorse.fun!`,
+      description: 'Profile Page',
+      images: [
+        {
+          url: `/api/og?account=${slug}${
+            searchParams.platform ? `&platform=${searchParams.platform}` : ''
+          }`,
+          width: 1200,
+          height: 630,
+          alt: 'Profile Page Image',
+        },
+      ],
+    },
+  };
 }

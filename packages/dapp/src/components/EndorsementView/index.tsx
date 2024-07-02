@@ -61,7 +61,7 @@ export const EndorsementView = async ({
           <div className="overflow-auto">
             <div>
               <Suspense fallback={<div>loading...</div>}>
-                <EndorsementViewAvatar address={endorser} />
+                <EndorsementViewAvatar size="sm" address={endorser} />
               </Suspense>
             </div>
             <div>{endorsementType}</div>
