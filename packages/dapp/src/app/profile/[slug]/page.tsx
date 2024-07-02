@@ -157,7 +157,7 @@ export async function generateMetadata({
       description: 'The next upgrade for Web3 social layer.',
       images: [
         {
-          url: `/api/og?account=${slug}&platform=${searchParams.platform}`,
+          url: `/api/og?account=${slug}&platform=${searchParams.platform}&endorsementId=${searchParams.endorsementId}`,
           width: 1200,
           height: 630,
           alt: 'Profile Page Image',
