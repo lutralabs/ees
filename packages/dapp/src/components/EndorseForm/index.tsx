@@ -24,7 +24,6 @@ import {
   encodeFunctionData,
   parseEventLogs,
 } from 'viem';
-import { ReloadIcon } from '@radix-ui/react-icons';
 import { useEndorsementStore } from '@/stores';
 import { toast } from 'sonner';
 import { CheckCircle2, CircleAlert } from 'lucide-react';
@@ -38,7 +37,9 @@ import {
 import { cn } from '@/lib/utils';
 import { ConnectButtonCustom } from '@/components/ConnectButtonCustom';
 import { EndorsementModal } from './EndorsementModal';
-import { APP_URL } from '@/utils';
+import { APP_URL, formatAddress } from '@/utils';
+import { waitForTransactionReceipt } from '@wagmi/core';
+import { Spinner } from '../ui/spinner';
 
 type EndorseeProps = {
   endorsee: React.ReactNode;
@@ -76,7 +77,6 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
   >();
   const [previousErrorInsufficientFunds, setPreviousErrorInsufficientFunds] =
     useState<boolean>(false);
-
   // Hooks
   const { address: connectedAccount, chainId } = useAccount();
 
@@ -99,18 +99,17 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
     [displayValue, comment, endorsementType, address]
   );
 
-  const {
-    writeContractAsync,
-    isPending,
-    data: transactionHash,
-  } = useWriteContract({
+  const { writeContractAsync, data: transactionHash } = useWriteContract({
     config: config,
   });
 
-  const { data: txReceipt, isLoading: isReceiptLoading } =
-    useWaitForTransactionReceipt({
-      hash: transactionHash,
-    });
+  const {
+    data: txReceipt,
+    isSuccess: isReceiptSuccess,
+    isLoading: isReceiptLoading,
+  } = useWaitForTransactionReceipt({
+    hash: transactionHash,
+  });
 
   const endorsementData = useMemo(() => {
     if (!txReceipt) return null;
@@ -194,7 +193,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
   }, [isGasEstimateFetching, gasEstimateError]);
 
   // Functions
-  const handleEnorsment = async () => {
+  const handleEndorsment = async () => {
     if (
       !address ||
       !displayValue ||
@@ -215,36 +214,8 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
       args: [address, endorsementType, comment, _displayValue],
       value: _value,
     })
-      .then((txHash) => {
+      .then(() => {
         partialClear();
-        toast(
-          <div className="flex gap-x-2">
-            <div className="flex items-center justify-center">
-              <CheckCircle2 className="w-6 h-6 text-green-500" />
-            </div>
-            <div className="flex flex-col gap-y-1">
-              <h3 className="font-semibold justify-start items-center">
-                Transaction submitted
-              </h3>
-              <div className="flex justify-start items-center text-xs">
-                Hash:
-                <Button
-                  variant="link"
-                  size="sm"
-                  className="p-0 pl-1 text-xs h-4"
-                  onClick={() =>
-                    window.open(`${EXPLORERS[chainId]}/tx/${txHash}`, '_blank')
-                  }
-                >
-                  {`${txHash.slice(0, 4)}...${txHash.slice(-4)}`}
-                </Button>
-              </div>
-            </div>
-          </div>,
-          {
-            duration: 4000,
-          }
-        );
       })
       .catch((error: WriteContractErrorType) => {
         if (error.name === 'TransactionExecutionError') {
@@ -282,8 +253,62 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
   };
 
   useEffect(() => {
-    if (isReceiptLoading) setEndorsementModalOpen(true);
-  }, [isReceiptLoading]);
+    if (isReceiptSuccess) setEndorsementModalOpen(true);
+  }, [isReceiptSuccess]);
+
+  useEffect(() => {
+    if (transactionHash === undefined) return;
+    const transactionReceipt = waitForTransactionReceipt(config, {
+      hash: transactionHash,
+    });
+
+    toast.promise(transactionReceipt, {
+      loading: (
+        <div className="flex gap-x-2">
+          <div className="flex items-center justify-center">
+            <div role="status">
+              <Spinner />
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+          <div className="flex flex-col gap-y-1">
+            <h3 className="font-semibold justify-start items-center">
+              Transaction submitted
+            </h3>
+            <div className="flex justify-start items-center text-xs">
+              Hash:
+              <Button
+                variant="link"
+                size="sm"
+                className="p-0 pl-1 text-xs h-4"
+                onClick={() =>
+                  window.open(
+                    `${EXPLORERS[chainId!]}/tx/${transactionHash}`,
+                    '_blank'
+                  )
+                }
+              >
+                {formatAddress(transactionHash)}
+              </Button>
+            </div>
+          </div>
+        </div>
+      ),
+      success: (
+        <div className="flex gap-x-2">
+          <div className="flex items-center justify-center">
+            <CheckCircle2 className="w-6 h-6 text-green-500" />
+          </div>
+          <div className="flex flex-col gap-y-1">
+            <h3 className="font-semibold justify-start items-center">
+              Your endorsement of {displayValue} was successful!{' '}
+            </h3>
+          </div>
+        </div>
+      ),
+      error: 'Error',
+    });
+  }, [transactionHash]);
 
   return (
     <>
@@ -311,7 +336,7 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
           <Button
             size="lg"
             className={cn('w-full text-xl py-6', 'disabled:bg-gray-300')}
-            onMouseDown={handleEnorsment}
+            onMouseDown={handleEndorsment}
             disabled={
               !intro &&
               (areRequestsPending ||
@@ -321,8 +346,11 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
                 isGasEstimateFetching)
             }
           >
-            {isPending && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
-            {previousErrorInsufficientFunds ? 'Insufficient funds' : 'Endorse'}
+            {!isReceiptLoading &&
+              (previousErrorInsufficientFunds
+                ? 'Insufficient funds'
+                : 'Endorse')}
+            {isReceiptLoading && <Spinner />}
           </Button>
         )}
         <FeeDisplay
@@ -334,8 +362,8 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
         open={endorsementModalOpen}
         setOpen={setEndorsementModalOpen}
         shareLink={
-          displayValue && platform && endorsementData?.uid
-            ? `${APP_URL}/profile/${displayValue}?platform=${platform}&tab=explorer&endorsementId=${endorsementData?.uid}`
+          displayValue && platform && endorsementData
+            ? `${APP_URL}/profile/${displayValue}?platform=${platform}&tab=explorer&endorsementId=${endorsementData.uid}`
             : null
         }
         endorsee={endorsee}
