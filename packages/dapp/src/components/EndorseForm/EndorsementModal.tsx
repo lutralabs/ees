@@ -9,14 +9,9 @@ import {
 import Link from 'next/link';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
 import { MemoizedImage } from '@/components/MemoizedImage';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { PlatformType, formatHandle, startsWithVowel } from '@/utils';
-import { Skeleton } from '../ui/skeleton';
-import { EndorseeSkeleton } from '../Endorsee';
 import { useEndorsementStore } from '@/stores';
-import Image from 'next/image';
 
 type EndorsementModalProps = {
   open: boolean;
@@ -31,8 +26,6 @@ export const EndorsementModal = ({
   shareLink,
   endorsee,
 }: EndorsementModalProps) => {
-  // TODO[Martin]: Add network name, so we can support multiple networks
-  // const shareLink = `${APP_URL}/endorsement/${endorsementId}`;
   const { displayValue, endorsementType, platform } = useEndorsementStore(
     (state) => ({
       displayValue: state.displayValue,
@@ -40,6 +33,7 @@ export const EndorsementModal = ({
       platform: state.platform,
     })
   );
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-[625px] p-4">

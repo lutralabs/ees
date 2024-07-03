@@ -362,8 +362,8 @@ export const EndorseForm = ({ endorsee }: EndorseeProps) => {
         open={endorsementModalOpen}
         setOpen={setEndorsementModalOpen}
         shareLink={
-          displayValue && platform && endorsementData?.uid
-            ? `${APP_URL}/profile/${displayValue}?platform=${platform}&tab=explorer&endorsementId=${endorsementData?.uid}`
+          displayValue && platform && endorsementData
+            ? `${APP_URL}/profile/${displayValue}?platform=${platform}&tab=explorer&endorsementId=${endorsementData.uid}`
             : null
         }
         endorsee={endorsee}
