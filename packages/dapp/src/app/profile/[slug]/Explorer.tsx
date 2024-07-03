@@ -49,7 +49,7 @@ export const Explorer = ({
           )}
           {endorsementId && (
             <Suspense
-              key={`${chainId}-${endorsementId}-${endorsementTab}`}
+              key={`${chainId}-${endorsementId}`}
               fallback={
                 <div className="mt-4 w-full">
                   <Skeleton className="w-full h-48 bg-gray-200 rounded-sm" />

@@ -1,11 +1,12 @@
 'use client';
+
 import React from 'react';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '../ui/tooltip';
+} from '@/components/ui/tooltip';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
@@ -13,10 +14,12 @@ import { EXPLORERS } from '@/lib/contracts/explorers';
 import { useAccount } from 'wagmi';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { CopyIcon } from '../CopyIcon';
 
 dayjs.extend(relativeTime);
 
 type DetailsProps = {
+  chainId: number;
   endorserAvatar: any;
   endorserAddress: string;
   endorsementType: string;
@@ -51,6 +54,7 @@ const LabelField = ({
 };
 
 export const Details = ({
+  chainId,
   endorserAvatar,
   endorserAddress,
   endorsementType,
@@ -60,7 +64,6 @@ export const Details = ({
   uid,
   revoked,
 }: DetailsProps) => {
-  const { chainId } = useAccount();
   return (
     <div>
       <div className="grid grid-cols-[35%_65%] gap-y-2 mt-4">
@@ -70,7 +73,7 @@ export const Details = ({
           label="Endorser Address"
           description="The address of the endorser"
         />
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-1">
           <Link
             href={`/profile/${endorserAddress}?platform=ethereum`}
             prefetch={false}
@@ -78,13 +81,7 @@ export const Details = ({
           >
             {endorserAddress}
           </Link>
-          <div
-            onClick={() => {
-              navigator.clipboard.writeText(endorserAddress);
-            }}
-          >
-            <DocumentDuplicateIcon className="h-5 w-5 text-gray-600 cursor-pointer hover:text-gray-500 animated-transition" />
-          </div>
+          <CopyIcon value={endorserAddress} />
         </div>
         <LabelField
           label="Endorsement Type"
@@ -115,7 +112,7 @@ export const Details = ({
           description="Id of the transaction."
         />
         <a
-          href={`${EXPLORERS[chainId ?? 8453]}/tx/${txid}`}
+          href={`${EXPLORERS[chainId]}/tx/${txid}`}
           target="_blank"
           className="text-primary-500 hover:underline hover:text-primary-600 animated-transition "
           rel="noreferrer"

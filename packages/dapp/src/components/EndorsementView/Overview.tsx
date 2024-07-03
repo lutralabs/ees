@@ -14,12 +14,9 @@ type OverviewProps = {
   endorsementType: string;
   endorsee: string;
   endorseeAvatar: string;
-  comment: string;
-  uid: string;
+  comment: string | null;
   endorserAvatar: any;
 };
-
-type Address = `0x${string}`;
 
 export const Overview = ({
   endorsementType,
@@ -27,7 +24,6 @@ export const Overview = ({
   endorseeAvatar,
   comment,
   endorserAvatar,
-  uid,
 }: OverviewProps) => {
   const pathname = usePathname();
   const query = useSearchParams();
@@ -48,7 +44,7 @@ export const Overview = ({
             <div className="hidden sm:block">
               <ProfileAvatar
                 avatar={endorseeAvatar}
-                address={endorsee as Address}
+                address={endorsee as `0x${string}`}
                 size="lg"
               />
             </div>
@@ -56,7 +52,7 @@ export const Overview = ({
             <div className="sm:hidden block">
               <ProfileAvatar
                 avatar={endorseeAvatar}
-                address={endorsee as Address}
+                address={endorsee as `0x${string}`}
                 size="sm"
               />
             </div>

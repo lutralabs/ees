@@ -1,7 +1,6 @@
 import { getAttestation } from '@/lib/eas';
 import { Suspense } from 'react';
 import { EndorsementViewAvatar } from './EndorsementViewAvatar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Overview } from './Overview';
 import { getPropertyValue } from '@/utils/getPropertyValue';
 import { Skeleton } from '../ui/skeleton';
@@ -50,7 +49,6 @@ export const EndorsementView = async ({
 
   const _tab = validateOrGetDefaultTab(endorsementTab);
 
-  // TODO: Not found view
   if (!attestation) {
     return (
       <div>
@@ -58,22 +56,18 @@ export const EndorsementView = async ({
       </div>
     );
   }
+
   const attestationData = JSON.parse(attestation?.decodedDataJson || '{}');
   const timestamp = attestation.timeCreated;
   const txid = attestation.txid;
   const revoked = attestation.revoked;
-  const endorsementType = getPropertyValue(attestationData, 'endorsementType');
+  const endorsementType =
+    getPropertyValue(attestationData, 'endorsementType') ?? '';
   const comment = getPropertyValue(attestationData, 'comment');
-  const endorser = getPropertyValue(
-    attestationData,
-    'endorser'
-  ) as `0x${string}`;
+  const endorser = (getPropertyValue(attestationData, 'endorser') ??
+    '0x') as `0x${string}`;
 
-  const endorserAvatar = (
-    <Suspense fallback={<div>loading...</div>}>
-      <EndorsementViewAvatar size="sm" address={endorser} />
-    </Suspense>
-  );
+  const endorserAvatar = <EndorsementViewAvatar size="sm" address={endorser} />;
 
   return (
     <div className="overflow-hidden">
@@ -89,17 +83,17 @@ export const EndorsementView = async ({
         <div className="p-4">
           {_tab === 'overview' && (
             <Overview
-              endorser={endorser ?? ''}
+              endorser={endorser}
               endorserAvatar={endorserAvatar}
               endorsee={displayName}
               endorseeAvatar={avatar}
-              endorsementType={endorsementType ?? ''}
-              comment={comment ?? ''}
-              uid={id}
+              endorsementType={endorsementType}
+              comment={comment}
             />
           )}
           {_tab === 'details' && (
             <Details
+              chainId={chainId}
               endorserAvatar={endorserAvatar}
               endorserAddress={endorser}
               endorsementType={endorsementType as string}

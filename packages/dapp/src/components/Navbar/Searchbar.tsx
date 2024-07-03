@@ -20,6 +20,7 @@ import { useAccount } from 'wagmi';
 import { type SearchListItemType, getSearchSuggestions } from '@/utils';
 import { SUGGESTED_ACCOUNTS } from '@/utils/constants';
 import { useRouter } from 'next/navigation';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
 export const Searchbar = () => {
   // Hooks
@@ -199,6 +200,7 @@ export const Searchbar = () => {
       </Button>
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogContent className="lg:hidden w-full overflow-hidden max-md:top-44">
+          <DialogTitle className="hidden">Search</DialogTitle>
           <div>
             <div className="relative flex items-center">
               <MagnifyingGlassIcon className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 transform" />
