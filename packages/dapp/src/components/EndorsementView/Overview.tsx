@@ -8,6 +8,7 @@ import { MemoizedImage } from '../MemoizedImage';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { usePathname, useSearchParams } from 'next/navigation';
+import { Skeleton } from '../ui/skeleton';
 
 type OverviewProps = {
   endorser: string;
@@ -125,6 +126,15 @@ export const Overview = ({
           </Button>
         </div>
       </div>
+    </div>
+  );
+};
+
+export const OverviewSkeleton = () => {
+  return (
+    <div>
+      <Skeleton className="md:w-[600px] md:h-[316px] bg-gray-200 rounded-sm" />
+      <Skeleton className="w-full mt-4 h-24 bg-gray-200 rounded-sm" />
     </div>
   );
 };
