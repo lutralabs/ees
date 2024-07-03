@@ -12,7 +12,7 @@ type EndorsementViewProps = {
   chainId: number;
   id: string;
   avatar: string;
-  accountName: string;
+  displayName: string;
   endorsementTab?: string;
 };
 
@@ -40,7 +40,7 @@ export const EndorsementView = async ({
   chainId,
   id,
   avatar,
-  accountName,
+  displayName,
   endorsementTab,
 }: EndorsementViewProps) => {
   const attestation = await getAttestation({
@@ -91,7 +91,7 @@ export const EndorsementView = async ({
             <Overview
               endorser={endorser ?? ''}
               endorserAvatar={endorserAvatar}
-              endorsee={accountName}
+              endorsee={displayName}
               endorseeAvatar={avatar}
               endorsementType={endorsementType ?? ''}
               comment={comment ?? ''}
@@ -102,7 +102,6 @@ export const EndorsementView = async ({
             <Details
               endorserAvatar={endorserAvatar}
               endorserAddress={endorser}
-              endorseeAddress={accountName}
               endorsementType={endorsementType as string}
               comment={comment}
               timestamp={timestamp}

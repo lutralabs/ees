@@ -1,12 +1,13 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ProfileAvatar } from '../ProfileAvatar';
 import { TwitterIcon, TwitterShareButton } from 'react-share';
-import { startsWithVowel } from '@/utils';
+import { APP_URL, startsWithVowel } from '@/utils';
 import Link from 'next/link';
 import { MemoizedImage } from '../MemoizedImage';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 type OverviewProps = {
   endorser: string;
@@ -18,6 +19,8 @@ type OverviewProps = {
   endorserAvatar: any;
 };
 
+type Address = `0x${string}`;
+
 export const Overview = ({
   endorsementType,
   endorsee,
@@ -26,11 +29,10 @@ export const Overview = ({
   endorserAvatar,
   uid,
 }: OverviewProps) => {
-  const [pathname, setPathname] = useState<string>('');
+  const pathname = usePathname();
+  const query = useSearchParams();
 
-  useEffect(() => {
-    setPathname(window.location.href);
-  }, [uid]);
+  const fullPath = `${APP_URL}${pathname}?${query.toString()}`;
 
   return (
     <div>
@@ -44,11 +46,19 @@ export const Overview = ({
         <div className="flex flex-col gap-y-2">
           <div className="flex items-center gap-x-2">
             <div className="hidden sm:block">
-              <ProfileAvatar avatar={endorseeAvatar} address="0x" size="lg" />
+              <ProfileAvatar
+                avatar={endorseeAvatar}
+                address={endorsee as Address}
+                size="lg"
+              />
             </div>
 
             <div className="sm:hidden block">
-              <ProfileAvatar avatar={endorseeAvatar} address="0x" size="sm" />
+              <ProfileAvatar
+                avatar={endorseeAvatar}
+                address={endorsee as Address}
+                size="sm"
+              />
             </div>
             <div className="text-primary text-xs sm:text-md md:text-3xl font-semibold">
               {endorsee}
@@ -68,7 +78,7 @@ export const Overview = ({
           <div>Share this endorsement on</div>
           <div className="flex items-center gap-x-2 max-sm:pt-2">
             <TwitterShareButton
-              url={pathname}
+              url={fullPath}
               title={`I endorsed ${endorsee} as ${
                 startsWithVowel(endorsementType.toLowerCase()) ? 'an' : 'a'
               } ${endorsementType} on @endorsedotfun!`}
@@ -80,7 +90,7 @@ export const Overview = ({
             <Link
               prefetch={false}
               href={`https://hey.xyz/?text=${encodeURIComponent(
-                `Check out ${endorsee}'s endorsement!\n ${pathname}\n`
+                `Check out ${endorsee}'s endorsement!\n ${fullPath}\n`
               )}&hashtags=${encodeURIComponent('reputation,endorse')}`}
               target="_blank"
             >
@@ -94,8 +104,8 @@ export const Overview = ({
             <Link
               prefetch={false}
               href={`https://warpcast.com/~/compose?text=${encodeURIComponent(
-                `Check out ${endorsee}'s endorsement!\n ${pathname}\n`
-              )}&embeds[]=${pathname}`}
+                `Check out ${endorsee}'s endorsement!\n ${fullPath}\n`
+              )}&embeds[]=${fullPath}`}
               target="_blank"
             >
               <MemoizedImage
@@ -109,11 +119,11 @@ export const Overview = ({
           </div>
         </div>
         <div className="mt-4 flex items-center gap-x-2">
-          <Input value={pathname} />
+          <Input value={fullPath} />
           <Button
             size="lg"
             variant="outline"
-            onClick={() => navigator.clipboard.writeText(pathname)}
+            onClick={() => navigator.clipboard.writeText(fullPath)}
           >
             Copy Link
           </Button>

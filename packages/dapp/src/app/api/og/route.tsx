@@ -58,6 +58,11 @@ export async function GET(req: NextRequest) {
         chainId: DEFAULT_CHAIN_ID,
         id: endorsementId,
       });
+
+      if (!attestation) {
+        throw new Error('Attestation not found');
+      }
+
       const attestationData = JSON.parse(attestation?.decodedDataJson || '{}');
       const endorser = getPropertyValue(
         attestationData,
@@ -71,8 +76,6 @@ export async function GET(req: NextRequest) {
       const endorserAvatar = endorserData.avatar;
       const endorserDisplayName =
         endorserData.displayName ?? formatAddress(endorser);
-
-      console.log(endorserDisplayName, endorsementType, endorserAvatar);
 
       return new ImageResponse(
         <div
@@ -104,10 +107,10 @@ export async function GET(req: NextRequest) {
                 height={48}
                 tw="rounded-full"
                 alt="Avatar"
-                src={endorserAvatar ?? blo(address, 160)}
+                src={endorserAvatar ?? blo(endorser, 160)}
               />
               <h2 tw="text-3xl font-medium text-blue-500 ml-2">
-                {endorserDisplayName ?? 'Unknown'}
+                {endorserDisplayName}
               </h2>
             </div>
           </div>

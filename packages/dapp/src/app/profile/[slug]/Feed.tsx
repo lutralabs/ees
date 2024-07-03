@@ -29,13 +29,12 @@ const validateOrGetDefaultTab = (tab: string | undefined) => {
 type FeedProps = {
   account: `0x${string}`;
   avatar: string | null;
-  displayName: string | null;
+  displayName: string;
   tab?: string;
   network: number;
   currentPage: number;
   endorsementId?: string;
   totalEndorsementsReceived: number;
-  accountName: string;
   endorsementTab?: string;
 };
 
@@ -48,7 +47,6 @@ export const Feed = ({
   currentPage,
   endorsementId,
   totalEndorsementsReceived,
-  accountName,
   endorsementTab,
 }: FeedProps) => {
   const _tab = validateOrGetDefaultTab(tab);
@@ -76,7 +74,7 @@ export const Feed = ({
               endorsementId={endorsementId}
               totalEndorsementsReceived={totalEndorsementsReceived}
               avatar={avatar ?? ''}
-              accountName={accountName}
+              displayName={displayName}
               endorsementTab={endorsementTab}
             />
           )}

@@ -3,6 +3,7 @@ import { ExplorerTable } from '@/components/ExplorerTable';
 import { EndorsementView } from '@/components/EndorsementView';
 import { EndorsementViewBackArrow } from './EndorsementVIewBackArrow';
 import { Suspense } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type ExplorerProps = {
   chainId: number;
@@ -11,7 +12,7 @@ type ExplorerProps = {
   endorsementId?: string;
   totalEndorsementsReceived: number;
   avatar: string;
-  accountName: string;
+  displayName: string;
   endorsementTab?: string;
 };
 
@@ -22,7 +23,7 @@ export const Explorer = ({
   endorsementId,
   totalEndorsementsReceived,
   avatar,
-  accountName,
+  displayName,
   endorsementTab,
 }: ExplorerProps) => {
   return (
@@ -48,14 +49,18 @@ export const Explorer = ({
           )}
           {endorsementId && (
             <Suspense
-              key={`${chainId}-${endorsementId}`}
-              fallback={<div>loading...</div>}
+              key={`${chainId}-${endorsementId}-${endorsementTab}`}
+              fallback={
+                <div className="mt-4 w-full">
+                  <Skeleton className="w-full h-48 bg-gray-200 rounded-sm" />
+                </div>
+              }
             >
               <EndorsementView
                 chainId={chainId}
                 id={endorsementId}
                 avatar={avatar}
-                accountName={accountName}
+                displayName={displayName}
                 endorsementTab={endorsementTab}
               />
             </Suspense>

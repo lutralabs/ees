@@ -116,13 +116,12 @@ export default async function Page({
         >
           <Feed
             account={mainAddress}
-            displayName={basicProfileInfo.name}
+            displayName={basicProfileInfo.name ?? formatAddress(mainAddress)}
             tab={tab}
             endorsementTab={endorsementTab}
             network={_network}
             currentPage={_page}
-            avatar={avatar ?? ''}
-            accountName={basicProfileInfo.name ?? formatAddress(mainAddress)}
+            avatar={avatar}
             endorsementId={endorsementId}
             totalEndorsementsReceived={
               Number.isNaN(totalEndorsementsReceived)
@@ -175,6 +174,10 @@ export async function generateMetadata({
         {
           url: `/api/og?account=${slug}${
             searchParams.platform ? `&platform=${searchParams.platform}` : ''
+          }${
+            searchParams.endorsementId
+              ? `&endorsementId=${searchParams.endorsementId}`
+              : ''
           }`,
           width: 1200,
           height: 630,

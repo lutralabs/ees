@@ -9,11 +9,16 @@ import {
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
+import { EXPLORERS } from '@/lib/contracts/explorers';
+import { useAccount } from 'wagmi';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 type DetailsProps = {
   endorserAvatar: any;
   endorserAddress: string;
-  endorseeAddress: string;
   endorsementType: string;
   comment: string | null;
   timestamp: number;
@@ -48,7 +53,6 @@ const LabelField = ({
 export const Details = ({
   endorserAvatar,
   endorserAddress,
-  endorseeAddress,
   endorsementType,
   comment,
   timestamp,
@@ -56,6 +60,7 @@ export const Details = ({
   uid,
   revoked,
 }: DetailsProps) => {
+  const { chainId } = useAccount();
   return (
     <div>
       <div className="grid grid-cols-[35%_65%] gap-y-2 mt-4">
@@ -91,7 +96,6 @@ export const Details = ({
           description="Type of the endorsement"
         />
         <div className="font-medium">
-          {/* biome-ignore lint/suspicious/useValidTypeof: <explanation> */}
           {comment && <div>"{comment}"</div>}
           {!comment && <div>No comment was added.</div>}
         </div>
@@ -105,18 +109,13 @@ export const Details = ({
           label="Timestamp"
           description="When the endorsement has been made."
         />
-        <div>
-          {new Date(timestamp * 1000).toLocaleString('en-US', {
-            dateStyle: 'medium',
-            timeStyle: 'medium',
-          })}
-        </div>
+        <div>{dayjs.unix(timestamp).fromNow()}</div>
         <LabelField
           label="Transaction ID"
           description="Id of the transaction."
         />
         <a
-          href={`https://basescan.org/tx/${txid}`}
+          href={`${EXPLORERS[chainId ?? 8453]}/tx/${txid}`}
           target="_blank"
           className="text-primary-500 hover:underline hover:text-primary-600 animated-transition "
           rel="noreferrer"
