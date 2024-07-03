@@ -15,12 +15,17 @@ import * as types from './graphql';
  */
 const documents = {
     "query GetAttestation($where: AttestationWhereUniqueInput!) {\n  attestation(where: $where) {\n    id\n    attester\n    recipient\n    decodedDataJson\n    timeCreated\n    revoked\n    revocationTime\n    txid\n  }\n}": types.GetAttestationDocument,
+    "query GetAttestationDecodedData($where: AttestationWhereUniqueInput!) {\n  attestation(where: $where) {\n    id\n    decodedDataJson\n  }\n}": types.GetAttestationDecodedDataDocument,
 };
 
 /**
  * The gqlEAS function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gqlEAS(source: "query GetAttestation($where: AttestationWhereUniqueInput!) {\n  attestation(where: $where) {\n    id\n    attester\n    recipient\n    decodedDataJson\n    timeCreated\n    revoked\n    revocationTime\n    txid\n  }\n}"): typeof import('./graphql').GetAttestationDocument;
+/**
+ * The gqlEAS function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gqlEAS(source: "query GetAttestationDecodedData($where: AttestationWhereUniqueInput!) {\n  attestation(where: $where) {\n    id\n    decodedDataJson\n  }\n}"): typeof import('./graphql').GetAttestationDecodedDataDocument;
 
 
 export function gqlEAS(source: string) {

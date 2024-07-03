@@ -1,0 +1,25 @@
+query GetRecentEndorsementsAndDonations {
+  donations(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {
+    id
+    createdAtTimestamp
+    from {
+      id
+    }
+    to {
+      id
+    }
+    amount
+  }
+  endorsements(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {
+    id
+    createdAtTimestamp
+    from {
+      id
+    }
+    to {
+      id
+    }
+    endorsementType
+    easUid
+  }
+}

@@ -31,7 +31,8 @@
       "**/artifacts/**",
       "**/contracts/lib/**",
       "**/__generated__/**",
-      "**/ignition/deployments/**"
+      "**/ignition/deployments/**",
+      "**/subgraphs/tests/.latest.json"
     ]
   },
   "organizeImports": {
@@ -96,6 +97,16 @@
           },
           "suspicious": {
             "noShadowRestrictedNames": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["**/dapp/src/app/api/frame/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useJsxKeyInIterable": "off"
           }
         }
       }

@@ -1155,12 +1155,25 @@ export type GetGlobalStatisticsQueryVariables = Exact<{
 
 export type GetGlobalStatisticsQuery = { __typename?: 'Query', globalStatistics?: { __typename?: 'GlobalStatistics', id: any, totalEndorsements: any, totalDonations: any, totalDonationAmount: any, totalWithdrawnAmount: any } | null };
 
+export type GetRecentEndorsementsAndDonationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRecentEndorsementsAndDonationsQuery = { __typename?: 'Query', donations: Array<{ __typename?: 'Donation', id: any, createdAtTimestamp: any, amount: any, from: { __typename?: 'Account', id: any }, to: { __typename?: 'Account', id: any } }>, endorsements: Array<{ __typename?: 'Endorsement', id: any, createdAtTimestamp: any, endorsementType: string, easUid: any, from: { __typename?: 'Account', id: any }, to: { __typename?: 'Account', id: any } }> };
+
 export type GetTopEndorsersAndDonatorsQueryVariables = Exact<{
   account: Scalars['String']['input'];
 }>;
 
 
 export type GetTopEndorsersAndDonatorsQuery = { __typename?: 'Query', topEndorsers: Array<{ __typename?: 'AggregatedInformation', id: any, from: { __typename?: 'Account', id: any } }>, topDonators: Array<{ __typename?: 'AggregatedInformation', id: any, donationAmount: any, from: { __typename?: 'Account', id: any } }> };
+
+export type GetTopEndorsersForAccountQueryVariables = Exact<{
+  account: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+}>;
+
+
+export type GetTopEndorsersForAccountQuery = { __typename?: 'Query', topEndorsers: Array<{ __typename?: 'AggregatedInformation', id: any, from: { __typename?: 'Account', id: any, totalEndorsementsReceived: any, sentEndorsements: Array<{ __typename?: 'Endorsement', endorsementType: string, easUid: any }> } }> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -1220,6 +1233,33 @@ export const GetGlobalStatisticsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetGlobalStatisticsQuery, GetGlobalStatisticsQueryVariables>;
+export const GetRecentEndorsementsAndDonationsDocument = new TypedDocumentString(`
+    query GetRecentEndorsementsAndDonations {
+  donations(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {
+    id
+    createdAtTimestamp
+    from {
+      id
+    }
+    to {
+      id
+    }
+    amount
+  }
+  endorsements(first: 5, orderBy: createdAtTimestamp, orderDirection: desc) {
+    id
+    createdAtTimestamp
+    from {
+      id
+    }
+    to {
+      id
+    }
+    endorsementType
+    easUid
+  }
+}
+    `) as unknown as TypedDocumentString<GetRecentEndorsementsAndDonationsQuery, GetRecentEndorsementsAndDonationsQueryVariables>;
 export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
     query GetTopEndorsersAndDonators($account: String!) {
   topEndorsers: aggregatedInformations(
@@ -1247,3 +1287,23 @@ export const GetTopEndorsersAndDonatorsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetTopEndorsersAndDonatorsQuery, GetTopEndorsersAndDonatorsQueryVariables>;
+export const GetTopEndorsersForAccountDocument = new TypedDocumentString(`
+    query GetTopEndorsersForAccount($account: String!, $first: Int!) {
+  topEndorsers: aggregatedInformations(
+    where: {to: $account}
+    orderBy: from__totalEndorsementsReceived
+    orderDirection: desc
+    first: $first
+  ) {
+    id
+    from {
+      id
+      totalEndorsementsReceived
+      sentEndorsements(where: {to: $account}) {
+        endorsementType
+        easUid
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetTopEndorsersForAccountQuery, GetTopEndorsersForAccountQueryVariables>;

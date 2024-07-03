@@ -133,6 +133,7 @@ async function main() {
       mentions,
       mentionsPositions,
       type: CastType.CAST,
+      parentUrl: 'https://warpcast.com/~/channel/endorse',
     },
     dataOptions,
     ed25519Signer

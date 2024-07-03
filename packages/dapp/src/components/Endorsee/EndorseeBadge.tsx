@@ -8,8 +8,8 @@ import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { CopyIcon } from '@/components/CopyIcon';
 import { useEffect, useMemo, useState } from 'react';
 import { useEndorsementStore } from '@/stores';
-import { ENDORSEMENT_OPTIONS } from '../EndorseForm/EndorseeCard';
 import Link from 'next/link';
+import { ENDORSEMENT_OPTIONS } from '@/utils/endorsementOptions';
 
 type EndorseeBadgeProps = {
   type: PlatformType;

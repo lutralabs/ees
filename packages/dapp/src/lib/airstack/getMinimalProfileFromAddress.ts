@@ -3,7 +3,7 @@ import {
   type GetMinimalProfileFromAddressQuery,
 } from '@/__generated__/airstack/graphql';
 
-type GetMinimalProfileInfoByPlatformResult = {
+export type GetMinimalProfileFromAddressResult = {
   displayName: string | null;
   address: `0x${string}` | null;
   description: string | null;
@@ -13,7 +13,7 @@ type GetMinimalProfileInfoByPlatformResult = {
 
 export const getMinimalProfileFromAddress = async (
   address: `0x${string}` | null
-): Promise<GetMinimalProfileInfoByPlatformResult> => {
+): Promise<GetMinimalProfileFromAddressResult> => {
   if (!address) {
     return {
       displayName: null,

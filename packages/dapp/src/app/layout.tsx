@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { headers } from 'next/headers';
+import { getFrameMetadata } from 'frog/next';
 import { Navbar } from '@/components/Navbar';
 import { Providers } from '@/components/Providers';
 import { cookieToInitialState } from '@/lib/wagmi/cookieToInitialState';
@@ -14,6 +15,8 @@ import { APP_URL } from '@/utils';
 import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
+
+const frameTags = await getFrameMetadata(`${APP_URL}/api/frame`);
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL),
@@ -35,6 +38,7 @@ export const metadata: Metadata = {
     title: 'endorse.fun - Ethereum Endorsement Service',
     description: 'The next upgrade for Web3 social layer.',
   },
+  other: frameTags,
 };
 
 export default function RootLayout(props: { children: ReactNode }) {
