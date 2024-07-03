@@ -221,7 +221,6 @@ export const InteractiveSocialGraph = ({
             });
           }}
           onLinkClick={(link) => {
-            console.log(link);
             handleEndorsementSelection(link.easUid, (link.target as any).id);
           }}
           linkLabel={(link) => {

@@ -69,7 +69,7 @@ export const getMinimalProfileInfoByPlatform = async (
     }
 
     const jsonResponse = await response.json();
-    console.log(jsonResponse);
+
     // Check if we successfully decoded the response
     if (!jsonResponse) {
       throw new Error('Failed to fetch profile');
