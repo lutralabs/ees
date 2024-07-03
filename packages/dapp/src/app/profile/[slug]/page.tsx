@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import type { Metadata } from 'next';
 import { Address } from '@/components/Address';
 import { Container } from '@/components/Container';
 import {
@@ -20,6 +19,7 @@ import { getAggregatedAccountData } from '@/lib/ees';
 import { NetworkSelect } from './NetworkSelect';
 import { cn } from '@/lib/utils';
 import { validateOrGetDefaultPage } from '@/utils/validateOrGetDefaultPage';
+import type { Metadata } from 'next';
 
 type PageProps = {
   params: { slug: string };
@@ -29,12 +29,13 @@ type PageProps = {
     network?: string;
     page?: string;
     endorsementId?: string;
+    endorsementTab?: string;
   };
 };
 
 export default async function Page({
   params: { slug },
-  searchParams: { platform, tab, network, page, endorsementId },
+  searchParams: { platform, tab, endorsementTab, network, page, endorsementId },
 }: PageProps) {
   const _platform = validateOrGetDefaultPlatform(platform);
   const _network = validateOrGetDefaultNetwork(network);
@@ -115,11 +116,12 @@ export default async function Page({
         >
           <Feed
             account={mainAddress}
-            avatar={avatar}
-            displayName={basicProfileInfo.name}
+            displayName={basicProfileInfo.name ?? formatAddress(mainAddress)}
             tab={tab}
+            endorsementTab={endorsementTab}
             network={_network}
             currentPage={_page}
+            avatar={avatar}
             endorsementId={endorsementId}
             totalEndorsementsReceived={
               Number.isNaN(totalEndorsementsReceived)
@@ -140,4 +142,48 @@ export default async function Page({
       </div>
     </Container>
   );
+}
+
+export async function generateMetadata({
+  params: { slug },
+  searchParams,
+}: PageProps): Promise<Metadata> {
+  return {
+    title: `Profile | ${slug}`,
+    description: `Check out ${slug} on endorse.fun!`,
+    openGraph: {
+      siteName: 'endorse.fun',
+      description: 'The next upgrade for Web3 social layer.',
+      images: [
+        {
+          url: `/api/og?account=${slug}&platform=${searchParams.platform}&endorsementId=${searchParams.endorsementId}`,
+          width: 1200,
+          height: 630,
+          alt: 'Profile Page Image',
+        },
+      ],
+      title: `Check out ${slug} on endorse.fun!`,
+      type: 'article',
+      url: `/profile/${slug}?platform=${searchParams.platform}`,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Check out ${slug} on endorse.fun!`,
+      description: 'Profile Page',
+      images: [
+        {
+          url: `/api/og?account=${slug}${
+            searchParams.platform ? `&platform=${searchParams.platform}` : ''
+          }${
+            searchParams.endorsementId
+              ? `&endorsementId=${searchParams.endorsementId}`
+              : ''
+          }`,
+          width: 1200,
+          height: 630,
+          alt: 'Profile Page Image',
+        },
+      ],
+    },
+  };
 }

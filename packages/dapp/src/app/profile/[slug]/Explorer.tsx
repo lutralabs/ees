@@ -3,6 +3,7 @@ import { ExplorerTable } from '@/components/ExplorerTable';
 import { EndorsementView } from '@/components/EndorsementView';
 import { EndorsementViewBackArrow } from './EndorsementVIewBackArrow';
 import { Suspense } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 type ExplorerProps = {
   chainId: number;
@@ -10,6 +11,9 @@ type ExplorerProps = {
   currentPage: number;
   endorsementId?: string;
   totalEndorsementsReceived: number;
+  avatar: string;
+  displayName: string;
+  endorsementTab?: string;
 };
 
 export const Explorer = ({
@@ -18,6 +22,9 @@ export const Explorer = ({
   currentPage,
   endorsementId,
   totalEndorsementsReceived,
+  avatar,
+  displayName,
+  endorsementTab,
 }: ExplorerProps) => {
   return (
     <div className="flex flex-col gap-y-4 overflow-auto px-2 pb-2">
@@ -43,9 +50,19 @@ export const Explorer = ({
           {endorsementId && (
             <Suspense
               key={`${chainId}-${endorsementId}`}
-              fallback={<div>loading...</div>}
+              fallback={
+                <div className="mt-4 w-full">
+                  <Skeleton className="w-full h-48 bg-gray-200 rounded-sm" />
+                </div>
+              }
             >
-              <EndorsementView chainId={chainId} id={endorsementId} />
+              <EndorsementView
+                chainId={chainId}
+                id={endorsementId}
+                avatar={avatar}
+                displayName={displayName}
+                endorsementTab={endorsementTab}
+              />
             </Suspense>
           )}
         </CardContent>
