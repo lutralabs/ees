@@ -116,7 +116,7 @@ export const Overview = ({
           </div>
         </div>
         <div className="mt-4 flex items-center gap-x-2">
-          <Input value={fullPath} />
+          <Input value={fullPath} readOnly />
           <Button
             size="lg"
             variant="outline"

@@ -3,11 +3,13 @@
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-type FeedNavigationProps = {
+type EndorsementNavigationProps = {
   endorsementTab: string;
 };
 
-export const FeedNavigation = ({ endorsementTab }: FeedNavigationProps) => {
+export const EndorsementNavigation = ({
+  endorsementTab,
+}: EndorsementNavigationProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);

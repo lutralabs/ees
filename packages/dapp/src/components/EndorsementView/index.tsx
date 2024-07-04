@@ -4,7 +4,7 @@ import { EndorsementViewAvatar } from './EndorsementViewAvatar';
 import { Overview, OverviewSkeleton } from './Overview';
 import { getPropertyValue } from '@/utils/getPropertyValue';
 import { Skeleton } from '../ui/skeleton';
-import { FeedNavigation } from './FeedNavigation';
+import { EndorsementNavigation } from './EndorsementNavigation';
 import { Details } from './Details';
 
 type EndorsementViewProps = {
@@ -71,7 +71,7 @@ export const EndorsementView = async ({
 
   return (
     <div className="overflow-hidden">
-      <FeedNavigation endorsementTab={_tab} />
+      <EndorsementNavigation endorsementTab={_tab} />
       <Suspense
         key={_tab}
         fallback={

@@ -9,12 +9,11 @@ import {
 } from '@/components/ui/tooltip';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { EXPLORERS } from '@/lib/contracts/explorers';
-import { useAccount } from 'wagmi';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { CopyIcon } from '../CopyIcon';
+import { formatAddress } from '@/utils';
 
 dayjs.extend(relativeTime);
 
@@ -79,7 +78,7 @@ export const Details = ({
             prefetch={false}
             className="flex items-center overflow-hidden cursor-pointer text-primary-500 hover:underline hover:text-primary-600 animated-transition "
           >
-            {endorserAddress}
+            {formatAddress(endorserAddress)}
           </Link>
           <CopyIcon value={endorserAddress} />
         </div>
