@@ -1,10 +1,10 @@
 import { getAttestation } from '@/lib/eas';
 import { Suspense } from 'react';
 import { EndorsementViewAvatar } from './EndorsementViewAvatar';
-import { Overview } from './Overview';
+import { Overview, OverviewSkeleton } from './Overview';
 import { getPropertyValue } from '@/utils/getPropertyValue';
 import { Skeleton } from '../ui/skeleton';
-import { FeedNavigation } from './FeedNavigation';
+import { EndorsementNavigation } from './EndorsementNavigation';
 import { Details } from './Details';
 
 type EndorsementViewProps = {
@@ -71,7 +71,7 @@ export const EndorsementView = async ({
 
   return (
     <div className="overflow-hidden">
-      <FeedNavigation endorsementTab={_tab} />
+      <EndorsementNavigation endorsementTab={_tab} />
       <Suspense
         key={_tab}
         fallback={
@@ -82,27 +82,35 @@ export const EndorsementView = async ({
       >
         <div className="p-4">
           {_tab === 'overview' && (
-            <Overview
-              endorser={endorser}
-              endorserAvatar={endorserAvatar}
-              endorsee={displayName}
-              endorseeAvatar={avatar}
-              endorsementType={endorsementType}
-              comment={comment}
-            />
+            <Suspense fallback={<OverviewSkeleton />}>
+              <Overview
+                endorser={endorser}
+                endorserAvatar={endorserAvatar}
+                endorsee={displayName}
+                endorseeAvatar={avatar}
+                endorsementType={endorsementType}
+                comment={comment}
+              />
+            </Suspense>
           )}
           {_tab === 'details' && (
-            <Details
-              chainId={chainId}
-              endorserAvatar={endorserAvatar}
-              endorserAddress={endorser}
-              endorsementType={endorsementType as string}
-              comment={comment}
-              timestamp={timestamp}
-              txid={txid}
-              revoked={revoked}
-              uid={id}
-            />
+            <Suspense
+              fallback={
+                <Skeleton className="w-full h-48 bg-gray-200 rounded-sm" />
+              }
+            >
+              <Details
+                chainId={chainId}
+                endorserAvatar={endorserAvatar}
+                endorserAddress={endorser}
+                endorsementType={endorsementType as string}
+                comment={comment}
+                timestamp={timestamp}
+                txid={txid}
+                revoked={revoked}
+                uid={id}
+              />
+            </Suspense>
           )}
         </div>
       </Suspense>

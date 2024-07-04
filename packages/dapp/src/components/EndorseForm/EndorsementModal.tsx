@@ -46,16 +46,18 @@ export const EndorsementModal = ({
               </DialogDescription>
             </DialogHeader>
 
-            <div className="p-4 bg-contain bg-no-repeat gap-y-2 md:w-[600px] md:h-[316px] bg-share-bg flex justify-start items-center">
-              <div className="flex flex-col gap-y-4 ml-4">
-                <div className="flex items-center justify-center">
-                  {endorsee}
-                </div>
-                <div className="md:text-xl font-medium">
-                  {endorsementType === 'Based energy 🔵' ? 'for' : 'as a'}
-                </div>
-                <div className="md:text-3xl text-md font-semibold text-primary-500">
-                  {endorsementType}
+            <div className="flex justify-center">
+              <div className="p-4 bg-contain bg-no-repeat w-[300px] h-[158px] gap-y-2 md:w-[600px] md:h-[316px] sm:w-[450px] sm:h-[237px] bg-share-bg flex justify-start items-center">
+                <div className="flex flex-col gap-y-1 md:gap-y-4 ml-4">
+                  <div className="flex items-center justify-center">
+                    {endorsee}
+                  </div>
+                  <div className="md:text-xl font-medium">
+                    {endorsementType === 'Based energy 🔵' ? 'for' : 'as a'}
+                  </div>
+                  <div className="md:text-3xl text-md font-semibold text-primary-500">
+                    {endorsementType}
+                  </div>
                 </div>
               </div>
             </div>

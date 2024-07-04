@@ -112,12 +112,26 @@ export const EndorseeBadge = ({
                 avatar={user.avatar}
                 address={user.address}
                 size="2xl"
+                className="md:block hidden"
+              />
+              <ProfileAvatar
+                avatar={user.avatar}
+                address={user.address}
+                size="lg"
+                className="sm:block hidden md:hidden"
+              />
+              <ProfileAvatar
+                avatar={user.avatar}
+                address={user.address}
+                size="md"
+                className="sm:hidden block"
               />
             </Link>
             <div className={'absolute -bottom-2 -right-2'}>
               <MemoizedSVG
                 fill={PLATFORM_DATA[user.type].color as string}
                 className={cn(
+                  'md:block hidden',
                   'p-1 rounded-full',
                   user.type === PlatformType.lens && 'bg-green-100',
                   user.type === PlatformType.farcaster && 'bg-purple-100',
@@ -128,10 +142,24 @@ export const EndorseeBadge = ({
                 width={30}
                 height={30}
               />
+              <MemoizedSVG
+                fill={PLATFORM_DATA[user.type].color as string}
+                className={cn(
+                  'md:hidden block',
+                  'p-1 rounded-full',
+                  user.type === PlatformType.lens && 'bg-green-100',
+                  user.type === PlatformType.farcaster && 'bg-purple-100',
+                  user.type === PlatformType.ens ||
+                    (user.type === PlatformType.ethereum && 'bg-blue-100')
+                )}
+                src={PLATFORM_DATA[user.type].icon as string}
+                width={20}
+                height={20}
+              />
             </div>
           </div>
-          <div className="w-full sm:ml-4">
-            <div className="text-xl sm:text-3xl font-semibold max-sm:text-center">
+          <div className="w-full ml-2 sm:ml-4">
+            <div className="text-lg sm:text-3xl font-semibold max-sm:text-center">
               {user.handle}
             </div>
             <div className="flex items-center text-sm sm:text-md text-gray-600 font-normal max-sm:justify-center gap-x-1">

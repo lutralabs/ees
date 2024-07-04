@@ -9,12 +9,11 @@ import {
 } from '@/components/ui/tooltip';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
 import { EXPLORERS } from '@/lib/contracts/explorers';
-import { useAccount } from 'wagmi';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { CopyIcon } from '../CopyIcon';
+import { formatAddress } from '@/utils';
 
 dayjs.extend(relativeTime);
 
@@ -35,7 +34,7 @@ const LabelField = ({
   description,
 }: { label: string; description: string }) => {
   return (
-    <div className="flex flex-col gap-y-1">
+    <div className="flex flex-col gap-y-1 max-sm:mt-4">
       <div className="flex items-center gap-x-1">
         <TooltipProvider>
           <Tooltip>
@@ -66,7 +65,7 @@ export const Details = ({
 }: DetailsProps) => {
   return (
     <div>
-      <div className="grid grid-cols-[35%_65%] gap-y-2 mt-4">
+      <div className="grid max-sm:grid-cols-1 sm:grid-cols-[35%_65%] gap-y-2 mt-4">
         <LabelField label="Endorser" description="The endorser" />
         {endorserAvatar}
         <LabelField
@@ -79,7 +78,7 @@ export const Details = ({
             prefetch={false}
             className="flex items-center overflow-hidden cursor-pointer text-primary-500 hover:underline hover:text-primary-600 animated-transition "
           >
-            {endorserAddress}
+            {formatAddress(endorserAddress)}
           </Link>
           <CopyIcon value={endorserAddress} />
         </div>
@@ -101,7 +100,7 @@ export const Details = ({
           description="Revoked endorsements are no longer valid"
         />
         <div className="">{revoked ? 'Invalid' : 'Valid'}</div>
-        <hr className="col-span-2 my-2" />
+        <hr className="sm:col-span-2 my-2 max-sm:mt-4" />
         <LabelField
           label="Timestamp"
           description="When the endorsement has been made."
