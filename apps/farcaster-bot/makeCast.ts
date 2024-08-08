@@ -1,9 +1,10 @@
 import {
   FarcasterNetwork,
-  getInsecureHubRpcClient,
+  getSSLHubRpcClient,
   makeCastAdd,
   NobleEd25519Signer,
   CastType,
+  Metadata,
 } from '@farcaster/hub-nodejs';
 import { hexToBytes } from '@noble/hashes/utils';
 import {
@@ -21,7 +22,7 @@ import 'dotenv/config';
 const SIGNER = process.env.SIGNER_PRIVATE_KEY || zeroAddress;
 const FID = 662535;
 
-const HUB_URL = process.env.HUB_URL || 'https://farcaster.xyz'; // URL + Port of the Hub
+const HUB_URL = 'hubs-grpc.airstack.xyz';
 const NETWORK = FarcasterNetwork.MAINNET; // Network of the Hub
 
 const fetchUserByAddress = async (
@@ -112,7 +113,7 @@ async function main() {
     network: NETWORK,
   };
 
-  const client = getInsecureHubRpcClient(HUB_URL);
+  const client = getSSLHubRpcClient(HUB_URL);
   const castResults = [];
   const endorsees: { fid: number; name: string }[] = await fetchEndorsees();
   const text =
@@ -138,9 +139,12 @@ async function main() {
     dataOptions,
     ed25519Signer
   );
+  const metadata = new Metadata();
+  metadata.add('x-airstack-hubs', process.env.AIRSTACK_API_KEY as string);
   castResults.push(castWithMentions);
   const submission = await client.submitMessage(
-    castWithMentions._unsafeUnwrap()
+    castWithMentions._unsafeUnwrap(),
+    metadata
   );
   if (submission.isErr()) {
     console.error('Failed to submit message:', submission.error);
