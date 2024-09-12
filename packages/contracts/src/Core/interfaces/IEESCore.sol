@@ -43,7 +43,9 @@ interface IEESCore {
      * @dev retrieves the balance from the storage
      * @return balance balance of the given account
      */
-    function getBalance(address account) external view returns (uint256 balance);
+    function getBalance(
+        address account
+    ) external view returns (uint256 balance);
 
     /**
      * @notice Withdraws all revenue received as fees from endorsements and donations
@@ -54,13 +56,17 @@ interface IEESCore {
      * @notice Withdraws the fees from endorsements
      * @param amount The amount of fees to withdraw
      */
-    function withdrawEndorsementFees(uint256 amount) external;
+    function withdrawEndorsementFees(
+        uint256 amount
+    ) external;
 
     /**
      * @notice Withdraws the fees from donations
      * @param amount The amount of fees to withdraw
      */
-    function withdrawDonationFees(uint256 amount) external;
+    function withdrawDonationFees(
+        uint256 amount
+    ) external;
 
     /**
      * @notice Set donation fee percentage
@@ -69,13 +75,17 @@ interface IEESCore {
      * 1% = 100,
      * 100% = 10_000
      */
-    function setDonationFeePercentage(uint256 newFee) external;
+    function setDonationFeePercentage(
+        uint256 newFee
+    ) external;
 
     /**
      * @notice Set the endorsement price
      * @param newPrice The new endorsement price
      */
-    function setEndorsementPrice(uint256 newPrice) external;
+    function setEndorsementPrice(
+        uint256 newPrice
+    ) external;
 
     /**
      * @notice Returns the balance of the given account
@@ -101,13 +111,17 @@ interface IEESCore {
      * @notice Set new core EAS deployment address
      * @param newAddress The new EAS address
      */
-    function setNewEasAddress(address newAddress) external;
+    function setNewEasAddress(
+        address newAddress
+    ) external;
 
     /**
      * @notice Set new EAS Schema UID
      * @param newSchemaUid The new Schema UID
      */
-    function setNewSchemaUid(bytes32 newSchemaUid) external;
+    function setNewSchemaUid(
+        bytes32 newSchemaUid
+    ) external;
 
     /**
      * @notice Returns the endorsement price

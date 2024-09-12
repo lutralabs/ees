@@ -53,7 +53,9 @@ library FeesLib {
      * Withdraws all fees (revenue to admins)
      * @param feesStorage the storage to use
      */
-    function _withdrawAll(FeesStorage.Fees storage feesStorage) internal {
+    function _withdrawAll(
+        FeesStorage.Fees storage feesStorage
+    ) internal {
         uint256 donationsFees = feesStorage._donationFees;
         uint256 endorsementsFees = feesStorage._endorsementFees;
         feesStorage._donationFees = 0;
@@ -92,11 +94,9 @@ library FeesLib {
      * @dev retrieves the donation fees balance from the storage
      * @return balance of the fees received by donations
      */
-    function _getEndorsementsFeesBalance(FeesStorage.Fees storage feesStorage)
-        internal
-        view
-        returns (uint256 balance)
-    {
+    function _getEndorsementsFeesBalance(
+        FeesStorage.Fees storage feesStorage
+    ) internal view returns (uint256 balance) {
         return feesStorage._endorsementFees;
     }
 
@@ -106,7 +106,9 @@ library FeesLib {
      * @dev retrieves the donation fees balance from the storage
      * @return balance of the fees received by donations
      */
-    function _getDonationsFeesBalance(FeesStorage.Fees storage feesStorage) internal view returns (uint256 balance) {
+    function _getDonationsFeesBalance(
+        FeesStorage.Fees storage feesStorage
+    ) internal view returns (uint256 balance) {
         return feesStorage._donationFees;
     }
 
@@ -116,7 +118,9 @@ library FeesLib {
      * @dev retrieves the total fees balance from the storage
      * @return balance of the fees received by donations and endorsements
      */
-    function _getTotalFeesBalance(FeesStorage.Fees storage feesStorage) internal view returns (uint256 balance) {
+    function _getTotalFeesBalance(
+        FeesStorage.Fees storage feesStorage
+    ) internal view returns (uint256 balance) {
         return feesStorage._endorsementFees + feesStorage._donationFees;
     }
 
@@ -125,7 +129,9 @@ library FeesLib {
      * @param feesStorage the storage to use
      * @dev retrieves the endorsement price from the storage
      */
-    function _getEndorsementPrice(FeesStorage.Fees storage feesStorage) internal view returns (uint256 price) {
+    function _getEndorsementPrice(
+        FeesStorage.Fees storage feesStorage
+    ) internal view returns (uint256 price) {
         return feesStorage._endorsementPrice;
     }
 
@@ -134,11 +140,9 @@ library FeesLib {
      * @param feesStorage the storage to use
      * @dev retrieves the donation fee percentage from the storage
      */
-    function _getDonationFeePercentage(FeesStorage.Fees storage feesStorage)
-        internal
-        view
-        returns (uint256 percentage)
-    {
+    function _getDonationFeePercentage(
+        FeesStorage.Fees storage feesStorage
+    ) internal view returns (uint256 percentage) {
         return feesStorage._donationFeePercentage;
     }
 

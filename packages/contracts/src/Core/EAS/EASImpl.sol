@@ -43,7 +43,9 @@ contract EASImpl is Initializable {
      * @dev Sets the EAS address
      * @param newEasAddress the new EAS address
      */
-    function _setNewEasAddress(address newEasAddress) internal {
+    function _setNewEasAddress(
+        address newEasAddress
+    ) internal {
         if (address(newEasAddress) == address(0)) {
             revert InvalidEAS();
         }
@@ -54,7 +56,9 @@ contract EASImpl is Initializable {
      * @dev sets new schema uid
      * @param newSchemaUid the new schema uid
      */
-    function _setNewSchemaUid(bytes32 newSchemaUid) internal {
+    function _setNewSchemaUid(
+        bytes32 newSchemaUid
+    ) internal {
         _schemaUid = newSchemaUid;
     }
 
@@ -63,7 +67,9 @@ contract EASImpl is Initializable {
      * @param data the attestation data
      * @return uid the uid of the new attestation
      */
-    function _attest(AttestationRequestData memory data) internal returns (bytes32 uid) {
+    function _attest(
+        AttestationRequestData memory data
+    ) internal returns (bytes32 uid) {
         uid = _eas.attest(AttestationRequest({schema: _schemaUid, data: data}));
     }
 
