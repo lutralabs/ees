@@ -4,7 +4,7 @@ import {
   PlatformType,
   SocialPlatformMapping,
 } from './platform';
-import { regexEns, regexEth, regexFarcaster, regexLens } from './regex';
+import { regexEns, regexEth, regexFarcaster } from './regex';
 
 export const discordUrl = 'https://discord.gg/M5xgNz7TTF';
 export const githubUrl = 'https://github.com/lutralabs/ees';
@@ -16,9 +16,9 @@ export const SUGGESTED_ACCOUNTS: SearchListItemType[] = [
     icon: '/icons/icon-ens.svg',
   },
   {
-    key: PlatformType.lens,
-    label: 'stani.lens',
-    icon: '/icons/icon-lens.svg',
+    key: PlatformType.ens,
+    label: 'barmstrong.eth',
+    icon: '/icons/icon-ens.svg',
   },
   {
     key: PlatformType.farcaster,
@@ -39,12 +39,6 @@ export const fuzzyDomainSuffix = [
     match: regexFarcaster,
     suffixes: ['eth', 'farcaster'],
   },
-  {
-    key: PlatformType.lens,
-    icon: SocialPlatformMapping(PlatformType.lens).icon,
-    match: regexLens,
-    suffixes: ['lens'],
-  },
   // ⬇️ Addresses
   {
     key: PlatformType.ethereum,
@@ -57,11 +51,6 @@ export const defaultSearchSuffix = [
   {
     key: PlatformType.ens,
     label: 'eth',
-    system: PlatformSystem.web3,
-  },
-  {
-    key: PlatformType.lens,
-    label: 'lens',
     system: PlatformSystem.web3,
   },
   {

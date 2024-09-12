@@ -37,7 +37,9 @@ contract FeesImpl is FeesStorage, Initializable {
      * @dev Sets the new endorsement fee
      * @param newPrice The new endorsement fee
      */
-    function _setNewEndorsementPrice(uint256 newPrice) internal {
+    function _setNewEndorsementPrice(
+        uint256 newPrice
+    ) internal {
         require(newPrice < _getEndorsementPrice(), "New endorsement price cannot be higher than the current one");
         FeesStorage.Fees storage fees = _getFeesStorage();
         fees._setNewEndorsementPrice(newPrice);
@@ -47,7 +49,9 @@ contract FeesImpl is FeesStorage, Initializable {
      * @dev Sets the new donation fee percentage
      * @param newDonationFeePercentage The new donation fee percentage
      */
-    function _setNewDonationFeePercentage(uint256 newDonationFeePercentage) internal {
+    function _setNewDonationFeePercentage(
+        uint256 newDonationFeePercentage
+    ) internal {
         require(newDonationFeePercentage <= MAXIMUM_FEE_PERCENTAGE, "Donation fee percentage cannot exceed 3%");
         FeesStorage.Fees storage fees = _getFeesStorage();
         fees._donationFeePercentage = newDonationFeePercentage;
@@ -95,7 +99,9 @@ contract FeesImpl is FeesStorage, Initializable {
      * @dev Stores the endorsement fee
      * @param amount The amount of fees to store
      */
-    function _storeEndorsementFee(uint256 amount) private {
+    function _storeEndorsementFee(
+        uint256 amount
+    ) private {
         FeesStorage.Fees storage fees = _getFeesStorage();
         fees._storeEndorsementFee(amount);
     }
@@ -104,7 +110,9 @@ contract FeesImpl is FeesStorage, Initializable {
      * @dev Stores the donation fee
      * @param amount The amount of fees to store
      */
-    function _storeDonationFee(uint256 amount) private {
+    function _storeDonationFee(
+        uint256 amount
+    ) private {
         FeesStorage.Fees storage fees = _getFeesStorage();
         fees._storeDonationFee(amount);
     }
@@ -122,7 +130,9 @@ contract FeesImpl is FeesStorage, Initializable {
      * @dev Withdraws the fees from endorsements
      * @param amount The amount of fees to withdraw
      */
-    function _withdrawEndorsementFees(uint256 amount) internal {
+    function _withdrawEndorsementFees(
+        uint256 amount
+    ) internal {
         FeesStorage.Fees storage fees = _getFeesStorage();
         fees._withdrawEndorsementFees(amount);
     }
@@ -131,7 +141,9 @@ contract FeesImpl is FeesStorage, Initializable {
      * @dev Withdraws the fees from donations
      * @param amount The amount of fees to withdraw
      */
-    function _withdrawDonationFees(uint256 amount) internal {
+    function _withdrawDonationFees(
+        uint256 amount
+    ) internal {
         FeesStorage.Fees storage fees = _getFeesStorage();
         fees._withdrawDonationFees(amount);
     }

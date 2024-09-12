@@ -32,7 +32,9 @@ contract EESCore is
     }
 
     /// @inheritdoc UUPSUpgradeable
-    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+    function _authorizeUpgrade(
+        address newImplementation
+    ) internal override onlyOwner {}
 
     /// @inheritdoc IEESCore
     function initialize(address easAddress, bytes32 schemaUid) external initializer {
@@ -67,7 +69,9 @@ contract EESCore is
     }
 
     /// @inheritdoc IEESCore
-    function getBalance(address account) public view returns (uint256 balance) {
+    function getBalance(
+        address account
+    ) public view returns (uint256 balance) {
         return _getBalance(account);
     }
 
@@ -77,23 +81,31 @@ contract EESCore is
     }
 
     /// @inheritdoc IEESCore
-    function withdrawEndorsementFees(uint256 amount) external onlyOwner nonReentrant {
+    function withdrawEndorsementFees(
+        uint256 amount
+    ) external onlyOwner nonReentrant {
         _withdrawEndorsementFees(amount);
     }
 
     /// @inheritdoc IEESCore
-    function withdrawDonationFees(uint256 amount) external onlyOwner nonReentrant {
+    function withdrawDonationFees(
+        uint256 amount
+    ) external onlyOwner nonReentrant {
         _withdrawDonationFees(amount);
     }
 
     /// @inheritdoc IEESCore
-    function setDonationFeePercentage(uint256 newFee) external onlyOwner {
+    function setDonationFeePercentage(
+        uint256 newFee
+    ) external onlyOwner {
         require(newFee <= MAXIMUM_FEE_PERCENTAGE, "Donation fee percentage cannot exceed 3%");
         _setNewDonationFeePercentage(newFee);
     }
 
     /// @inheritdoc IEESCore
-    function setEndorsementPrice(uint256 newPrice) external onlyOwner {
+    function setEndorsementPrice(
+        uint256 newPrice
+    ) external onlyOwner {
         require(newPrice < _getEndorsementPrice(), "Endorsement price cannot exceed previous price");
         _setNewEndorsementPrice(newPrice);
     }
@@ -109,12 +121,16 @@ contract EESCore is
     }
 
     /// @inheritdoc IEESCore
-    function setNewEasAddress(address newEasAddress) external onlyOwner {
+    function setNewEasAddress(
+        address newEasAddress
+    ) external onlyOwner {
         _setNewEasAddress(newEasAddress);
     }
 
     /// @inheritdoc IEESCore
-    function setNewSchemaUid(bytes32 newSchemaUid) external onlyOwner {
+    function setNewSchemaUid(
+        bytes32 newSchemaUid
+    ) external onlyOwner {
         _setNewSchemaUid(newSchemaUid);
     }
 
