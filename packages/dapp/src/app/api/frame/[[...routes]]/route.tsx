@@ -26,11 +26,10 @@ import {
   getBasicPlatformProfileInfo,
   getProfileInfo,
 } from '@/lib/airstack';
-import { regexEns, regexEth, regexLens } from '@/utils/regex';
+import { regexEns, regexEth } from '@/utils/regex';
 import { EXPLORERS } from '@/lib/contracts/explorers';
 import { CONTRACT_ADDRESSES } from '@/lib/contracts';
 import { ENDORSEMENT_OPTIONS } from '@/utils/endorsementOptions';
-import { Space } from 'lucide-react';
 
 const options_length = ENDORSEMENT_OPTIONS.length;
 
@@ -125,7 +124,7 @@ const verifyLogin = () => {
 };
 
 const SEARCH_INTENTS = [
-  <TextInput placeholder="Search by farcaster, ens, lens" />,
+  <TextInput placeholder="Search by farcaster, ens" />,
   <Button value="search" action="/search">
     Search🔎
   </Button>,
@@ -173,8 +172,6 @@ app.frame('/search', async (c) => {
   let platform;
   if (regexEns.test(inputText)) {
     platform = PlatformType.ens;
-  } else if (regexLens.test(inputText)) {
-    platform = PlatformType.lens;
   } else if (regexEth.test(inputText)) {
     platform = PlatformType.ethereum;
   } else {
@@ -259,7 +256,7 @@ app.frame('/search', async (c) => {
       </Box>
     ),
     intents: [
-      <TextInput placeholder="Search by farcaster, ens, lens" />,
+      <TextInput placeholder="Search by farcaster, ens" />,
       <Button action="/type-selection">✅</Button>,
       <Button value="search">Search🔎</Button>,
       <Button.Reset>🔄</Button.Reset>,

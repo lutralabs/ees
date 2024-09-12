@@ -30,7 +30,9 @@ contract DonationsImpl is DonationsStorage {
      * @param amount the amount to withdraw
      * @dev withdraws the given amount from the storage
      */
-    function _withdraw(uint256 amount) internal {
+    function _withdraw(
+        uint256 amount
+    ) internal {
         require(amount > 0, "Insufficient balance");
         DonationsStorage.Donations storage donations = _getDonationsStorage();
         donations._withdraw(amount);
@@ -42,7 +44,9 @@ contract DonationsImpl is DonationsStorage {
      * @dev retrieves the balance from the storage
      * @return balance balance of the given account
      */
-    function _getBalance(address account) internal view returns (uint256) {
+    function _getBalance(
+        address account
+    ) internal view returns (uint256) {
         DonationsStorage.Donations storage donations = _getDonationsStorage();
         return donations._getBalance(account);
     }
