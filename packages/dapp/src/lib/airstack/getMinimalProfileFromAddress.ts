@@ -85,8 +85,7 @@ export const getMinimalProfileFromAddress = async (
                 'ipfs://',
                 'https://ipfs.io/ipfs/'
               )
-            : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image?.small ??
-              null,
+            : null,
         error: null,
       };
     }
@@ -100,19 +99,6 @@ export const getMinimalProfileFromAddress = async (
         avatar:
           data.farcasterSocials.Social[0].profileImageContentValue?.image
             ?.small ?? null,
-        error: null,
-      };
-    }
-
-    // Lens profile
-    if (data?.lensSocials?.Social?.length === 1) {
-      return {
-        displayName: data.lensSocials.Social[0].profileHandle ?? null,
-        address: address,
-        description: data.lensSocials.Social[0].profileBio ?? null,
-        avatar:
-          data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
-          null,
         error: null,
       };
     }

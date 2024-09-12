@@ -37,9 +37,7 @@ const Badge = ({
   );
 };
 
-export const Badges = ({
-  data: { Wallet, farcasterSocials, lensSocials },
-}: BadgesProps) => {
+export const Badges = ({ data: { Wallet, farcasterSocials } }: BadgesProps) => {
   return (
     <div className="flex flex-wrap gap-x-1.5 gap-y-1.5 justify-center mt-4">
       {/* ENS */}
@@ -49,18 +47,6 @@ export const Badges = ({
           platform={PlatformType.ens}
         />
       )}
-      {/* Lens */}
-      {lensSocials?.Social?.map((item) => {
-        if (!item.profileHandle) return null;
-
-        return (
-          <Badge
-            key={item.profileHandle}
-            identity={item.profileHandle}
-            platform={PlatformType.lens}
-          />
-        );
-      })}
       {/* Farcaster */}
       {farcasterSocials?.Social?.map((item) => {
         if (!item.profileHandle) return null;

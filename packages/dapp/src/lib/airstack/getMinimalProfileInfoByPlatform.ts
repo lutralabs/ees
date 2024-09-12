@@ -3,7 +3,6 @@ import {
   type GetProfileFromEnsQuery,
   GetProfileFromFarcasterDocument,
   GetProfileFromLensDocument,
-  type GetProfileFromLensQuery,
   type GetProfileFromFarcasterQuery,
 } from '@/__generated__/airstack/graphql';
 import { PlatformType } from '@/utils';
@@ -111,8 +110,7 @@ export const getMinimalProfileInfoByPlatform = async (
                   'ipfs://',
                   'https://ipfs.io/ipfs/'
                 )
-              : data.Wallet.primaryDomain?.tokenNft?.contentValue?.image
-                  ?.small ?? null,
+              : null,
           error: null,
         };
       }
@@ -163,13 +161,6 @@ export const getMinimalProfileInfoByPlatform = async (
         // Use ENS if available
         let mainAddress = data.Wallet?.primaryDomain?.resolvedAddress;
 
-        // If ENS is not available, check if Lens is available
-        if (!mainAddress) {
-          if (data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
-            mainAddress = data.lensSocials.Social[0].userAddress;
-          }
-        }
-
         // If `mainAddress` is still null, use the first connected address
         if (!mainAddress) {
           mainAddress = connectedAddresses[0].address;
@@ -181,47 +172,6 @@ export const getMinimalProfileInfoByPlatform = async (
           description: farcasterSocials[0].profileBio ?? null,
           avatar:
             farcasterSocials[0].profileImageContentValue?.image?.small ?? null,
-          error: null,
-        };
-      }
-      case PlatformType.lens: {
-        const data = jsonResponse.data as GetProfileFromLensQuery;
-
-        if (
-          !data.lensSocials ||
-          !data.lensSocials.Social ||
-          data.lensSocials.Social.length === 0
-        ) {
-          return {
-            displayName: null,
-            address: null,
-            description: null,
-            avatar: null,
-            error: 'No Lens profile found',
-          };
-        }
-
-        if (
-          !data.Wallet ||
-          !data.Wallet.addresses ||
-          data.Wallet.addresses.length === 0
-        ) {
-          return {
-            displayName: null,
-            address: null,
-            description: null,
-            avatar: null,
-            error: 'No matching address for the Lens profile found',
-          };
-        }
-
-        return {
-          displayName: identity,
-          address: data.Wallet.addresses[0],
-          description: data.lensSocials.Social[0].profileBio ?? null,
-          avatar:
-            data.lensSocials.Social[0].profileImageContentValue?.image?.small ??
-            null,
           error: null,
         };
       }

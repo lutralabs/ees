@@ -1,17 +1,10 @@
 query GetProfileInfo($identity: Identity!) {
-  Wallet(input: {identity: $identity, blockchain: ethereum}) {
+  Wallet(input: {identity: $identity}) {
     addresses
     primaryDomain {
       name
       avatar
       resolvedAddress
-      tokenNft {
-        contentValue {
-          image {
-            small
-          }
-        }
-      }
     }
   }
   farcasterSocials: Socials(
@@ -21,22 +14,6 @@ query GetProfileInfo($identity: Identity!) {
       connectedAddresses {
         address
       }
-      userAddress
-      profileName
-      profileDisplayName
-      profileHandle
-      profileBio
-      profileImageContentValue {
-        image {
-          small
-        }
-      }
-    }
-  }
-  lensSocials: Socials(
-    input: {filter: {identity: {_eq: $identity}, dappName: {_eq: lens}}, blockchain: ethereum, order: {followerCount: DESC}}
-  ) {
-    Social {
       userAddress
       profileName
       profileDisplayName

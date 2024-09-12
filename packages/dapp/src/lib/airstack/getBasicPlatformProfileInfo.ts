@@ -39,20 +39,6 @@ export const getBasicPlatformProfileInfo = (
         description: farcaster.profileBio ?? null,
       };
     }
-    case PlatformType.lens: {
-      if (!data.lensSocials?.Social || data.lensSocials?.Social.length === 0) {
-        return EMPTY_RESULT;
-      }
-      // We take the first social (most followed one)
-      const lens = data.lensSocials?.Social[0];
-      if (!lens) return EMPTY_RESULT;
-
-      return {
-        name: lens.profileDisplayName ?? null,
-        handle: lens.profileHandle ?? null,
-        description: lens.profileBio ?? null,
-      };
-    }
     // We try to find the first social entry
     case PlatformType.ethereum: {
       // ENS profile
@@ -72,18 +58,6 @@ export const getBasicPlatformProfileInfo = (
             name: farcaster.profileDisplayName ?? null,
             handle: farcaster.profileHandle ?? null,
             description: farcaster.profileBio ?? null,
-          };
-        }
-      }
-
-      // Lens profile
-      if (data.lensSocials?.Social) {
-        const lens = data.lensSocials?.Social[0];
-        if (lens) {
-          return {
-            name: lens.profileDisplayName ?? null,
-            handle: lens.profileHandle ?? null,
-            description: lens.profileBio ?? null,
           };
         }
       }

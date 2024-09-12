@@ -78,12 +78,6 @@ export const getProfileInfo = async (
       return data;
     }
 
-    // Use Lens if available
-    if (data.lensSocials?.Social && data.lensSocials.Social.length > 0) {
-      data.Wallet.addresses = [data.lensSocials.Social[0].userAddress];
-      return data;
-    }
-
     // Filter out the Farcaster user address and all non-evm addresses from the `connectedAddresses` array
     farcasterSocials[0].connectedAddresses =
       farcasterSocials[0].connectedAddresses.filter(

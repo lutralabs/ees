@@ -1,5 +1,5 @@
 query GetProfileFromFarcaster($identity: Identity!) {
-  Wallet(input: {identity: $identity, blockchain: ethereum}) {
+  Wallet(input: {identity: $identity}) {
     primaryDomain {
       resolvedAddress
     }
@@ -21,13 +21,6 @@ query GetProfileFromFarcaster($identity: Identity!) {
           small
         }
       }
-    }
-  }
-  lensSocials: Socials(
-    input: {filter: {identity: {_eq: $identity}, dappName: {_eq: lens}}, blockchain: ethereum, order: {followerCount: DESC}}
-  ) {
-    Social {
-      userAddress
     }
   }
 }
